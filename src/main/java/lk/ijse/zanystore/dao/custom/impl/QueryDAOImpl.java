@@ -1,4 +1,6 @@
 package lk.ijse.zanystore.dao.custom.impl;
 
-public class QueryDAOImpl {
+import lk.ijse.zanystore.dao.custom.QueryDAO;
+
+public class QueryDAOImpl implements QueryDAO {
 }
