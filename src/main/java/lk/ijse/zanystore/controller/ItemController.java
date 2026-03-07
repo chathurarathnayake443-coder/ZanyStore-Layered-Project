@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.ItemBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ItemDAOImpl;
@@ -36,6 +37,7 @@ public class ItemController implements Initializable {
 
     ItemDAOImpl itemDAO = new ItemDAOImpl();
     ItemColorStockDAOImpl itemColorStockDAO = new ItemColorStockDAOImpl();
+    ItemBOImpl itemBO = new ItemBOImpl();
 
     private final String ITEM_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
     private final String ITEM_TYPE_REGEX = "^[A-Za-z]{1,}$";
@@ -141,10 +143,10 @@ public class ItemController implements Initializable {
             try {
                 int itemId = getOrCreateItemId(conn, name, type, unitPrice);
 
-                    boolean updated = itemColorStockDAO.update(new ItemColorStockDTO(itemId, color, qtyToAdd));
+                    boolean updated = itemBO.updateItemColors(new ItemColorStockDTO(itemId, color, qtyToAdd));
 
                     if (!updated) {
-                        boolean result = itemColorStockDAO.save(new ItemColorStockDTO(itemId, color, qtyToAdd));
+                        boolean result = itemBO.saveItemColors(new ItemColorStockDTO(itemId, color, qtyToAdd));
                         conn.commit();
 
                         // Refresh UI
@@ -206,7 +208,7 @@ public class ItemController implements Initializable {
             conn.setAutoCommit(false);
 
             try {
-                boolean r1 = itemColorStockDAO.delete(itemId);
+                boolean r1 = itemBO.deleteItemColors(itemId);
 
                 if (!r1) {
                     conn.rollback();
@@ -214,7 +216,7 @@ public class ItemController implements Initializable {
                     //return false;
                 }
 
-                boolean affected = itemDAO.delete(itemId);
+                boolean affected = itemBO.deleteItem(itemId);
                     if (affected) {
                         conn.commit();
                         new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully !").show();
@@ -277,7 +279,7 @@ public class ItemController implements Initializable {
 
     private void loadItemNames() {
         try {
-            List<String> itemNames = itemDAO.getNames();
+            List<String> itemNames = itemBO.loadItemNames();
             ObservableList<String> names = FXCollections.observableArrayList();
             for(String name : itemNames){
                 names.add(name);
@@ -290,7 +292,7 @@ public class ItemController implements Initializable {
 
     private void populateColorsForItem(int itemId) {
         try {
-            List<String> colors = itemColorStockDAO.getColors(itemId);
+            List<String> colors = itemBO.populateColors(itemId);
             ObservableList<String> colorNames = FXCollections.observableArrayList();
             for(String name : colors){
                 colorNames.add(name);
@@ -300,7 +302,7 @@ public class ItemController implements Initializable {
     }
 
     private int getItemIdByName(String itemName) throws SQLException {
-        int id = itemDAO.getIds(itemName);
+        int id = itemBO.getItemIdByName(itemName);
         if (id == 0) {
             throw new SQLException("Item not found: " + itemName);
         }
@@ -308,21 +310,21 @@ public class ItemController implements Initializable {
     }
 
     private int getOrCreateItemId(Connection conn, String name, String type, double price) throws SQLException {
-        ItemDTO itemDTO = itemDAO.find(name);
+        ItemDTO itemDTO = itemBO.findItem(name);
         if(!(itemDTO == null)){
             return itemDTO.getItem_id();
         }
-        boolean saved = itemDAO.save(new ItemDTO(name,type,price));
+        boolean saved = itemBO.saveItem(new ItemDTO(name,type,price));
         if (!saved) {
             throw new SQLException("Item insert failed");
         }
-        ItemDTO newItemDTO = itemDAO.find(name);
+        ItemDTO newItemDTO = itemBO.findItem(name);
         return newItemDTO.getItem_id();
     }
 
     private int getTotalQtyForItem(int itemId) {
         try {
-            int qty = itemColorStockDAO.getTotalQty(itemId);
+            int qty = itemBO.getTotalQtyForItem(itemId);
             return qty;
         } catch (Exception e) { e.printStackTrace(); }
         return 0;
@@ -330,7 +332,7 @@ public class ItemController implements Initializable {
 
     private int getColorQty(int itemId, String color) {
         try {
-            int qty = itemColorStockDAO.getColorQty(itemId, color);
+            int qty = itemBO.getColorQty(itemId, color);
             return qty;
         } catch (Exception e) { e.printStackTrace(); }
         return 0;
@@ -351,7 +353,7 @@ public class ItemController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = itemDAO.showNextId();
+        String id = itemBO.showNextId();
         idField.setText(id);
     }
     catch(Exception e){

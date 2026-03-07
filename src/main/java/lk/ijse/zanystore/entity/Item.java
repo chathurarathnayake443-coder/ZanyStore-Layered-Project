@@ -4,7 +4,7 @@ public class Item {
     private int item_id;
     private String item_name;
     private String item_type;
-    private String item_unit_price;
+    private double item_unit_price;
 
     public Item() {
     }
@@ -13,13 +13,13 @@ public class Item {
         this.item_id=item_id;
     }
 
-    public Item(String item_name, String item_type, String item_unit_price) {
+    public Item(String item_name, String item_type, double item_unit_price) {
         this.item_name = item_name;
         this.item_type = item_type;
         this.item_unit_price = item_unit_price;
     }
 
-    public Item(int item_id, String item_name, String item_type, String item_unit_price) {
+    public Item(int item_id, String item_name, String item_type, double item_unit_price) {
         this.item_id = item_id;
         this.item_name = item_name;
         this.item_type = item_type;
@@ -44,10 +44,10 @@ public class Item {
     public void setItem_type(String item_type) {
         this.item_type = item_type;
     }
-    public String getItem_unit_price() {
+    public double getItem_unit_price() {
         return item_unit_price;
     }
-    public void setItem_unit_price(String item_unit_price) {
+    public void setItem_unit_price(double item_unit_price) {
         this.item_unit_price = item_unit_price;
     }
 }
