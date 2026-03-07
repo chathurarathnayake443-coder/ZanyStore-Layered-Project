@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.EmployeeBOImpl;
 import lk.ijse.zanystore.dao.custom.EmployeeDAO;
 import lk.ijse.zanystore.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.zanystore.dto.EmployeeDTO;
@@ -77,6 +78,7 @@ public class EmployeeController implements Initializable {
     private final String EMP_CONTACT_REGEX = "^[0-9]{10}$";
     
     EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    EmployeeBOImpl employeeBO = new EmployeeBOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -119,7 +121,7 @@ public class EmployeeController implements Initializable {
             }
             else{
               
-                    EmployeeDTO employeeDTO = employeeDAO.find(Integer.parseInt(id));
+                    EmployeeDTO employeeDTO = employeeBO.searchEmployee(Integer.parseInt(id));
                     
                     if(employeeDTO != null){
                         idField.setText(String.valueOf(employeeDTO.getEmployee_id()));
@@ -159,7 +161,7 @@ public class EmployeeController implements Initializable {
         if (result.isPresent() && result.get() == yesButton) {
             String id = idField.getText().trim();
         
-            boolean deleteResult = employeeDAO.delete(Integer.parseInt(id));
+            boolean deleteResult = employeeBO.deleteEmployee(Integer.parseInt(id));
             
             if(deleteResult){
                 new Alert(Alert.AlertType.INFORMATION,"Employee Deleted Successfully !").show();
@@ -212,7 +214,7 @@ public class EmployeeController implements Initializable {
                     new Alert(Alert.AlertType.ERROR,"Invalid Employee Age").show();
                     return;
                 }
-            boolean result = employeeDAO.update(new EmployeeDTO(Integer.parseInt(id),name,Integer.parseInt(age),address,Double.parseDouble(salary),contactNumber,specialNotes));
+            boolean result = employeeBO.updateEmployee(new EmployeeDTO(Integer.parseInt(id),name,Integer.parseInt(age),address,Double.parseDouble(salary),contactNumber,specialNotes));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Employee Updated Successfully !").show();
@@ -262,7 +264,7 @@ public class EmployeeController implements Initializable {
                     new Alert(Alert.AlertType.ERROR,"Invalid Employee Age").show();
                     return;
                 }
-            boolean result = employeeDAO.save(new EmployeeDTO(name,Integer.parseInt(age),address,Double.parseDouble(salary),contactNumber,specialNotes));
+            boolean result = employeeBO.saveEmployee(new EmployeeDTO(name,Integer.parseInt(age),address,Double.parseDouble(salary),contactNumber,specialNotes));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Employee Added Successfully !").show();
@@ -281,7 +283,7 @@ public class EmployeeController implements Initializable {
     @FXML
     private void loadEmployeeTable(){
         try{
-            List<EmployeeDTO> employeeList = employeeDAO.getAll();
+            List<EmployeeDTO> employeeList = employeeBO.loadEmployeeTable();
             
             ObservableList<EmployeeDTO> obList = FXCollections.observableArrayList();
             
@@ -315,7 +317,7 @@ public class EmployeeController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = employeeDAO.showNextId();
+        String id = employeeBO.showNextId();
         idField.setText(id);
     }
     catch(Exception e){
