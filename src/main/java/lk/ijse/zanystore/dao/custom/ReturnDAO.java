@@ -1,14 +1,16 @@
 package lk.ijse.zanystore.dao.custom;
 
+import lk.ijse.zanystore.dao.CrudDAO;
 import lk.ijse.zanystore.dto.ReturnDTO;
+import lk.ijse.zanystore.entity.Return;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface ReturnDAO {
+public interface ReturnDAO extends CrudDAO<Return> {
 
-    public boolean save(ReturnDTO returnDTO) throws SQLException;
+    public boolean save(Return entity) throws SQLException;
 
     public String showNextId() throws SQLException;
 

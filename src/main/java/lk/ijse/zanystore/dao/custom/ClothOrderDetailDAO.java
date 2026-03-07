@@ -1,11 +1,13 @@
 package lk.ijse.zanystore.dao.custom;
 
+import lk.ijse.zanystore.dao.CrudDAO;
 import lk.ijse.zanystore.dto.OrderItemDTO;
+import lk.ijse.zanystore.entity.OrderItem;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.SQLException;
 
-public interface ClothOrderDetailDAO {
+public interface ClothOrderDetailDAO extends CrudDAO<OrderItem> {
 
-    public boolean save(OrderItemDTO orderItem) throws SQLException;
+    public boolean save(OrderItem entity) throws SQLException;
 }

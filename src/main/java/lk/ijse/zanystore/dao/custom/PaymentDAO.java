@@ -1,4 +1,7 @@
 package lk.ijse.zanystore.dao.custom;
 
-public interface PaymentDAO {
+import lk.ijse.zanystore.dao.CrudDAO;
+import lk.ijse.zanystore.entity.Payment;
+
+public interface PaymentDAO extends CrudDAO<Payment> {
 }

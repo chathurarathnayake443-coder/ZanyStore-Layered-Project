@@ -2,6 +2,7 @@ package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.ServiceproviderDAO;
 import lk.ijse.zanystore.dto.ServiceproviderDTO;
+import lk.ijse.zanystore.entity.ServiceProvider;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -11,13 +12,13 @@ import java.util.List;
 
 public class ServiceproviderDAOImpl implements ServiceproviderDAO {
 
-    public boolean save(ServiceproviderDTO serviceProviderDTO) throws SQLException {
-        boolean result = CrudUtil.execute("INSERT INTO service_providers (serprovider_name, serprovider_address, serprovider_contact_no, serprovider_type) VALUES (?,?,?,?)", serviceProviderDTO.getSerprovider_name(),serviceProviderDTO.getSerprovider_address(),serviceProviderDTO.getSerprovider_contact_no(),serviceProviderDTO.getSerprovider_type());
+    public boolean save(ServiceProvider entity) throws SQLException {
+        boolean result = CrudUtil.execute("INSERT INTO service_providers (serprovider_name, serprovider_address, serprovider_contact_no, serprovider_type) VALUES (?,?,?,?)", entity.getSerprovider_name(),entity.getSerprovider_address(),entity.getSerprovider_contact_no(),entity.getSerprovider_type());
         return result;
     }
 
-    public boolean update(ServiceproviderDTO serviceProviderDTO) throws SQLException{
-        boolean result = CrudUtil.execute("UPDATE service_providers SET serprovider_name = ?, serprovider_address = ?, serprovider_contact_no = ?, serprovider_type = ? WHERE serprovider_id = ?", serviceProviderDTO.getSerprovider_name(),serviceProviderDTO.getSerprovider_address(),serviceProviderDTO.getSerprovider_contact_no(),serviceProviderDTO.getSerprovider_type(), serviceProviderDTO.getSerprovider_id());
+    public boolean update(ServiceProvider entity) throws SQLException{
+        boolean result = CrudUtil.execute("UPDATE service_providers SET serprovider_name = ?, serprovider_address = ?, serprovider_contact_no = ?, serprovider_type = ? WHERE serprovider_id = ?", entity.getSerprovider_name(),entity.getSerprovider_address(),entity.getSerprovider_contact_no(),entity.getSerprovider_type(), entity.getSerprovider_id());
         return result;
     }
 
@@ -26,10 +27,10 @@ public class ServiceproviderDAOImpl implements ServiceproviderDAO {
         return result;
     }
 
-    public List<ServiceproviderDTO> getAll() throws SQLException{
+    public List<ServiceProvider> getAll() throws SQLException{
         ResultSet results = CrudUtil.execute("SELECT * FROM service_providers");
 
-        List<ServiceproviderDTO> serviceList = new ArrayList<>();
+        List<ServiceProvider> serviceList = new ArrayList<>();
 
         while(results.next()){
             int id = results.getInt("serprovider_id");
@@ -38,8 +39,7 @@ public class ServiceproviderDAOImpl implements ServiceproviderDAO {
             String contact = results.getString("serprovider_contact_no");
             String type = results.getString("serprovider_type");
 
-            ServiceproviderDTO serviceProvider = new ServiceproviderDTO(id,name,address,contact,type);
-            serviceList.add(serviceProvider);
+            serviceList.add(new ServiceProvider(id,name,address,contact,type));
         }
         return serviceList;
     }
@@ -53,5 +53,15 @@ public class ServiceproviderDAOImpl implements ServiceproviderDAO {
             return serId;
         }
         return null;
+    }
+
+    @Override
+    public ServiceProvider find(int empId) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getId() throws SQLException {
+        return "";
     }
 }

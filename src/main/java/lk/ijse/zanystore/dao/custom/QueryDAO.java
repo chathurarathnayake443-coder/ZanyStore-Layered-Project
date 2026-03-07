@@ -1,4 +1,6 @@
 package lk.ijse.zanystore.dao.custom;
 
-public interface QueryDAO {
+import lk.ijse.zanystore.dao.SuperDAO;
+
+public interface QueryDAO extends SuperDAO {
 }

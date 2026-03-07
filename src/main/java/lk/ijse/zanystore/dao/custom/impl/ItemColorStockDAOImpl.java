@@ -2,6 +2,7 @@ package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dto.ItemColorStockDTO;
+import lk.ijse.zanystore.entity.ItemColorStock;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -11,19 +12,39 @@ import java.util.List;
 
 public class ItemColorStockDAOImpl implements ItemColorStockDAO {
 
-    public boolean update(ItemColorStockDTO itemColorStockDTO) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE item_color_stock SET qty = qty + ? WHERE item_id = ? AND color = ?", itemColorStockDTO.getQty(),itemColorStockDTO.getItemId(),itemColorStockDTO.getColor());
+    public boolean update(ItemColorStock entity) throws SQLException {
+        boolean result = CrudUtil.execute("UPDATE item_color_stock SET qty = qty + ? WHERE item_id = ? AND color = ?", entity.getQty(),entity.getItem_id(),entity.getColor());
         return result;
     }
 
-    public boolean save(ItemColorStockDTO itemColorStockDTO) throws SQLException {
-        boolean result = CrudUtil.execute("INSERT INTO item_color_stock (item_id, color, qty) VALUES (?, ?, ?)",itemColorStockDTO.getItemId(),itemColorStockDTO.getColor(),itemColorStockDTO.getQty());
+    public boolean save(ItemColorStock entity) throws SQLException {
+        boolean result = CrudUtil.execute("INSERT INTO item_color_stock (item_id, color, qty) VALUES (?, ?, ?)",entity.getItem_id(),entity.getColor(),entity.getQty());
         return result;
     }
 
     public boolean delete(int id) throws SQLException {
         boolean result = CrudUtil.execute("DELETE FROM item_color_stock WHERE item_id = ?",id);
         return result;
+    }
+
+    @Override
+    public List<ItemColorStock> getAll() throws SQLException {
+        return List.of();
+    }
+
+    @Override
+    public String showNextId() throws SQLException {
+        return "";
+    }
+
+    @Override
+    public ItemColorStock find(int empId) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getId() throws SQLException {
+        return "";
     }
 
     public List<String> getColors(int itemId) throws SQLException {
@@ -61,8 +82,8 @@ public class ItemColorStockDAOImpl implements ItemColorStockDAO {
         return colorList;
     }
 
-    public boolean decreaseQty(ItemColorStockDTO itemColorStockDTO) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE item_color_stock SET qty = qty - ? WHERE item_id = ? AND color = ? AND qty >= ?", itemColorStockDTO.getQty(), itemColorStockDTO.getItemId(), itemColorStockDTO.getColor(), itemColorStockDTO.getQty());
+    public boolean decreaseQty(ItemColorStock entity) throws SQLException {
+        boolean result = CrudUtil.execute("UPDATE item_color_stock SET qty = qty - ? WHERE item_id = ? AND color = ? AND qty >= ?", entity.getQty(), entity.getItem_id(), entity.getColor(), entity.getQty());
         return result;
     }
 }

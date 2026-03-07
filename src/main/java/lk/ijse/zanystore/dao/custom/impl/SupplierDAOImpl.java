@@ -2,6 +2,7 @@ package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.SupplierDAO;
 import lk.ijse.zanystore.dto.SupplierDTO;
+import lk.ijse.zanystore.entity.Supplier;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -11,16 +12,16 @@ import java.util.List;
 
 public class SupplierDAOImpl implements SupplierDAO {
 
-    public boolean save(SupplierDTO supplierDTO) throws SQLException {
+    public boolean save(Supplier entity) throws SQLException {
         boolean result = CrudUtil.execute("INSERT INTO supplier (supplier_name, supplier_item, supplier_address, supplier_contact_no) VALUES (?,?,?,?)",
-                supplierDTO.getSupplier_name(),supplierDTO.getSupplier_item(),supplierDTO.getSupplier_address(),supplierDTO.getSupplier_contact_no());
+                entity.getSupplier_name(),entity.getSupplier_item(),entity.getSupplier_address(),entity.getSupplier_contact_no());
 
         return result;
     }
 
-    public boolean update(SupplierDTO supplierDTO) throws SQLException{
+    public boolean update(Supplier entity) throws SQLException{
         boolean result = CrudUtil.execute("UPDATE supplier SET supplier_name = ?, supplier_item = ?, supplier_address = ?, supplier_contact_no = ? WHERE supplier_id = ?",
-                supplierDTO.getSupplier_name(),supplierDTO.getSupplier_item(),supplierDTO.getSupplier_address(),supplierDTO.getSupplier_contact_no(),supplierDTO.getSupplier_id()
+                entity.getSupplier_name(),entity.getSupplier_item(),entity.getSupplier_address(),entity.getSupplier_contact_no(),entity.getSupplier_id()
         );
 
         return result;
@@ -32,11 +33,11 @@ public class SupplierDAOImpl implements SupplierDAO {
         return result;
     }
 
-    public List<SupplierDTO> getAll() throws SQLException{
+    public List<Supplier> getAll() throws SQLException{
 
         ResultSet results = CrudUtil.execute("SELECT * FROM supplier");
 
-        List<SupplierDTO> supplierList = new ArrayList<>();
+        List<Supplier> supplierList = new ArrayList<>();
 
         while(results.next()){
             int id = results.getInt("supplier_id");
@@ -45,8 +46,7 @@ public class SupplierDAOImpl implements SupplierDAO {
             String address = results.getString("supplier_address");
             String contact = results.getString("supplier_contact_no");
 
-            SupplierDTO supplierDTO = new SupplierDTO(id,name,address,item,contact);
-            supplierList.add(supplierDTO);
+            supplierList.add(new Supplier(id,name,address,item,contact));
         }
         return supplierList;
     }
@@ -60,5 +60,15 @@ public class SupplierDAOImpl implements SupplierDAO {
             return id;
         }
         return null;
+    }
+
+    @Override
+    public Supplier find(int empId) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getId() throws SQLException {
+        return "";
     }
 }

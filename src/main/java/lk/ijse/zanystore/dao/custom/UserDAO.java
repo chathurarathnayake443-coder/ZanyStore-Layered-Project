@@ -1,6 +1,8 @@
 package lk.ijse.zanystore.dao.custom;
 
+import lk.ijse.zanystore.dao.CrudDAO;
 import lk.ijse.zanystore.dto.UserDTO;
+import lk.ijse.zanystore.entity.User;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -8,17 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface UserDAO {
+public interface UserDAO extends CrudDAO<User> {
 
     public boolean exist(String name) throws SQLException;
 
-    public boolean save(UserDTO userDTO) throws SQLException;
+    public boolean save(User entity) throws SQLException;
 
     public boolean delete(String name) throws SQLException;
 
-    public UserDTO find(String name) throws SQLException;
+    public User find(String name) throws SQLException;
 
-    public List<UserDTO> getAll() throws SQLException;
+    public List<User> getAll() throws SQLException;
 
-    public boolean update(UserDTO userDTO) throws SQLException;
+    public boolean update(User entity) throws SQLException;
 }

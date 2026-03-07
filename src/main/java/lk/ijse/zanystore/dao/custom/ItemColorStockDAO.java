@@ -1,6 +1,8 @@
 package lk.ijse.zanystore.dao.custom;
 
+import lk.ijse.zanystore.dao.CrudDAO;
 import lk.ijse.zanystore.dto.ItemColorStockDTO;
+import lk.ijse.zanystore.entity.ItemColorStock;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -8,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ItemColorStockDAO {
-    public boolean update(ItemColorStockDTO itemColorStockDTO) throws SQLException;
+public interface ItemColorStockDAO extends CrudDAO<ItemColorStock> {
+    public boolean update(ItemColorStock entity) throws SQLException;
 
-    public boolean save(ItemColorStockDTO itemColorStockDTO) throws SQLException;
+    public boolean save(ItemColorStock entity) throws SQLException;
 
     public boolean delete(int id) throws SQLException;
 
@@ -23,5 +25,5 @@ public interface ItemColorStockDAO {
 
     public List<String> getColorsById(int id) throws SQLException;
 
-    public boolean decreaseQty(ItemColorStockDTO itemColorStockDTO) throws SQLException;
+    public boolean decreaseQty(ItemColorStock entity) throws SQLException;
 }

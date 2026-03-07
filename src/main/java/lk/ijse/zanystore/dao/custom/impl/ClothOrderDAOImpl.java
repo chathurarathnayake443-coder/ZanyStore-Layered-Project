@@ -2,6 +2,7 @@ package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
 import lk.ijse.zanystore.dto.OrderDTO;
+import lk.ijse.zanystore.entity.ClothOrder;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -20,9 +21,29 @@ public class ClothOrderDAOImpl implements ClothOrderDAO {
         return null;
     }
 
-    public boolean save(OrderDTO orderDTO) throws SQLException {
-        boolean result = CrudUtil.execute("INSERT INTO cloth_order (customer_id, cloth_order_description, cloth_order_start_date, cloth_order_end_date) VALUES (?,?,?,?)", orderDTO.getCustomer_id(), orderDTO.getCloth_order_description(), orderDTO.getCloth_order_start_date(),orderDTO.getCloth_order_end_date());
+    @Override
+    public ClothOrder find(int empId) throws SQLException {
+        return null;
+    }
+
+    public boolean save(ClothOrder entity) throws SQLException {
+        boolean result = CrudUtil.execute("INSERT INTO cloth_order (customer_id, cloth_order_description, cloth_order_start_date, cloth_order_end_date) VALUES (?,?,?,?)", entity.getCustomer_id(), entity.getCloth_order_description(), entity.getCloth_order_start_date(),entity.getCloth_order_end_date());
         return result;
+    }
+
+    @Override
+    public boolean update(ClothOrder entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public List<ClothOrder> getAll() throws SQLException {
+        return List.of();
     }
 
     public String getId() throws SQLException {
