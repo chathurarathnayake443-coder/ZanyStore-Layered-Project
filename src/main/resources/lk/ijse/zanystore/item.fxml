@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.zanystore.controller.ItemController">
+   <top>
+      <AnchorPane prefHeight="455.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#773396" layoutX="47.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Details">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Text>
+            <VBox layoutX="22.0" layoutY="52.0" prefHeight="312.0" prefWidth="578.0">
+               <children>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="ID ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="idField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="80.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Name ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="nameField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Type ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="typeField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="colorField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="605.0" layoutY="52.0" prefHeight="312.0" prefWidth="578.0">
+               <children>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Price ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="priceField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="qtyField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Text>
+                        <ComboBox fx:id="nameBox" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="64.0" prefWidth="578.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Colour ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Text>
+                        <ComboBox fx:id="colorBox" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox layoutX="131.0" layoutY="388.0" prefHeight="58.0" prefWidth="1030.0">
+               <children>
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#clickAddItem" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10;" text="Add" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#clickDeleteItem" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10;" text="Remove" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#clickReset" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10;" text="Reset" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Button layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#backButton" prefHeight="23.0" prefWidth="30.0" style="-fx-background-color: #8d72f7;" text="&lt;" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="504.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableItem" layoutX="32.0" layoutY="6.0" prefHeight="301.0" prefWidth="1133.0">
+              <columns>
+                <TableColumn fx:id="colId" prefWidth="96.92110252380371" text="Item ID" />
+                <TableColumn fx:id="colName" prefWidth="406.0789566040039" text="Name" />
+                  <TableColumn fx:id="colType" prefWidth="211.36376953125" text="Type" />
+                  <TableColumn fx:id="colPrice" prefWidth="219.63629150390625" text="Unit Price" />
+                  <TableColumn fx:id="colQty" prefWidth="198.387451171875" text="Quantity" />
+              </columns>
+            </TableView>
+            <Button fx:id="resetBtn1" layoutX="901.0" layoutY="316.0" mnemonicParsing="false" onAction="#printReport" prefHeight="29.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10;" text="Item Report" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="13.0" />
+               </font></Button>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>

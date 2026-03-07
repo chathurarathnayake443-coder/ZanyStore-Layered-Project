@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.zanystore.controller.PaymentController">
+   <top>
+      <AnchorPane prefHeight="1064.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="26.0" layoutY="70.0" prefHeight="396.0" prefWidth="548.0">
+               <children>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment ID">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="pIdField" prefHeight="36.0" prefWidth="548.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></TextField>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField fx:id="oIdField" prefHeight="36.0" prefWidth="548.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></TextField>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField fx:id="cIdField" prefHeight="36.0" prefWidth="548.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></TextField>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Amount (LKR)">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField fx:id="amountField" prefHeight="36.0" prefWidth="548.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></TextField>
+               </children>
+            </VBox>
+            <Text fill="#773396" layoutX="42.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales &amp; Payment">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Text>
+            <VBox layoutX="611.0" layoutY="74.0" prefHeight="373.0" prefWidth="551.0">
+               <children>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Method">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <ComboBox fx:id="methodBox" prefHeight="36.0" prefWidth="548.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <DatePicker fx:id="dateBox" prefHeight="36.0" prefWidth="553.0" />
+                  <Button mnemonicParsing="false" onAction="#printBill" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px; -fx-border-radius: 40px;" text="Print Reciept" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="300.0" top="170.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <TableView fx:id="tablePayment" layoutX="28.0" layoutY="460.0" prefHeight="240.0" prefWidth="1144.0">
+              <columns>
+                <TableColumn fx:id="colPId" prefWidth="147.9336452484131" text="Payment ID" />
+                <TableColumn fx:id="colOId" prefWidth="154.45095825195312" text="Order ID" />
+                  <TableColumn fx:id="colName" prefWidth="391.10107421875" text="Customer Name" />
+                  <TableColumn fx:id="colAmount" prefWidth="262.57916259765625" text="Payment Amount" />
+                  <TableColumn fx:id="colDate" prefWidth="186.4207763671875" text="Date" />
+              </columns>
+            </TableView>
+            <Text fill="#868686" layoutX="750.0" layoutY="768.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Earnings (LKR)">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="19.0" />
+               </font>
+            </Text>
+            <Button fx:id="saveBtn" layoutX="27.0" layoutY="741.0" mnemonicParsing="false" onAction="#makePayment" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px; -fx-border-radius: 40px;" text="Save Payment" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="orderBtn" layoutX="255.0" layoutY="741.0" mnemonicParsing="false" onAction="#backToOrders" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px; -fx-border-radius: 40px;" text="Back to Orders" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+            <Label fx:id="totalLbl" layoutX="961.0" layoutY="736.0" prefHeight="49.0" prefWidth="230.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="485.0" layoutY="740.0" mnemonicParsing="false" onAction="#printReport" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px; -fx-border-radius: 40px;" text="Print Report" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="5.0" layoutY="4.0" mnemonicParsing="false" onAction="#backButton" prefHeight="23.0" prefWidth="30.0" style="-fx-background-color: #8d72f7;" text="&lt;" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

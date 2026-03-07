@@ -1,0 +1,386 @@
+package lk.ijse.zanystore.controller;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.sql.*;
+import java.util.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
+import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
+import lk.ijse.zanystore.dao.custom.impl.ItemDAOImpl;
+import lk.ijse.zanystore.db.DBConnection;
+import lk.ijse.zanystore.dto.ItemColorStockDTO;
+import lk.ijse.zanystore.dto.ItemDTO;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+
+public class ItemController implements Initializable {
+
+    @FXML private TextField idField, nameField, typeField, colorField, priceField, qtyField;
+    @FXML private ComboBox<String> nameBox, colorBox;
+    @FXML private TableView<ItemDTO> tableItem;
+    @FXML private TableColumn<ItemDTO, Integer> colId;
+    @FXML private TableColumn<ItemDTO, String> colName, colType, colColor;
+    @FXML private TableColumn<ItemDTO, Double> colPrice;
+    @FXML private TableColumn<ItemDTO, Integer> colQty;
+
+    ItemDAOImpl itemDAO = new ItemDAOImpl();
+    ItemColorStockDAOImpl itemColorStockDAO = new ItemColorStockDAOImpl();
+
+    private final String ITEM_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
+    private final String ITEM_TYPE_REGEX = "^[A-Za-z]{1,}$";
+    private final String ITEM_COLOR_REGEX = "^[A-Za-z]{1,}$";
+    private final String ITEM_PRICE_REGEX = "^[0-9]+(?:\\.[0-9]{1,2})?$";
+    private final String ITEM_QTY_REGEX = "^[0-9]{1,}$";
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("Item Page Loaded");
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("item_id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("item_name"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("item_type"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("item_unit_price"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+
+        tableItem.setOnMouseClicked(event -> {
+            ItemDTO selected = tableItem.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                idField.setText(String.valueOf(selected.getItem_id()));
+                nameField.setText(selected.getItem_name());
+                typeField.setText(selected.getItem_type());
+                priceField.setText(String.valueOf(selected.getItem_unit_price()));
+                qtyField.setText(String.valueOf(selected.getQty()));
+                nameBox.setValue(selected.getItem_name());
+                colorBox.setValue(selected.getColor());
+            }
+        });
+
+        nameBox.setEditable(true);
+        colorBox.setEditable(true);
+
+        loadItemTable();
+        loadItemNames();
+
+        nameBox.getSelectionModel().selectedItemProperty().addListener((obs, oldName, newName) -> {
+            if (newName == null) {
+                colorBox.getItems().clear();
+                nameField.setText("");
+                colorField.setText("");
+                qtyField.setText("");
+                return;
+            }
+            nameField.setText(newName);
+            try {
+                int itemId = getItemIdByName(newName);
+                populateColorsForItem(itemId);
+                int total = getTotalQtyForItem(itemId);
+                qtyField.setText(String.valueOf(total));
+                colorField.setText(""); // clear until color selected
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error from Database").show();
+            }
+        });
+
+        colorBox.getSelectionModel().selectedItemProperty().addListener((obs, oldColor, newColor) -> {
+            String itemName = nameBox.getValue();
+            if (itemName == null || newColor == null) {
+                colorField.setText("");
+                qtyField.setText("");
+                return;
+            }
+            colorField.setText(newColor);
+            try {
+                int itemId = getItemIdByName(itemName);
+                int colorQty = getColorQty(itemId, newColor);
+                qtyField.setText(String.valueOf(colorQty));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error from Database").show();
+            }
+        });
+        
+        showNextId();
+    }
+
+    @FXML
+    private void clickAddItem() {
+        try {
+            String name = (nameBox.getValue() != null && !nameBox.getValue().trim().isEmpty()) 
+                    ? nameBox.getValue().trim() : nameField.getText().trim();
+            String type = typeField.getText().trim();
+            String color = (colorBox.getValue() != null && !colorBox.getValue().trim().isEmpty()) 
+                    ? colorBox.getValue().trim() : colorField.getText().trim();
+            String priceText = priceField.getText().trim();
+            String qtyText = qtyField.getText().trim();
+
+            if (!name.matches(ITEM_NAME_REGEX) || !type.matches(ITEM_TYPE_REGEX) ||
+                !color.matches(ITEM_COLOR_REGEX) || !priceText.matches(ITEM_PRICE_REGEX) ||
+                !qtyText.matches(ITEM_QTY_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid input!").show();
+                return;
+            }
+
+            int qtyToAdd = Integer.parseInt(qtyText);
+            double unitPrice = Double.parseDouble(priceText);
+
+            Connection conn = DBConnection.getInstance().getConnection();
+            conn.setAutoCommit(false);
+
+            try {
+                int itemId = getOrCreateItemId(conn, name, type, unitPrice);
+
+                    boolean updated = itemColorStockDAO.update(new ItemColorStockDTO(itemId, color, qtyToAdd));
+
+                    if (!updated) {
+                        boolean result = itemColorStockDAO.save(new ItemColorStockDTO(itemId, color, qtyToAdd));
+                        conn.commit();
+
+                        // Refresh UI
+                        loadItemNames();
+                        if (!nameBox.getItems().contains(name)) nameBox.getItems().add(name);
+                        nameBox.setValue(name);
+
+                        populateColorsForItem(itemId);
+                        if (!colorBox.getItems().contains(color)) colorBox.getItems().add(color);
+                        colorBox.setValue(color);
+
+                        // Update TextFields
+                        nameField.setText(name);
+                        colorField.setText(color);
+                        qtyField.setText(String.valueOf(getTotalQtyForItem(itemId)));
+
+                        loadItemTable();
+                        new Alert(Alert.AlertType.INFORMATION, "Item saved/updated successfully!").show();
+                    }
+
+            } catch (SQLException ex) {
+                try { conn.rollback(); } catch (SQLException ignore) {}
+                ex.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error saving item").show();
+            } finally {
+                try { conn.setAutoCommit(true); } catch (SQLException ignore) {}
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Unexpected error").show();
+        }
+    }
+
+    @FXML
+    private void clickDeleteItem() {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to Delete Item?");
+
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == yesButton) {
+            String idText = idField.getText();
+            if (idText == null || idText.trim().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Enter an Item ID").show();
+                return;
+            }
+            int itemId = Integer.parseInt(idText.trim());
+
+            Connection conn = DBConnection.getInstance().getConnection();
+            conn.setAutoCommit(false);
+
+            try {
+                boolean r1 = itemColorStockDAO.delete(itemId);
+
+                if (!r1) {
+                    conn.rollback();
+                    conn.setAutoCommit(true);
+                    //return false;
+                }
+
+                boolean affected = itemDAO.delete(itemId);
+                    if (affected) {
+                        conn.commit();
+                        new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully !").show();
+                        cleanFields();
+                        loadItemTable();
+                        loadItemNames();
+                    } else {
+                        conn.rollback();
+                        new Alert(Alert.AlertType.ERROR, "No item found with ID: " + itemId).show();
+                    }
+
+            } catch (SQLException ex) {
+                try { conn.rollback(); } catch (SQLException ignore) {}
+                ex.printStackTrace();
+            } finally {
+                try { conn.setAutoCommit(true); } catch (SQLException ignore) {}
+            }
+        } 
+            
+        } catch (NumberFormatException nfe) {
+            new Alert(Alert.AlertType.ERROR, "Invalid ID format").show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clickReset() {
+        loadItemTable();
+        cleanFields();
+    }
+
+    private void loadItemTable() {
+        try {
+            Connection conn = DBConnection.getInstance().getConnection();
+            String sql = "SELECT ics.item_id, i.item_name, i.item_type, i.item_unit_price, ics.color, ics.qty " +
+                         "FROM item_color_stock ics JOIN item i ON ics.item_id = i.item_id";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet result = pstm.executeQuery();
+
+            List<ItemDTO> itemList = new ArrayList<>();
+            while (result.next()) {
+                ItemDTO itemDTO = new ItemDTO(
+                        result.getInt("item_id"),
+                        result.getString("item_name"),
+                        result.getString("item_type"),
+                        result.getString("color"),
+                        result.getDouble("item_unit_price"),
+                        result.getInt("qty")
+                );
+                itemList.add(itemDTO);
+            }
+
+            tableItem.setItems(FXCollections.observableArrayList(itemList));
+            result.close();
+            pstm.close();
+
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    private void loadItemNames() {
+        try {
+            List<String> itemNames = itemDAO.getNames();
+            ObservableList<String> names = FXCollections.observableArrayList();
+            for(String name : itemNames){
+                names.add(name);
+            }
+            nameBox.setItems(names);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void populateColorsForItem(int itemId) {
+        try {
+            List<String> colors = itemColorStockDAO.getColors(itemId);
+            ObservableList<String> colorNames = FXCollections.observableArrayList();
+            for(String name : colors){
+                colorNames.add(name);
+            }
+            colorBox.setItems(colorNames);
+        } catch (SQLException ex) { ex.printStackTrace(); }
+    }
+
+    private int getItemIdByName(String itemName) throws SQLException {
+        int id = itemDAO.getIds(itemName);
+        if (id == 0) {
+            throw new SQLException("Item not found: " + itemName);
+        }
+        return id;
+    }
+
+    private int getOrCreateItemId(Connection conn, String name, String type, double price) throws SQLException {
+        ItemDTO itemDTO = itemDAO.find(name);
+        if(!(itemDTO == null)){
+            return itemDTO.getItem_id();
+        }
+        boolean saved = itemDAO.save(new ItemDTO(name,type,price));
+        if (!saved) {
+            throw new SQLException("Item insert failed");
+        }
+        ItemDTO newItemDTO = itemDAO.find(name);
+        return newItemDTO.getItem_id();
+    }
+
+    private int getTotalQtyForItem(int itemId) {
+        try {
+            int qty = itemColorStockDAO.getTotalQty(itemId);
+            return qty;
+        } catch (Exception e) { e.printStackTrace(); }
+        return 0;
+    }
+
+    private int getColorQty(int itemId, String color) {
+        try {
+            int qty = itemColorStockDAO.getColorQty(itemId, color);
+            return qty;
+        } catch (Exception e) { e.printStackTrace(); }
+        return 0;
+    }
+
+    @FXML
+    private void cleanFields() {
+        idField.setText("");
+        nameField.setText("");
+        typeField.setText("");
+        priceField.setText("");
+        colorField.setText("");
+        qtyField.setText("");
+        nameBox.getSelectionModel().clearSelection();
+        colorBox.getSelectionModel().clearSelection();
+    }
+    
+    @FXML
+private void showNextId(){
+    try{
+        String id = itemDAO.showNextId();
+        idField.setText(id);
+    }
+    catch(Exception e){
+        e.printStackTrace();
+    }
+}
+
+
+    public void printReport()throws SQLException , JRException{
+        
+        Connection conn = DBConnection.getInstance().getConnection();
+        
+        InputStream inputStream = getClass().getResourceAsStream("/lk/ijse/zanystore/reports/Items.jrxml" );
+        JasperReport jr =JasperCompileManager.compileReport(inputStream);
+        
+        JasperPrint jp = JasperFillManager.fillReport(jr, null , conn);
+        
+        JasperViewer.viewReport(jp, false);
+    
+    }
+    
+    @FXML
+private void backButton(){
+    try{
+        App.setRoot("layout");
+    }
+    catch(Exception e){
+        e.printStackTrace();
+    }
+}
+}
+

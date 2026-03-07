@@ -1,0 +1,88 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Bill" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b525d68-a29a-4011-b46d-31fadc6c8193">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<query language="sql"><![CDATA[SELECT payment.payment_id, payment.payment_amount, customer.customer_name, order_payment_details.date FROM order_payment_details JOIN payment  on payment.payment_id = order_payment_details.payment_id JOIN customer ON order_payment_details.customer_id = customer.customer_id ORDER BY payment_id DESC LIMIT 1;]]></query>
+	<field name="payment_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="payment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="payment_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="payment"/>
+	</field>
+	<field name="payment_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="payment_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="payment_amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="payment"/>
+	</field>
+	<field name="customer_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date"/>
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_payment_details"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="textField" uuid="a6423513-1451-4f07-908c-a46545415c2b" x="632" y="3" width="37" height="30" pattern="HH:mm">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="image" uuid="aa785533-c90b-43e3-a00a-45d99e847f6a" x="59" y="0" width="110" height="79">
+			<expression><![CDATA["/Users/chathura/NetBeansProjects/zanystore/src/main/resources/lk/ijse/zanystore/images/Screenshot 2025-12-20 at 12.08.25.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="ed2f8810-ac43-4204-8227-c36d6415bdf4" x="285" y="46" width="141" height="30" fontSize="14.0">
+			<text><![CDATA[Payment Reciept]]></text>
+		</element>
+		<element kind="staticText" uuid="aee44ea3-d3c4-4d98-ba35-8c59783f6cdb" x="240" y="1" width="219" height="30" fontSize="20.0">
+			<text><![CDATA[ZANY Stitching Store]]></text>
+		</element>
+		<element kind="textField" uuid="e0689b96-fb38-4b60-b4c9-6de248ca4766" x="521" y="3" width="100" height="30" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+	</title>
+	<pageHeader height="17" splitType="Stretch">
+		<element kind="line" uuid="050d7e1f-682c-40ff-8772-6f87847be500" x="-30" y="10" width="750" height="1"/>
+	</pageHeader>
+	<columnHeader height="28" splitType="Stretch">
+		<element kind="staticText" uuid="f9c60b8a-4bfc-49f5-91ea-468a58324764" x="6" y="5" width="100" height="16">
+			<text><![CDATA[Payment ID]]></text>
+		</element>
+		<element kind="staticText" uuid="2cdff46a-eec4-4396-9365-2449466dd66d" x="168" y="6" width="100" height="13">
+			<text><![CDATA[Customer Name]]></text>
+		</element>
+		<element kind="staticText" uuid="4a930ba2-47dc-41a8-8ef1-2a5e8a1455a1" x="357" y="5" width="100" height="20">
+			<text><![CDATA[Payment Amount]]></text>
+		</element>
+		<element kind="staticText" uuid="a44ff185-5af8-42b4-a970-ad989d362d3c" x="569" y="5" width="100" height="17">
+			<text><![CDATA[Date / Time]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<element kind="textField" uuid="f373f2eb-6fa2-4e16-9bd3-b6e29bdb6d7b" x="3" y="11" width="100" height="30">
+				<expression><![CDATA[$F{payment_id}]]></expression>
+			</element>
+			<element kind="textField" uuid="e18ae400-dbc3-452e-91e3-f23f190576ed" x="174" y="10" width="100" height="30">
+				<expression><![CDATA[$F{customer_name}]]></expression>
+			</element>
+			<element kind="textField" uuid="18797dec-fac4-49c0-ae66-60e488824f8d" x="354" y="9" width="100" height="30">
+				<expression><![CDATA[$F{payment_amount}]]></expression>
+			</element>
+			<element kind="textField" uuid="6652745a-6522-475d-92a6-8c12d2a82e1d" x="562" y="8" width="118" height="30">
+				<expression><![CDATA[$F{date}]]></expression>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter height="16" splitType="Stretch"/>
+	<pageFooter height="74" splitType="Stretch">
+		<element kind="staticText" uuid="4bdd8419-b4f3-49d9-8404-5007d738aa14" x="266" y="7" width="198" height="23">
+			<text><![CDATA[Thank You for Shopping with Us    :)]]></text>
+		</element>
+		<element kind="staticText" uuid="517e348b-3e82-406a-93a3-be3894922778" x="310" y="37" width="100" height="30">
+			<text><![CDATA[Visit Us Again !]]></text>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

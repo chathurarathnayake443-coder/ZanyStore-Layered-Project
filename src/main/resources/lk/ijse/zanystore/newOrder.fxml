@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.zanystore.controller.NewOrderController">
+   <bottom>
+      <ScrollPane prefHeight="536.0" prefWidth="1200.0" style="-fx-background-color: none;" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1100.0" prefWidth="1200.0">
+               <children>
+                  <VBox layoutX="43.0" layoutY="3.0" prefHeight="1100.0" prefWidth="1100.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Items">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <TableView fx:id="tableItem" prefHeight="290.0" prefWidth="1100.0">
+                          <columns>
+                            <TableColumn fx:id="colId" prefWidth="108.47756576538086" text="Item ID" />
+                            <TableColumn fx:id="colItemName" prefWidth="365.52239990234375" text="Name" />
+                              <TableColumn fx:id="colItemColor" prefWidth="205.38400268554688" text="Colour" />
+                              <TableColumn fx:id="colItemQty" prefWidth="183.193603515625" text="Quantity" />
+                              <TableColumn fx:id="colUnitPrice" prefWidth="237.32162475585938" text="Unit Price" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Items Table">
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        <TableView fx:id="tableOrder" prefHeight="443.0" prefWidth="1100.0">
+                          <columns>
+                            <TableColumn fx:id="colName" prefWidth="337.24062728881836" text="Item Name" />
+                            <TableColumn fx:id="colColor" prefWidth="289.25946044921875" text="Color" />
+                              <TableColumn fx:id="colQty" prefWidth="248.37527465820312" text="Quantity" />
+                              <TableColumn fx:id="colEdit" prefWidth="224.9080810546875" text="Edit" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onOpenCustomersClicked" style="-fx-background-color: #843c9e;" text="View Customers" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#saveOrder" style="-fx-background-color: #843c9e;" text="Save Order" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#clickPayment" style="-fx-background-color: #843c9e;" text="Payment" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#onOpenOrdersClicked" style="-fx-background-color: #843c9e;" text="Order History" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#clickUsedItems" style="-fx-background-color: #843c9e;" text="Used Items for Orders" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="13.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="450.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </bottom>
+   <top>
+      <AnchorPane prefHeight="390.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="75.0" layoutY="12.0" prefHeight="259.0" prefWidth="498.0">
+               <children>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font></Text>
+                  <TextField fx:id="orderIdField">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="customerIdField">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Details">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <TextArea fx:id="orderDetailsField" prefHeight="112.0" prefWidth="498.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TextArea>
+               </children>
+            </VBox>
+            <VBox layoutX="712.0" layoutY="10.0" prefHeight="258.0" prefWidth="400.0">
+               <children>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <DatePicker fx:id="startDate" prefHeight="26.0" prefWidth="372.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <DatePicker fx:id="endDate" prefHeight="26.0" prefWidth="371.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Given Date for Service">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <DatePicker fx:id="givenDate" prefHeight="26.0" prefWidth="371.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Recieved Date from Service">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <DatePicker fx:id="recievedDate" prefHeight="26.0" prefWidth="371.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </DatePicker>
+               </children>
+            </VBox>
+            <HBox layoutX="51.0" layoutY="294.0" prefHeight="79.0" prefWidth="1119.0">
+               <children>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Item ID">
+                     <HBox.margin>
+                        <Insets top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="addingIdField">
+                     <HBox.margin>
+                        <Insets left="20.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Colour">
+                     <HBox.margin>
+                        <Insets left="80.0" top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <ComboBox fx:id="addingColorBox" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets left="20.0" top="30.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Qty">
+                     <HBox.margin>
+                        <Insets left="80.0" top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="addingQtyField">
+                     <HBox.margin>
+                        <Insets left="20.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button mnemonicParsing="false" onAction="#AddToOrder" style="-fx-background-color: #843c9e;" text="Add to Order" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="100.0" top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clickReset" style="-fx-background-color: #843c9e;" text="Reset" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#backButton" prefHeight="23.0" prefWidth="30.0" style="-fx-background-color: #8d72f7;" text="&lt;" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

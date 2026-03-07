@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.zanystore.controller.CollectionController">
+   <top>
+      <AnchorPane prefHeight="108.0" prefWidth="1200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#8d72f7" layoutX="72.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Collection">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="38.0" />
+               </font>
+            </Text>
+            <Button layoutX="19.0" layoutY="42.0" mnemonicParsing="false" onAction="#backButton" prefHeight="23.0" prefWidth="30.0" style="-fx-background-color: #8d72f7;" text="&lt;" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <ScrollPane prefHeight="4000.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox prefHeight="4237.0" prefWidth="1202.0">
+               <children>
+                  <HBox prefHeight="418.0" prefWidth="1202.0">
+                     <children>
+                        <ImageView fitHeight="422.0" fitWidth="1199.0">
+                           <image>
+                              <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2018.01.51.jpeg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="177.0" prefWidth="1202.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price List &amp; Short Collection">
+                           <font>
+                              <Font size="74.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" top="50.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="559.0" prefWidth="1202.0">
+                     <children>
+                        <ImageView fitHeight="545.0" fitWidth="548.0">
+                           <image>
+                              <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12.45%20(1)%20Background%20Removed.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="20.0" top="30.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <VBox prefHeight="526.0" prefWidth="557.0" style="-fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" top="20.0" />
+                           </HBox.margin>
+                           <children>
+                              <HBox prefHeight="69.0" prefWidth="553.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product Name : Classic Short" wrappingWidth="497.22235107421875">
+                                       <font>
+                                          <Font size="32.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="69.0" prefWidth="553.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sizes : 28 / 30 / 32 / 34 / 36 / 38 / 40" wrappingWidth="497.22235107421875">
+                                       <font>
+                                          <Font size="32.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="69.0" prefWidth="553.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price : LKR 1500 /=" wrappingWidth="497.22235107421875">
+                                       <font>
+                                          <Font size="32.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="69.0" prefWidth="553.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Colors : " wrappingWidth="497.22235107421875">
+                                       <font>
+                                          <Font size="32.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="69.0" prefWidth="553.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Red, Green, Blue, Black, Brown, Yellow, Orange and their Variations" wrappingWidth="497.22235107421875">
+                                       <font>
+                                          <Font size="32.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <VBox prefHeight="644.0" prefWidth="1202.0">
+                     <children>
+                        <HBox prefHeight="320.0" prefWidth="1202.0">
+                           <children>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12.48%20(1)%20Background%20Removed.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12.48%20(2)%20Background%20Removed.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12.47%20(1)%20Background%20Removed.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12%20Background%20Removed.47.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="320.0" prefWidth="1202.0">
+                           <children>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12%20Background%20Removed.46.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12.46%20(2)%20Background%20Removed.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12.46%20(1)%20Background%20Removed.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="300.0" fitWidth="300.0">
+                                 <image>
+                                    <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2016.12%20Background%20Removed.45.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="1330.0" prefWidth="1202.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Measurement Tables">
+                           <font>
+                              <Font size="74.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="30.0" />
+                           </VBox.margin>
+                        </Text>
+                        <ImageView fitHeight="560.0" fitWidth="1169.0">
+                           <image>
+                              <Image url="@images/WhatsApp%20Image%202025-12-24%20at%2015.48.35.jpeg" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="18.0" top="30.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <ImageView fitHeight="564.0" fitWidth="1156.0">
+                           <image>
+                              <Image url="@images/WhatsApp%20Image%202025-12-24%20at%2015.48.34.jpeg" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="20.0" top="20.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <HBox prefHeight="953.0" prefWidth="1202.0">
+                     <children>
+                        <ImageView fitHeight="866.0" fitWidth="566.0">
+                           <image>
+                              <Image url="@images/WhatsApp%20Image%202025-12-28%20at%2018.01%20Background%20Removed.55.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="#751818" strokeType="OUTSIDE" strokeWidth="0.0" text="Simple Way to Unique . . ." wrappingWidth="548.8106689453125">
+                           <font>
+                              <Font size="96.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="40.0" top="350.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </bottom>
+</BorderPane>

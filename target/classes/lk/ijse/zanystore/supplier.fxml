@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.zanystore.controller.SupplierController">
+   <top>
+      <AnchorPane prefHeight="415.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#773396" layoutX="42.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier Details">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Text>
+            <VBox layoutX="21.0" layoutY="50.0" prefHeight="287.0" prefWidth="563.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="ID ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="idField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="60.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Name ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="nameField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Item ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="itemField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="609.0" layoutY="52.0" prefHeight="228.0" prefWidth="563.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Address ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="addressField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="110.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Number ">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="contactField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox layoutX="98.0" layoutY="347.0" prefHeight="73.0" prefWidth="1023.0">
+               <children>
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#clickAddSupplier" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px;" text="Add" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font></Button>
+                  <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickUpdateSupplier" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px;" text="Update" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickDeleteSupplier" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px;" text="Delete" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#clickReset" prefHeight="40.0" prefWidth="213.0" style="-fx-background-color: #843c9e; -fx-background-radius: 10px;" text="Reset" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Button layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#backButton" prefHeight="23.0" prefWidth="30.0" style="-fx-background-color: #8d72f7;" text="&lt;" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="513.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableSupplier" layoutX="27.0" layoutY="16.0" prefHeight="362.0" prefWidth="1146.0">
+              <columns>
+                <TableColumn fx:id="colId" prefWidth="92.36710166931152" text="ID" />
+                <TableColumn fx:id="colName" prefWidth="355.13294982910156" text="Name" />
+                  <TableColumn fx:id="colItem" prefWidth="179.56243896484375" text="Item" />
+                  <TableColumn fx:id="colAddress" prefWidth="359.08587646484375" text="Address" />
+                  <TableColumn fx:id="colContact" prefWidth="160.9140625" text="Contact" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,154 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Quotation" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a55531bd-c577-49b7-813e-b1dda9e7b4e9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<query language="sql"><![CDATA[SELECT
+    q.quotation_id,
+    q.customer_name,
+    q.total_amount,
+    qi.item_name,
+    qi.color,
+    qi.quantity,
+    qi.unit_price,
+    (qi.quantity * qi.unit_price) AS line_total
+FROM quotation q
+JOIN quotation_item qi
+    ON q.quotation_id = qi.quotation_id
+WHERE q.quotation_id = (
+    SELECT MAX(quotation_id) FROM quotation
+);
+]]></query>
+	<field name="quotation_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quotation_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="quotation_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation"/>
+	</field>
+	<field name="customer_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation"/>
+	</field>
+	<field name="total_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation"/>
+	</field>
+	<field name="item_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="item_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="item_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation_item"/>
+	</field>
+	<field name="color" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="color"/>
+		<property name="com.jaspersoft.studio.field.label" value="color"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation_item"/>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation_item"/>
+	</field>
+	<field name="unit_price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="unit_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="unit_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="quotation_item"/>
+	</field>
+	<field name="line_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="line_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="line_total"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="textField" uuid="2e774f14-4bd0-49d0-91a9-41d4824ff6ef" x="421" y="3" width="100" height="30" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="textField" uuid="f85f70bc-9cd6-40b4-9211-8c50720884be" x="532" y="3" width="37" height="30" pattern="HH:mm">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="image" uuid="d4482fd7-1151-40c2-99b4-d48bed098ef4" x="21" y="0" width="89" height="69">
+			<expression><![CDATA["/Users/chathura/NetBeansProjects/zanystore/src/main/resources/lk/ijse/zanystore/images/Screenshot 2025-12-20 at 12.08.25.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="d5571bab-a95c-4c8a-adb2-641da8194aeb" x="200" y="46" width="141" height="30" fontSize="14.0">
+			<text><![CDATA[Quotation Report]]></text>
+		</element>
+		<element kind="staticText" uuid="378df492-5682-4f61-bd41-35bec4dcc12e" x="160" y="1" width="219" height="30" fontSize="20.0">
+			<text><![CDATA[ZANY Stitching Store]]></text>
+		</element>
+	</title>
+	<pageHeader height="10" splitType="Stretch"/>
+	<columnHeader height="80" splitType="Stretch">
+		<element kind="staticText" uuid="c4f5a879-7032-4042-a127-bb4334654dcf" x="1" y="2" width="100" height="19" forecolor="#B01613">
+			<text><![CDATA[Quotation ID :]]></text>
+		</element>
+		<element kind="textField" uuid="e16bf3fc-a285-4718-8e6d-dfb138f1a79c" x="146" y="2" width="100" height="13">
+			<expression><![CDATA[$F{quotation_id}]]></expression>
+		</element>
+		<element kind="staticText" uuid="95d32fe0-1b42-427b-bff3-f1dd94bc3bc0" x="1" y="27" width="100" height="14" forecolor="#AB1A18">
+			<text><![CDATA[Customer Name :]]></text>
+		</element>
+		<element kind="textField" uuid="1bd7c74b-4bf8-4cec-9396-4b94a1ac2699" x="146" y="25" width="100" height="20">
+			<expression><![CDATA[$F{customer_name}]]></expression>
+		</element>
+		<element kind="staticText" uuid="71b7a269-efbd-496b-9378-0a165b759ccf" x="2" y="62" width="59" height="14" forecolor="#B81512">
+			<text><![CDATA[Item Name]]></text>
+		</element>
+		<element kind="staticText" uuid="4ab1752d-395e-42c1-ab8d-4aaa2d729b63" x="116" y="61" width="61" height="16" forecolor="#AB1C1A">
+			<text><![CDATA[Color]]></text>
+		</element>
+		<element kind="staticText" uuid="214bdd93-ea14-46f5-8ee3-a7570a922d69" x="213" y="61" width="60" height="15" forecolor="#AB1C1A">
+			<text><![CDATA[Quantity]]></text>
+		</element>
+		<element kind="staticText" uuid="229dfa86-1697-4667-a5d0-3c78ebabfe25" x="325" y="61" width="68" height="15" forecolor="#AB1C1A">
+			<text><![CDATA[Unit Price]]></text>
+		</element>
+		<element kind="staticText" uuid="ef766462-e2d6-4ca4-836d-5a8bac42ce49" x="458" y="62" width="75" height="13" forecolor="#AB1C1A">
+			<text><![CDATA[Line Total]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<element kind="textField" uuid="2b3f5cd2-96d1-4941-8367-6827a932e5a6" x="2" y="12" width="78" height="18">
+				<expression><![CDATA[$F{item_name}]]></expression>
+			</element>
+			<element kind="textField" uuid="4f365ada-d9cc-492f-9d04-97f93ff3e8da" x="114" y="11" width="63" height="19">
+				<expression><![CDATA[$F{color}]]></expression>
+			</element>
+			<element kind="textField" uuid="d26d0193-ff45-41e8-b574-30f5870d5267" x="209" y="12" width="66" height="19">
+				<expression><![CDATA[$F{quantity}]]></expression>
+			</element>
+			<element kind="textField" uuid="ab70917d-c696-4962-b66a-adce0f429c09" x="320" y="11" width="100" height="19">
+				<expression><![CDATA[$F{unit_price}]]></expression>
+			</element>
+			<element kind="textField" uuid="7016109c-81b0-49f5-aaa4-62f1a27afd8c" x="455" y="12" width="89" height="19">
+				<expression><![CDATA[$F{line_total}]]></expression>
+			</element>
+			<element kind="line" uuid="f32b649e-555d-4ad9-87d0-c9a74601a17e" x="-16" y="34" width="588" height="1"/>
+			<element kind="line" uuid="d4e6f362-f88b-4f2c-b1e5-cc2b0eaef38d" x="-17" y="3" width="588" height="1"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch">
+		<element kind="staticText" uuid="b6996108-496f-4a5d-b86b-b9f9b894f1a0" x="386" y="15" width="69" height="20">
+			<text><![CDATA[Full Total]]></text>
+		</element>
+		<element kind="textField" uuid="b7d206aa-2c76-452e-9c8e-a3c8d999afae" x="470" y="15" width="90" height="20">
+			<expression><![CDATA[$F{total_amount}]]></expression>
+		</element>
+	</columnFooter>
+	<pageFooter height="114" splitType="Stretch">
+		<element kind="line" uuid="6b7ad6ec-f40a-4fff-a520-cba779766d5b" x="370" y="18" width="162" height="1"/>
+		<element kind="staticText" uuid="77857bf1-b407-43f3-8098-bdb001be7152" x="403" y="23" width="154" height="20">
+			<text><![CDATA[Authorized Signature]]></text>
+		</element>
+		<element kind="staticText" uuid="38ccb95c-5e96-4b52-b349-b01bb8990d1b" x="405" y="55" width="100" height="15">
+			<text><![CDATA[Tharindu Nayanajith]]></text>
+		</element>
+		<element kind="staticText" uuid="90fc7fa8-11c7-4578-8f63-c1fb22891b83" x="430" y="71" width="100" height="12">
+			<text><![CDATA[Proprietor]]></text>
+		</element>
+		<element kind="staticText" uuid="1f87b116-5a0e-489d-abda-4a089405a66c" x="409" y="89" width="100" height="17">
+			<text><![CDATA[Zany Stitching Store]]></text>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
