@@ -53,4 +53,14 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return null;
     }
+
+    @Override
+    public Customer find(int empId) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getId() throws SQLException {
+        return "";
+    }
 }

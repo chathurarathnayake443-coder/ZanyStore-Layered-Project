@@ -39,6 +39,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.PlaceOrderBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
 import lk.ijse.zanystore.dao.custom.impl.*;
@@ -125,6 +126,7 @@ public class NewOrderController implements Initializable {
     ClothOrderDAOImpl clothOrderDAO = new ClothOrderDAOImpl();
     ClothOrderDetailDAOImpl clothOrderDetailDAO = new ClothOrderDetailDAOImpl();
     OrderSerproviderDAOImpl orderSerproviderDAO = new OrderSerproviderDAOImpl();
+    PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
     
     private final ObservableList<OrderItemDTO> orderItemObList = FXCollections.observableArrayList();
 
@@ -269,11 +271,8 @@ public class NewOrderController implements Initializable {
      
      @FXML
     private void saveOrder(ActionEvent event) {
-         Connection connection = null;
-        try{
-            connection= DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
 
+        try{
             String customerId = customerIdField.getText();
             String orderDetails = orderDetailsField.getText();
             String sDate = String.valueOf(startDate.getValue());
@@ -281,59 +280,27 @@ public class NewOrderController implements Initializable {
             String gDate = String.valueOf(givenDate.getValue());
             String rDate = String.valueOf(recievedDate.getValue());
 
-
-            boolean b1 = clothOrderDAO.save(new OrderDTO(Integer.parseInt(customerId), orderDetails, sDate, eDate));
-
-            if (!b1) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
+            List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
+            for(OrderItemDTO orderItemDTO : orderItemObList){
+                orderItemDTOList.add(orderItemDTO);
             }
 
-            String orderId = clothOrderDAO.getId();
+            boolean result = placeOrderBO.saveOrder(customerId, orderDetails, sDate, eDate, gDate, rDate, orderItemDTOList);
 
-          for (OrderItemDTO orderItemDTO : orderItemObList) {
-              boolean b2 = clothOrderDetailDAO.save(new OrderItemDTO(Integer.parseInt(orderId),orderItemDTO.getItem_id(),orderItemDTO.getQty(),orderItemDTO.getColor()));
-
-              if (!b2) {
-                  connection.rollback();
-                  connection.setAutoCommit(true);
-                  //return false;
-              }
-
-              boolean b3 = itemColorStockDAO.decreaseQty(new ItemColorStockDTO(orderItemDTO.getItem_id(),orderItemDTO.getColor(),orderItemDTO.getQty()));
-
-              if (!b3) {
-                  connection.rollback();
-                  connection.setAutoCommit(true);
-                  //return false;
-              }
-          }
-
-          boolean b4 = orderSerproviderDAO.save(new OrderSerproviderDTO(Integer.parseInt(orderId),gDate,rDate));
-
-            if (!b4) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
+            if(!result){
+                new Alert(Alert.AlertType.ERROR,"Failed to save order").show();
+                return;
             }
 
-                connection.commit();
-                connection.setAutoCommit(true);
-              new Alert(Alert.AlertType.INFORMATION,"Order Placed Successfully !").show();
+            new Alert(Alert.AlertType.INFORMATION,"Order Placed Successfully !").show();
               loadItemTable();
               showNextId();
               cleanFields();
               tableOrder.getItems().clear();
         }
-        catch (Exception e) {
-            try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
-            new Alert(Alert.AlertType.ERROR, "Something went Wrong !").show();
+        catch(Exception e){
             e.printStackTrace();
-        } finally {
-            try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
-        
     }
     
     @FXML
