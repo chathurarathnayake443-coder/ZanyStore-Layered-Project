@@ -15,6 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.CustomerBO;
+import lk.ijse.zanystore.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.zanystore.dao.custom.CustomerDAO;
 import lk.ijse.zanystore.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.zanystore.dto.CustomerDTO;
@@ -52,8 +54,8 @@ public class CustomerController implements Initializable {
     private final String CUS_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
     private final String CUS_ADDRESS_REGEX = "^[A-Za-z0-9\\s,]{3,}$";
     private final String CUS_CONTACT_REGEX = "^[0-9]{10}$";
-    
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+
+    CustomerBO customerBO = new CustomerBOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,8 +102,8 @@ public class CustomerController implements Initializable {
                 new Alert(Alert.AlertType.ERROR,"Invalid Customer Contact").show();
                 return;
             }
-            
-            boolean result = customerDAO.save(new CustomerDTO(name,address,contact));
+
+            boolean result = customerBO.saveCustomer(new CustomerDTO(name,address,contact));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Customer Added Successfully !").show();
@@ -139,8 +141,8 @@ public class CustomerController implements Initializable {
                 new Alert(Alert.AlertType.ERROR,"Invalid Customer Contact").show();
                 return;
             }
-            
-            boolean result = customerDAO.update(new CustomerDTO(Integer.parseInt(id),name,address,contact));
+
+            boolean result = customerBO.updateCustomer(new CustomerDTO(Integer.parseInt(id),name,address,contact));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Customer Updated Successfully !").show();
@@ -174,7 +176,7 @@ public class CustomerController implements Initializable {
         if (result.isPresent() && result.get() == yesButton) {
             String id = idField.getText();
 
-            boolean deleteResult = customerDAO.delete(Integer.parseInt(id));
+            boolean deleteResult = customerBO.deleteCustomer(id);
             
             if(deleteResult){
                 new Alert(Alert.AlertType.INFORMATION,"Customer Deleted Successfully !").show();
@@ -196,7 +198,7 @@ public class CustomerController implements Initializable {
     private void loadCustomerTable(){
         try{
             
-            List<CustomerDTO> customerList = customerDAO.getAll();
+            List<CustomerDTO> customerList = customerBO.loadCustomerTable();
             
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
             
@@ -226,7 +228,7 @@ public class CustomerController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = customerDAO.showNextId();
+        String id = customerBO.showNextId();
         idField.setText(id);
     }
     catch(Exception e){

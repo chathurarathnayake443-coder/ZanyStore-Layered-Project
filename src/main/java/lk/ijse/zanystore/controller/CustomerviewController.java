@@ -16,6 +16,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.zanystore.bo.custom.CustomerBO;
+import lk.ijse.zanystore.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.zanystore.dao.custom.CustomerDAO;
 import lk.ijse.zanystore.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.zanystore.dto.CustomerDTO;
@@ -47,8 +49,8 @@ public class CustomerviewController implements Initializable {
     
     @FXML
     private Button closeBtn;
-    
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+
+    CustomerBO customerBO = new CustomerBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,7 +74,7 @@ public class CustomerviewController implements Initializable {
     
     private void loadTable(){
         try{
-            List<CustomerDTO> customerList = customerDAO.getAll();
+            List<CustomerDTO> customerList = customerBO.loadCustomerTable();
             
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
             
