@@ -1,12 +1,13 @@
 package lk.ijse.zanystore.dao.custom.impl;
 
+import lk.ijse.zanystore.dao.custom.ReturnDAO;
 import lk.ijse.zanystore.dto.ReturnDTO;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ReturnDAOImpl {
+public class ReturnDAOImpl implements ReturnDAO {
 
     public boolean save(ReturnDTO returnDTO) throws SQLException {
         boolean result = CrudUtil.execute("INSERT INTO return_order (return_order_details) VALUES (?)", returnDTO.getReturn_order_details());
