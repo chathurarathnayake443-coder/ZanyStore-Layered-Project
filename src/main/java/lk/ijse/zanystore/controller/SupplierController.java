@@ -68,8 +68,7 @@ public class SupplierController implements Initializable {
     private final String SUP_ITEM_REGEX = "^[A-Za-z]{1,}$";
     private final String SUP_ADDRESS_REGEX = "^[A-Za-z0-9]{3,}$";
     private final String SUP_CONTACT_REGEX = "^[0-9]{10}$";
-    
-    SupplierDAO supplierDAO = new SupplierDAOImpl();
+
     SupplierBOImpl supplierBO = new SupplierBOImpl();
     
     @Override

@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.UserBOImpl;
 import lk.ijse.zanystore.dao.custom.UserDAO;
 import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -37,8 +38,8 @@ public class LoginController implements Initializable {
     
     @FXML 
     private AnchorPane mainContent;
-    
-    UserDAO userDAO = new UserDAOImpl();
+
+    UserBOImpl userBO = new UserBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,7 +62,7 @@ public class LoginController implements Initializable {
             String password = passwordField.getText().trim();
             boolean userNotFound = true;
         
-            List<UserDTO> list = userDAO.getAll();
+            List<UserDTO> list = userBO.getAllUser();
             
             for(UserDTO user : list){
                 if(user.getUser_name().equals(name) && user.getUser_password().equalsIgnoreCase(password)){
@@ -91,7 +92,7 @@ public class LoginController implements Initializable {
             
             boolean userNotFound = true;
 
-                List<UserDTO> list = userDAO.getAll();
+                List<UserDTO> list = userBO.getAllUser();
 
                 for(UserDTO user : list){
                     if(user.getUser_name().equals(name) && user.getUser_password().equalsIgnoreCase(password)){
