@@ -25,6 +25,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.UserBO;
 import lk.ijse.zanystore.bo.custom.impl.UserBOImpl;
 import lk.ijse.zanystore.dao.custom.UserDAO;
 //import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
@@ -73,7 +75,7 @@ public class SignupController implements Initializable {
     @FXML
     private TableColumn colPassword;
 
-    UserBOImpl userBO = new UserBOImpl();
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.USER);
     
     private final String USER_ID_REGEX = "^[0-9]+$";
     private final String USER_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";

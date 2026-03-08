@@ -94,4 +94,9 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         String id = clothOrderDAO.showNextId();
         return id;
     }
+
+    public List<String> getAllId() throws SQLException {
+        List<String> list = clothOrderDAO.getAllId();
+        return list;
+    }
 }

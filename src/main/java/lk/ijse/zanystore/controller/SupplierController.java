@@ -20,6 +20,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.SupplierBO;
 import lk.ijse.zanystore.bo.custom.impl.SupplierBOImpl;
 import lk.ijse.zanystore.dao.custom.SupplierDAO;
 import lk.ijse.zanystore.dao.custom.impl.SupplierDAOImpl;
@@ -69,7 +71,7 @@ public class SupplierController implements Initializable {
     private final String SUP_ADDRESS_REGEX = "^[A-Za-z0-9]{3,}$";
     private final String SUP_CONTACT_REGEX = "^[0-9]{10}$";
 
-    SupplierBOImpl supplierBO = new SupplierBOImpl();
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.SUPPLIER);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

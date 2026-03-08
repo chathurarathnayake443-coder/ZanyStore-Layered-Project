@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.CreateQuotationBO;
 import lk.ijse.zanystore.bo.custom.ItemBO;
 import lk.ijse.zanystore.bo.custom.impl.CreateQuotationBOImpl;
@@ -100,11 +101,8 @@ public class QuotationController implements Initializable {
     private TextField customerField;
     
     private ObservableList<QuotationDTO> quotationItemObList = FXCollections.observableArrayList();
-    
-    QuotationDAO quotationDAO = new QuotationDAOImpl();
-    QuotationItemDAO quotationItemDAO = new QuotationItemDAOImpl();
-    ItemDAO itemDAO = new ItemDAOImpl();
-    CreateQuotationBOImpl createQuotationBO = new CreateQuotationBOImpl();
+
+    CreateQuotationBO createQuotationBO = (CreateQuotationBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUOTATION);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

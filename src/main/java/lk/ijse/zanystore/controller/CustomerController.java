@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.CustomerBO;
 import lk.ijse.zanystore.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.zanystore.dao.custom.CustomerDAO;
@@ -55,7 +56,7 @@ public class CustomerController implements Initializable {
     private final String CUS_ADDRESS_REGEX = "^[A-Za-z0-9\\s,]{3,}$";
     private final String CUS_CONTACT_REGEX = "^[0-9]{10}$";
 
-    CustomerBO customerBO = new CustomerBOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.CUSTOMER);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

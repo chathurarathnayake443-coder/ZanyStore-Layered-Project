@@ -39,6 +39,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
 import lk.ijse.zanystore.bo.custom.impl.PlaceOrderBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
@@ -121,7 +123,7 @@ public class NewOrderController implements Initializable {
     @FXML
     private TableView tableOrder;
 
-    PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PLACE_ORDER);
     
     private final ObservableList<OrderItemDTO> orderItemObList = FXCollections.observableArrayList();
 

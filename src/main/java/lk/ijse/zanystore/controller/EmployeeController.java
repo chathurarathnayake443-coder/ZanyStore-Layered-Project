@@ -18,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.EmployeeBO;
 import lk.ijse.zanystore.bo.custom.impl.EmployeeBOImpl;
 import lk.ijse.zanystore.dao.custom.EmployeeDAO;
 import lk.ijse.zanystore.dao.custom.impl.EmployeeDAOImpl;
@@ -77,7 +79,7 @@ public class EmployeeController implements Initializable {
     private final String EMP_SALARY_REGEX = "^[0-9]+(?:\\.[0-9]{1,2})?$";
     private final String EMP_CONTACT_REGEX = "^[0-9]{10}$";
 
-    EmployeeBOImpl employeeBO = new EmployeeBOImpl();
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.EMPLOYEE);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

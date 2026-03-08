@@ -21,6 +21,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.UserBO;
 import lk.ijse.zanystore.bo.custom.impl.UserBOImpl;
 import lk.ijse.zanystore.dao.custom.UserDAO;
 import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
@@ -39,7 +41,7 @@ public class LoginController implements Initializable {
     @FXML 
     private AnchorPane mainContent;
 
-    UserBOImpl userBO = new UserBOImpl();
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.USER);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -23,6 +23,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
 import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -66,7 +68,7 @@ public class UsedItemsController implements Initializable {
     @FXML
     private TableColumn colQty;
 
-    ClothOrderDAO clothOrderDAO = new ClothOrderDAOImpl();
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PLACE_ORDER);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,7 +101,7 @@ private void backButton(){
 @FXML
 private void loadId(){
     try{
-        List<String> list = clothOrderDAO.getAllId();
+        List<String> list = placeOrderBO.getAllId();
         
         ObservableList obList = FXCollections.observableArrayList();
         

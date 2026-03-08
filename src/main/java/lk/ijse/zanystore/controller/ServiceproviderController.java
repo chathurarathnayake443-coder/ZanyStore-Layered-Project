@@ -19,6 +19,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.ServiceProviderBO;
 import lk.ijse.zanystore.bo.custom.impl.ServiceProviderBOImpl;
 import lk.ijse.zanystore.dao.custom.ServiceproviderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ServiceproviderDAOImpl;
@@ -68,7 +70,7 @@ public class ServiceproviderController implements Initializable {
     private final String SER_CONTACT_REGEX = "^[0-9]{10}$";
     private final String SER_TYPE_REGEX = "^[A-Za-z\\s]{3,}$";
 
-    ServiceProviderBOImpl serviceProviderBO = new ServiceProviderBOImpl();
+    ServiceProviderBO serviceProviderBO = (ServiceProviderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.SERVICEPROVIDER);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

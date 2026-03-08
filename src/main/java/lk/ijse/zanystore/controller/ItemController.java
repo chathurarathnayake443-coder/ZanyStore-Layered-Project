@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.ItemBO;
 import lk.ijse.zanystore.bo.custom.impl.ItemBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
@@ -35,7 +37,7 @@ public class ItemController implements Initializable {
     @FXML private TableColumn<ItemDTO, Double> colPrice;
     @FXML private TableColumn<ItemDTO, Integer> colQty;
 
-    ItemBOImpl itemBO = new ItemBOImpl();
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
 
     private final String ITEM_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
     private final String ITEM_TYPE_REGEX = "^[A-Za-z]{1,}$";

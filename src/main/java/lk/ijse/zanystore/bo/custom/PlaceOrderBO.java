@@ -21,4 +21,6 @@ public interface PlaceOrderBO extends SuperBO {
     public String getItemNameFromId(int itemId) throws SQLException;
 
     public String generateNextOrderId() throws SQLException;
+
+    public List<String> getAllId() throws SQLException;
 }

@@ -18,6 +18,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.ReturnBO;
 import lk.ijse.zanystore.bo.custom.impl.ReturnBOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDetailDAOImpl;
@@ -54,7 +56,7 @@ public class ReturnController implements Initializable {
     @FXML
     private TableColumn colOrderId;
 
-    ReturnBOImpl returnBO =  new ReturnBOImpl();
+    ReturnBO returnBO =  (ReturnBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.RETURN);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

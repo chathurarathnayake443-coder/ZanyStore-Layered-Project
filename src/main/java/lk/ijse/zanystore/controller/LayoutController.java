@@ -35,6 +35,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.LayoutBO;
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
 import lk.ijse.zanystore.bo.custom.impl.LayoutBOImpl;
 import lk.ijse.zanystore.bo.custom.impl.PlaceOrderBOImpl;
@@ -153,7 +155,7 @@ public class LayoutController implements Initializable {
     @FXML
 private AnchorPane imageSliderPane;
 
-    LayoutBOImpl layoutBO = new LayoutBOImpl();
+    LayoutBO layoutBO = (LayoutBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.LAYOUT);
 
 private final List<Image> images = new ArrayList<>();
 private final List<ImageView> imageViews = new ArrayList<>();

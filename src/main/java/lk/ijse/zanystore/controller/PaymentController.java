@@ -30,6 +30,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.PaymentBO;
 import lk.ijse.zanystore.bo.custom.impl.PaymentBOImpl;
 import lk.ijse.zanystore.dao.custom.impl.OrderPaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
@@ -107,7 +109,7 @@ public class PaymentController implements Initializable {
      @FXML
      private TableView tablePayment;
 
-     PaymentBOImpl paymentBO = new PaymentBOImpl();
+     PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PAYMENT);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
