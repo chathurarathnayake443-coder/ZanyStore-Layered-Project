@@ -1,7 +1,9 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.CustomerBO;
+import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.CustomerDAO;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.zanystore.dto.CustomerDTO;
 import lk.ijse.zanystore.entity.Customer;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class CustomerBOImpl implements CustomerBO {
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
 
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {
         return customerDAO.save(new Customer(customerDTO.getCustomer_name(),customerDTO.getCustomer_address(),customerDTO.getCustomer_contact_no()));

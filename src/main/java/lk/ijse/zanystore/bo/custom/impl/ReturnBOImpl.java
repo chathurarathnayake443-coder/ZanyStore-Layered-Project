@@ -2,6 +2,8 @@ package lk.ijse.zanystore.bo.custom.impl;
 
 import javafx.scene.control.Alert;
 import lk.ijse.zanystore.bo.custom.ReturnBO;
+import lk.ijse.zanystore.dao.DAOFactory;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.ReturnDAO;
 import lk.ijse.zanystore.dao.custom.ReturnDetailDAO;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
@@ -16,8 +18,8 @@ import java.sql.SQLException;
 
 public class ReturnBOImpl implements ReturnBO {
 
-    ReturnDAO returnDAO = new ReturnDAOImpl();
-    ReturnDetailDAO returnDetailDAO = new ReturnDetailDAOImpl();
+    ReturnDAO returnDAO = (ReturnDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.RETURN);
+    ReturnDetailDAO returnDetailDAO = (ReturnDetailDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.RETURN_DETAIL);
 
     public boolean saveReturn(String detail, String orderId, String date) {
         Connection connection = null;

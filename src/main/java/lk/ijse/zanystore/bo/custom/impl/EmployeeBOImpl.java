@@ -1,7 +1,9 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.EmployeeBO;
+import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.EmployeeDAO;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.zanystore.dto.EmployeeDTO;
 import lk.ijse.zanystore.entity.Employee;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class EmployeeBOImpl implements EmployeeBO {
 
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    EmployeeDAO employeeDAO = (EmployeeDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EMPLOYEE);
 
     public EmployeeDTO searchEmployee(int id) throws SQLException {
         Employee entity = employeeDAO.find(id);

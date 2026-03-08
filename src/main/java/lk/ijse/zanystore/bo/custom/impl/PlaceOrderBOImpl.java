@@ -1,6 +1,7 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
+import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.*;
 import lk.ijse.zanystore.dao.custom.impl.*;
 import lk.ijse.zanystore.db.DBConnection;
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class PlaceOrderBOImpl implements PlaceOrderBO {
 
-    ClothOrderDAO clothOrderDAO = new ClothOrderDAOImpl();
-    ClothOrderDetailDAO clothOrderDetailDAO = new ClothOrderDetailDAOImpl();
-    ItemColorStockDAO itemColorStockDAO = new ItemColorStockDAOImpl();
-    OrderSerproviderDAO orderSerproviderDAO = new OrderSerproviderDAOImpl();
-    ItemDAO itemDAO = new ItemDAOImpl();
+    ClothOrderDAO clothOrderDAO = (ClothOrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER);
+    ClothOrderDetailDAO clothOrderDetailDAO = (ClothOrderDetailDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER_DETAIL);
+    ItemColorStockDAO itemColorStockDAO = (ItemColorStockDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM_COLOR_STOCK);
+    OrderSerproviderDAO orderSerproviderDAO = (OrderSerproviderDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER_SERPROVIDER);
+    ItemDAO itemDAO = (ItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
 
     public boolean saveOrder(String customerId, String orderDetails, String sDate, String eDate, String gDate, String rDate, List<OrderItemDTO> orderItemDTOList) {
         Connection connection = null;

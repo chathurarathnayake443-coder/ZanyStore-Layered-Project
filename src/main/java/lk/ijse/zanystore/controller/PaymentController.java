@@ -162,7 +162,7 @@ private void showNextId(){
 
                 System.out.println("payment id : " + pIdField.getText());
 
-                boolean result = paymentBO.savePayment(pId,oId,cId,amount,method,date);
+                boolean result = paymentBO.savePayment(amount,method,pId,oId,cId,date);
 
                 if(!result){
                     new Alert(Alert.AlertType.ERROR, "Failed to Place Payment !").show();

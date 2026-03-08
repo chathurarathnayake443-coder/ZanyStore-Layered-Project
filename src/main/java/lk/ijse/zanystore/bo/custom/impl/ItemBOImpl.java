@@ -1,8 +1,10 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.ItemBO;
+import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -18,8 +20,8 @@ import java.util.List;
 
 public class ItemBOImpl implements ItemBO {
 
-    ItemDAO itemDAO = new ItemDAOImpl();
-    ItemColorStockDAO itemColorStockDAO = new ItemColorStockDAOImpl();
+    ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+    ItemColorStockDAO itemColorStockDAO = (ItemColorStockDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM_COLOR_STOCK);
 
     public boolean saveItem(String color, int qtyToAdd, String name, String type, double price) {
         Connection connection = null;

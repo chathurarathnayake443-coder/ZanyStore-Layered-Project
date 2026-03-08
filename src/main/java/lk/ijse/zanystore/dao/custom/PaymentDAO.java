@@ -9,4 +9,6 @@ import java.sql.SQLException;
 
 public interface PaymentDAO extends CrudDAO<Payment> {
     public double getSum() throws SQLException;
+
+    public String findTotal() throws SQLException;
 }

@@ -1,6 +1,8 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.ServiceProviderBO;
+import lk.ijse.zanystore.dao.DAOFactory;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.ServiceproviderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ServiceproviderDAOImpl;
 import lk.ijse.zanystore.dto.ServiceproviderDTO;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class ServiceProviderBOImpl implements ServiceProviderBO {
 
-    ServiceproviderDAO serviceproviderDAO = new ServiceproviderDAOImpl();
+    ServiceproviderDAO serviceproviderDAO = (ServiceproviderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SERVICEPROVIDER);
 
     public boolean saveServiceProvider(ServiceproviderDTO dto) throws SQLException {
         boolean result = serviceproviderDAO.save(new ServiceProvider(dto.getSerprovider_name(),dto.getSerprovider_address(),dto.getSerprovider_contact_no(),dto.getSerprovider_type()));

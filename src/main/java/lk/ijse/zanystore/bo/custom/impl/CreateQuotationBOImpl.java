@@ -2,6 +2,7 @@ package lk.ijse.zanystore.bo.custom.impl;
 
 import javafx.scene.control.Alert;
 import lk.ijse.zanystore.bo.custom.CreateQuotationBO;
+import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
 import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.QuotationItemDAO;
@@ -21,9 +22,9 @@ import java.util.List;
 
 public class CreateQuotationBOImpl implements CreateQuotationBO {
 
-    QuotationDAO quotationDAO = new QuotationDAOImpl();
-    QuotationItemDAO quotationItemDAO = new QuotationItemDAOImpl();
-    ItemDAO itemDAO = new ItemDAOImpl();
+    QuotationDAO quotationDAO = (QuotationDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUOTATION);
+    QuotationItemDAO quotationItemDAO = (QuotationItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUOTATION_ITEM);
+    ItemDAO itemDAO = (ItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
 
     public List<String> loadItemNames() throws SQLException {
         List<String> itemNames = itemDAO.getNames();

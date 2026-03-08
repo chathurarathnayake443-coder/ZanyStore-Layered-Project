@@ -1,6 +1,8 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.SupplierBO;
+import lk.ijse.zanystore.dao.DAOFactory;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.SupplierDAO;
 import lk.ijse.zanystore.dao.custom.impl.SupplierDAOImpl;
 import lk.ijse.zanystore.dto.SupplierDTO;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class SupplierBOImpl implements SupplierBO {
 
-    SupplierDAO supplierDAO = new SupplierDAOImpl();
+    SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SUPPLIER);
 
     public boolean addSupplier(SupplierDTO supplier) throws SQLException {
         boolean result = supplierDAO.save(new Supplier(supplier.getSupplier_name(),supplier.getSupplier_item(),supplier.getSupplier_address(),supplier.getSupplier_contact_no()));

@@ -1,6 +1,8 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.UserBO;
+import lk.ijse.zanystore.dao.DAOFactory;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.UserDAO;
 import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
 import lk.ijse.zanystore.dto.UserDTO;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class UserBOImpl implements UserBO {
 
-    UserDAO userDAO = new UserDAOImpl();
+    UserDAO userDAO = (UserDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.USER);
 
     public boolean existUser(String name) throws SQLException {
         boolean result = userDAO.exist(name);

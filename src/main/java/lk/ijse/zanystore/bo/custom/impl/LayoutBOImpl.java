@@ -1,10 +1,8 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import lk.ijse.zanystore.bo.custom.LayoutBO;
-import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
-import lk.ijse.zanystore.dao.custom.PaymentDAO;
-import lk.ijse.zanystore.dao.custom.ReturnDAO;
-import lk.ijse.zanystore.dao.custom.TaskDAO;
+import lk.ijse.zanystore.dao.DAOFactory;
+import lk.ijse.zanystore.dao.custom.*;
 import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
@@ -18,10 +16,10 @@ import java.util.List;
 
 public class LayoutBOImpl implements LayoutBO {
 
-    ClothOrderDAO clothOrderDAO =  new ClothOrderDAOImpl();
-    ReturnDAO returnDAO = new ReturnDAOImpl();
-    PaymentDAO paymentDAO = new PaymentDAOImpl();
-    TaskDAO taskDAO = new TaskDAOImpl();
+    ClothOrderDAO clothOrderDAO =  (ClothOrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER);
+    ReturnDAO returnDAO = (ReturnDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.RETURN);
+    PaymentDAO paymentDAO = (PaymentDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PAYMENT);
+    TaskDAO taskDAO = (TaskDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TASK);
 
     public int getOrderCount() throws SQLException {
         return clothOrderDAO.getOrderCount();

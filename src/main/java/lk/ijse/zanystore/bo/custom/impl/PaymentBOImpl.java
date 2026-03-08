@@ -2,6 +2,10 @@ package lk.ijse.zanystore.bo.custom.impl;
 
 import javafx.scene.control.Alert;
 import lk.ijse.zanystore.bo.custom.PaymentBO;
+import lk.ijse.zanystore.dao.DAOFactory;
+import lk.ijse.zanystore.dao.custom.OrderPaymentDAO;
+import lk.ijse.zanystore.dao.custom.PaymentDAO;
+import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.impl.OrderPaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -14,8 +18,8 @@ import java.sql.SQLException;
 
 public class PaymentBOImpl implements PaymentBO {
 
-    PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
-    OrderPaymentDAOImpl orderPaymentDAO = new OrderPaymentDAOImpl();
+    PaymentDAO paymentDAO = (PaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PAYMENT);
+    OrderPaymentDAO orderPaymentDAO = (OrderPaymentDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER_PAYMENT);
 
     public String generateNextPaymentId() throws SQLException {
         String id = paymentDAO.showNextId();
@@ -36,7 +40,10 @@ public class PaymentBOImpl implements PaymentBO {
                 return false;
             }
 
-            boolean b2 = orderPaymentDAO.save(new OrderPayment(Integer.parseInt(oId),Integer.parseInt(pId),Integer.parseInt(cId),date));
+            String paymentId = paymentDAO.showNextId();
+            int id = Integer.parseInt(paymentId) - 1;
+
+            boolean b2 = orderPaymentDAO.save(new OrderPayment(Integer.parseInt(oId),id,Integer.parseInt(cId),date));
 
             if (!b2) {
                 connection.rollback();
