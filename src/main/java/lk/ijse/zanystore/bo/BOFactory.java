@@ -10,7 +10,7 @@ public class BOFactory {
         return instance==null?instance=new BOFactory():instance;
     }
     public enum BOTypes{
-        CUSTOMER,ITEM,PLACE_ORDER,QUOTATION,EMPLOYEE,LAYOUT,PAYMENT,RETURN,SERVICEPROVIDER,SUPPLIER,USER
+        CUSTOMER,ITEM,PLACE_ORDER,QUOTATION,EMPLOYEE,LAYOUT,PAYMENT,RETURN,SERVICEPROVIDER,SUPPLIER,USER,QUERY
     }
     public SuperBO getBOFactory(BOTypes boType){
         switch (boType){
@@ -26,6 +26,8 @@ public class BOFactory {
                 return new EmployeeBOImpl();
             case LAYOUT:
                 return new LayoutBOImpl();
+            case QUERY:
+                return new QueryBOImpl();
             case PAYMENT:
                 return new PaymentBOImpl();
             case RETURN:

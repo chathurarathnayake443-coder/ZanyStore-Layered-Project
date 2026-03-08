@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.ItemBO;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.impl.ItemBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
@@ -20,6 +21,7 @@ import lk.ijse.zanystore.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.ItemColorStockDTO;
 import lk.ijse.zanystore.dto.ItemDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -31,13 +33,14 @@ public class ItemController implements Initializable {
 
     @FXML private TextField idField, nameField, typeField, colorField, priceField, qtyField;
     @FXML private ComboBox<String> nameBox, colorBox;
-    @FXML private TableView<ItemDTO> tableItem;
-    @FXML private TableColumn<ItemDTO, Integer> colId;
-    @FXML private TableColumn<ItemDTO, String> colName, colType, colColor;
-    @FXML private TableColumn<ItemDTO, Double> colPrice;
-    @FXML private TableColumn<ItemDTO, Integer> colQty;
+    @FXML private TableView<LoadItemDTO> tableItem;
+    @FXML private TableColumn<LoadItemDTO, Integer> colId;
+    @FXML private TableColumn<LoadItemDTO, String> colName, colType, colColor;
+    @FXML private TableColumn<LoadItemDTO, Double> colPrice;
+    @FXML private TableColumn<LoadItemDTO, Integer> colQty;
 
     ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
 
     private final String ITEM_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
     private final String ITEM_TYPE_REGEX = "^[A-Za-z]{1,}$";
@@ -56,7 +59,7 @@ public class ItemController implements Initializable {
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
 
         tableItem.setOnMouseClicked(event -> {
-            ItemDTO selected = tableItem.getSelectionModel().getSelectedItem();
+            LoadItemDTO selected = tableItem.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 idField.setText(String.valueOf(selected.getItem_id()));
                 nameField.setText(selected.getItem_name());
@@ -219,28 +222,8 @@ public class ItemController implements Initializable {
 
     private void loadItemTable() {
         try {
-            Connection conn = DBConnection.getInstance().getConnection();
-            String sql = "SELECT ics.item_id, i.item_name, i.item_type, i.item_unit_price, ics.color, ics.qty " +
-                         "FROM item_color_stock ics JOIN item i ON ics.item_id = i.item_id";
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            ResultSet result = pstm.executeQuery();
-
-            List<ItemDTO> itemList = new ArrayList<>();
-            while (result.next()) {
-                ItemDTO itemDTO = new ItemDTO(
-                        result.getInt("item_id"),
-                        result.getString("item_name"),
-                        result.getString("item_type"),
-                        result.getString("color"),
-                        result.getDouble("item_unit_price"),
-                        result.getInt("qty")
-                );
-                itemList.add(itemDTO);
-            }
-
+            List<LoadItemDTO> itemList = queryBO.loadItemTable();
             tableItem.setItems(FXCollections.observableArrayList(itemList));
-            result.close();
-            pstm.close();
 
         } catch (Exception e) { e.printStackTrace(); }
     }

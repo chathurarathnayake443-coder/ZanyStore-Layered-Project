@@ -161,9 +161,7 @@ private void loadTable(int id){
             String color = results.getString("color");
             int qty = results.getInt("qty");
             
-            UsedItemDTO usedItems = new UsedItemDTO(itemName, color, qty);
-            
-            itemList.add(usedItems);
+            itemList.add(new UsedItemDTO(itemName, color, qty));
         }
         
         tblUsedItems.setItems(itemList);

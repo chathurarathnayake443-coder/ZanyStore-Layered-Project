@@ -4,12 +4,6 @@ module lk.ijse.zanystore {
     requires java.sql;
     requires java.base;
     requires net.sf.jasperreports.core;
-    requires lk.ijse.zanystore;
-    //requires lk.ijse.zanystore;
-    //requires lk.ijse.zanystore;
-    //requires lk.ijse.zanystore;
-    //requires lk.ijse.zanystore;
-    //requires lk.ijse.zanystore;
     //requires lk.ijse.zanystore;
 
     opens lk.ijse.zanystore.controller to javafx.fxml;
@@ -17,6 +11,8 @@ module lk.ijse.zanystore {
     exports lk.ijse.zanystore;
     exports lk.ijse.zanystore.controller;
     exports lk.ijse.zanystore.dto;
+    exports lk.ijse.zanystore.dto.QueryDTO;
+    opens lk.ijse.zanystore.dto.QueryDTO to java.base;
 
 }
 
