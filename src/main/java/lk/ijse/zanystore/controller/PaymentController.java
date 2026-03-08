@@ -30,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.PaymentBOImpl;
 import lk.ijse.zanystore.dao.custom.impl.OrderPaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -105,9 +106,8 @@ public class PaymentController implements Initializable {
      
      @FXML
      private TableView tablePayment;
-     
-     PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
-     OrderPaymentDAOImpl orderPaymentDAO = new OrderPaymentDAOImpl();
+
+     PaymentBOImpl paymentBO = new PaymentBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -138,7 +138,7 @@ private void backToOrders() throws IOException {
          @FXML
 private void showNextId(){
     try{
-        String id = paymentDAO.showNextId();
+        String id = paymentBO.generateNextPaymentId();
         pIdField.setText(id);
     }
     catch(Exception e){
@@ -147,10 +147,10 @@ private void showNextId(){
 }
         
         @FXML
-        private void makePayment(){
+        private void makePayment() {
             Connection connection = null;
-            try{
-                connection= DBConnection.getInstance().getConnection();
+            try {
+                connection = DBConnection.getInstance().getConnection();
                 connection.setAutoCommit(false);
 
                 String pId = pIdField.getText();
@@ -159,35 +159,22 @@ private void showNextId(){
                 String amount = amountField.getText();
                 String method = methodBox.getValue();
                 String date = String.valueOf(dateBox.getValue());
-                
+
                 System.out.println("payment id : " + pIdField.getText());
 
-                boolean b1 = paymentDAO.save(new PaymentDTO(Double.parseDouble(amount),method));
+                boolean result = paymentBO.savePayment(pId,oId,cId,amount,method,date);
 
-                if (!b1) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    //return false;
+                if(!result){
+                    new Alert(Alert.AlertType.ERROR, "Failed to Place Payment !").show();
+                    return;
                 }
 
-                boolean b2 = orderPaymentDAO.save(new PaymentDTO(Integer.parseInt(oId),Integer.parseInt(pId),Integer.parseInt(cId),date));
-
-                if (!b2) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    //return false;
-                }
-                connection.commit();
-                connection.setAutoCommit(true);
                 new Alert(Alert.AlertType.INFORMATION, "Payment Successfull").show();
                 loadpaymentTable();
-            }
-            catch (Exception e) {
-                try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Something went Wrong !").show();
                 e.printStackTrace();
-            } finally {
-                try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
+
             }
         }
         
@@ -215,9 +202,8 @@ private void showNextId(){
                    String name = results.getString("customer_name");
                    double amount = results.getDouble("payment_amount");
                    String date = results.getString("date");
-                   
-                   PaymentDTO paymentDTO = new PaymentDTO(paymentId, orderId, name, amount, date);
-                   paymentList.add(paymentDTO);
+
+                   paymentList.add(new PaymentDTO(paymentId, orderId, name, amount, date));
                }
                
                ObservableList<PaymentDTO> obList = FXCollections.observableArrayList();
@@ -236,7 +222,7 @@ private void showNextId(){
       @FXML
       private void findTotal(){
           try{
-              String total = paymentDAO.findTotal();
+              String total = paymentBO.getTotalAmount();
               totalLbl.setText(total);
           }
           catch(Exception e){
