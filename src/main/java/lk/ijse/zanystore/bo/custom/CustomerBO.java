@@ -2,12 +2,12 @@ package lk.ijse.zanystore.bo.custom;
 
 import lk.ijse.zanystore.dto.CustomerDTO;
 import lk.ijse.zanystore.entity.Customer;
-
+import lk.ijse.zanystore.bo.custom.SuperBO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface CustomerBO {
+public interface CustomerBO extends SuperBO {
 
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException;
 
