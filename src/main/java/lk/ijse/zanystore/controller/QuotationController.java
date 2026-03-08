@@ -26,6 +26,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.CreateQuotationBO;
+import lk.ijse.zanystore.bo.custom.ItemBO;
+import lk.ijse.zanystore.bo.custom.impl.CreateQuotationBOImpl;
+import lk.ijse.zanystore.bo.custom.impl.ItemBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
 import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.QuotationItemDAO;
@@ -100,6 +104,8 @@ public class QuotationController implements Initializable {
     QuotationDAO quotationDAO = new QuotationDAOImpl();
     QuotationItemDAO quotationItemDAO = new QuotationItemDAOImpl();
     ItemDAO itemDAO = new ItemDAOImpl();
+    CreateQuotationBOImpl createQuotationBO = new CreateQuotationBOImpl();
+    ItemBOImpl itemBO = new ItemBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -162,7 +168,7 @@ public class QuotationController implements Initializable {
     @FXML
     private void loadItemNames(){
         try{
-            List<String> names = itemDAO.getNames();
+            List<String> names = itemBO.loadItemNames();
             
             ObservableList<String> itemNames = FXCollections.observableArrayList();
             
@@ -206,7 +212,7 @@ public class QuotationController implements Initializable {
     @FXML
     private void loadQty(String itemName){
         try{
-            Double price = itemDAO.getPrice(itemName);
+            Double price = itemBO.getPriceForItem(itemName);
             unitPriceField.setText(String.valueOf(price));
         }
         catch(Exception e){
@@ -223,9 +229,8 @@ public class QuotationController implements Initializable {
             int qty = Integer.parseInt(qtyField.getText());
             double price = Double.parseDouble(unitPriceField.getText());
             double total = qty * price;
-    
-            QuotationDTO quotationItemDTO = new QuotationDTO(itemName,color, qty,price,total);
-            quotationItemObList.add(quotationItemDTO);
+
+            quotationItemObList.add(new QuotationDTO(itemName,color, qty,price,total));
        
  
         loadQuotationItemTbl();

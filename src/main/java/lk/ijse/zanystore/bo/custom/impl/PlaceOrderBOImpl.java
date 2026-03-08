@@ -1,18 +1,16 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
-import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
-import lk.ijse.zanystore.dao.custom.ClothOrderDetailDAO;
-import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
-import lk.ijse.zanystore.dao.custom.OrderSerproviderDAO;
-import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
-import lk.ijse.zanystore.dao.custom.impl.ClothOrderDetailDAOImpl;
-import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
-import lk.ijse.zanystore.dao.custom.impl.OrderSerproviderDAOImpl;
+import lk.ijse.zanystore.dao.custom.*;
+import lk.ijse.zanystore.dao.custom.impl.*;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.ItemColorStockDTO;
 import lk.ijse.zanystore.dto.OrderDTO;
 import lk.ijse.zanystore.dto.OrderItemDTO;
 import lk.ijse.zanystore.dto.OrderSerproviderDTO;
+import lk.ijse.zanystore.entity.ClothOrder;
+import lk.ijse.zanystore.entity.ItemColorStock;
+import lk.ijse.zanystore.entity.OrderItem;
+import lk.ijse.zanystore.entity.OrderSerprovider;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,6 +22,7 @@ public class PlaceOrderBOImpl {
     ClothOrderDetailDAO clothOrderDetailDAO = new ClothOrderDetailDAOImpl();
     ItemColorStockDAO itemColorStockDAO = new ItemColorStockDAOImpl();
     OrderSerproviderDAO orderSerproviderDAO = new OrderSerproviderDAOImpl();
+    ItemDAO itemDAO = new ItemDAOImpl();
 
     public boolean saveOrder(String customerId, String orderDetails, String sDate, String eDate, String gDate, String rDate, List<OrderItemDTO> orderItemDTOList) {
         Connection connection = null;
@@ -31,7 +30,7 @@ public class PlaceOrderBOImpl {
             connection= DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            boolean b1 = clothOrderDAO.save(new OrderDTO(Integer.parseInt(customerId), orderDetails, sDate, eDate));
+            boolean b1 = clothOrderDAO.save(new ClothOrder(orderDetails, sDate, eDate,Integer.parseInt(customerId)));
 
             if (!b1) {
                 connection.rollback();
@@ -42,7 +41,7 @@ public class PlaceOrderBOImpl {
             String orderId = clothOrderDAO.getId();
 
             for (OrderItemDTO orderItemDTO : orderItemDTOList) {
-                boolean b2 = clothOrderDetailDAO.save(new OrderItemDTO(Integer.parseInt(orderId),orderItemDTO.getItem_id(),orderItemDTO.getQty(),orderItemDTO.getColor()));
+                boolean b2 = clothOrderDetailDAO.save(new OrderItem(Integer.parseInt(orderId),orderItemDTO.getItem_id(),orderItemDTO.getQty(),orderItemDTO.getPrice(),orderItemDTO.getColor()));
 
                 if (!b2) {
                     connection.rollback();
@@ -50,7 +49,7 @@ public class PlaceOrderBOImpl {
                     return false;
                 }
 
-                boolean b3 = itemColorStockDAO.decreaseQty(new ItemColorStockDTO(orderItemDTO.getItem_id(),orderItemDTO.getColor(),orderItemDTO.getQty()));
+                boolean b3 = itemColorStockDAO.decreaseQty(new ItemColorStock(orderItemDTO.getItem_id(),orderItemDTO.getColor(),orderItemDTO.getQty()));
 
                 if (!b3) {
                     connection.rollback();
@@ -59,7 +58,7 @@ public class PlaceOrderBOImpl {
                 }
             }
 
-            boolean b4 = orderSerproviderDAO.save(new OrderSerproviderDTO(Integer.parseInt(orderId),gDate,rDate));
+            boolean b4 = orderSerproviderDAO.save(new OrderSerprovider(Integer.parseInt(orderId),gDate,rDate));
 
             if (!b4) {
                 connection.rollback();
@@ -77,5 +76,20 @@ public class PlaceOrderBOImpl {
             try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
         return true;
+    }
+
+    public List<String> loadItemColors(int itemId) throws SQLException {
+        List<String> colorList = itemColorStockDAO.getColorsById(itemId);
+        return colorList;
+    }
+
+    public String getItemNameFromId(int itemId) throws SQLException {
+        String name = itemDAO.getNameById(itemId);
+        return name;
+    }
+
+    public String generateNextOrderId() throws SQLException {
+        String id = clothOrderDAO.showNextId();
+        return id;
     }
 }

@@ -35,8 +35,6 @@ public class ItemController implements Initializable {
     @FXML private TableColumn<ItemDTO, Double> colPrice;
     @FXML private TableColumn<ItemDTO, Integer> colQty;
 
-    ItemDAOImpl itemDAO = new ItemDAOImpl();
-    ItemColorStockDAOImpl itemColorStockDAO = new ItemColorStockDAOImpl();
     ItemBOImpl itemBO = new ItemBOImpl();
 
     private final String ITEM_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
@@ -137,43 +135,11 @@ public class ItemController implements Initializable {
             int qtyToAdd = Integer.parseInt(qtyText);
             double unitPrice = Double.parseDouble(priceText);
 
-            Connection conn = DBConnection.getInstance().getConnection();
-            conn.setAutoCommit(false);
-
-            try {
-                int itemId = getOrCreateItemId(conn, name, type, unitPrice);
-
-                    boolean updated = itemBO.updateItemColors(new ItemColorStockDTO(itemId, color, qtyToAdd));
-
-                    if (!updated) {
-                        boolean result = itemBO.saveItemColors(new ItemColorStockDTO(itemId, color, qtyToAdd));
-                        conn.commit();
-
-                        // Refresh UI
-                        loadItemNames();
-                        if (!nameBox.getItems().contains(name)) nameBox.getItems().add(name);
-                        nameBox.setValue(name);
-
-                        populateColorsForItem(itemId);
-                        if (!colorBox.getItems().contains(color)) colorBox.getItems().add(color);
-                        colorBox.setValue(color);
-
-                        // Update TextFields
-                        nameField.setText(name);
-                        colorField.setText(color);
-                        qtyField.setText(String.valueOf(getTotalQtyForItem(itemId)));
-
-                        loadItemTable();
-                        new Alert(Alert.AlertType.INFORMATION, "Item saved/updated successfully!").show();
-                    }
-
-            } catch (SQLException ex) {
-                try { conn.rollback(); } catch (SQLException ignore) {}
-                ex.printStackTrace();
-                new Alert(Alert.AlertType.ERROR,"Error saving item").show();
-            } finally {
-                try { conn.setAutoCommit(true); } catch (SQLException ignore) {}
+            boolean result = itemBO.saveItem(color, qtyToAdd, name, type, unitPrice);
+            if (!result) {
+                new Alert(Alert.AlertType.ERROR, "Failed to Save Item!").show();
             }
+            new Alert(Alert.AlertType.INFORMATION, "Item Saved!").show();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -307,19 +273,6 @@ public class ItemController implements Initializable {
             throw new SQLException("Item not found: " + itemName);
         }
         return id;
-    }
-
-    private int getOrCreateItemId(Connection conn, String name, String type, double price) throws SQLException {
-        ItemDTO itemDTO = itemBO.findItem(name);
-        if(!(itemDTO == null)){
-            return itemDTO.getItem_id();
-        }
-        boolean saved = itemBO.saveItem(new ItemDTO(name,type,price));
-        if (!saved) {
-            throw new SQLException("Item insert failed");
-        }
-        ItemDTO newItemDTO = itemBO.findItem(name);
-        return newItemDTO.getItem_id();
     }
 
     private int getTotalQtyForItem(int itemId) {

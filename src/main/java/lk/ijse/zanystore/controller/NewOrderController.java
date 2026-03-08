@@ -121,11 +121,6 @@ public class NewOrderController implements Initializable {
     @FXML
     private TableView tableOrder;
 
-    ItemDAO itemDAO = new ItemDAOImpl();
-    ItemColorStockDAO itemColorStockDAO = new ItemColorStockDAOImpl();
-    ClothOrderDAOImpl clothOrderDAO = new ClothOrderDAOImpl();
-    ClothOrderDetailDAOImpl clothOrderDetailDAO = new ClothOrderDetailDAOImpl();
-    OrderSerproviderDAOImpl orderSerproviderDAO = new OrderSerproviderDAOImpl();
     PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
     
     private final ObservableList<OrderItemDTO> orderItemObList = FXCollections.observableArrayList();
@@ -206,9 +201,8 @@ public class NewOrderController implements Initializable {
                 double unitPrice = results.getDouble("item_unit_price");
                 String color = results.getString("color");
                 int qty = results.getInt("qty");
-                
-                ItemDTO itemDTO = new ItemDTO(id,name, color, unitPrice, qty);
-                itemList.add(itemDTO);
+
+                itemList.add(new ItemDTO(id,name, color, unitPrice, qty));
             }
             
             ObservableList<ItemDTO> obList = FXCollections.observableArrayList();
@@ -226,7 +220,7 @@ public class NewOrderController implements Initializable {
     
      private void loadComboItemColor(int itemId) {
     try {
-        List<String> colorList = itemColorStockDAO.getColorsById(itemId);
+        List<String> colorList = placeOrderBO.loadItemColors(itemId);
         ObservableList<String> list = FXCollections.observableArrayList();
 
         for(String color : colorList){
@@ -249,9 +243,8 @@ public class NewOrderController implements Initializable {
             String color = selectedColor;
             String qty = addingQtyField.getText();
 
-            String name = itemDAO.getNameById(itemId);
-            OrderItemDTO orderItemDTO = new OrderItemDTO(name, itemId, color, Integer.parseInt(qty));
-            orderItemObList.add(orderItemDTO);
+            String name = placeOrderBO.getItemNameFromId(itemId);
+            orderItemObList.add(new OrderItemDTO(name, itemId, color, Integer.parseInt(qty)));
             addingIdField.setText("");
             addingQtyField.setText("");
             addingColorBox.getSelectionModel().clearSelection();
@@ -306,7 +299,7 @@ public class NewOrderController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = clothOrderDAO.showNextId();
+        String id = placeOrderBO.generateNextOrderId();
         orderIdField.setText(id);
     }
     catch(Exception e){
