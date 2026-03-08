@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.SupplierBOImpl;
 import lk.ijse.zanystore.dao.custom.SupplierDAO;
 import lk.ijse.zanystore.dao.custom.impl.SupplierDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -69,6 +70,7 @@ public class SupplierController implements Initializable {
     private final String SUP_CONTACT_REGEX = "^[0-9]{10}$";
     
     SupplierDAO supplierDAO = new SupplierDAOImpl();
+    SupplierBOImpl supplierBO = new SupplierBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -120,7 +122,7 @@ public class SupplierController implements Initializable {
                 new Alert(Alert.AlertType.ERROR,"Invalid Supplier Contact !").show();
             }
 
-            boolean result = supplierDAO.save(new SupplierDTO(name,item,address,contact));
+            boolean result = supplierBO.addSupplier(new SupplierDTO(name,item,address,contact));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Supplier Added Successfully !").show();
@@ -165,7 +167,7 @@ public class SupplierController implements Initializable {
                 new Alert(Alert.AlertType.ERROR,"Invalid Supplier Contact !").show();
             }
 
-        boolean result = supplierDAO.update(new SupplierDTO(Integer.parseInt(id),name,item,address,contact));
+        boolean result = supplierBO.updateSupplier(new SupplierDTO(Integer.parseInt(id),name,item,address,contact));
         
         if(result){
             new Alert(Alert.AlertType.INFORMATION,"Supplier Updated Successfully !").show();
@@ -204,7 +206,7 @@ public class SupplierController implements Initializable {
             new Alert(Alert.AlertType.ERROR,"Invalid Supplier ID !").show();
         }
         
-        boolean deleteResult = supplierDAO.delete(Integer.parseInt(id));
+        boolean deleteResult = supplierBO.deleteSupplier(id);
         
         if(deleteResult){
             new Alert(Alert.AlertType.INFORMATION,"Supplier Deleted Successfully !").show();
@@ -224,7 +226,7 @@ public class SupplierController implements Initializable {
     @FXML
     private void loadSupplierTable(){
         try{
-            List<SupplierDTO> supplierList = supplierDAO.getAll();
+            List<SupplierDTO> supplierList = supplierBO.getAllSupplier();
 
             ObservableList<SupplierDTO> obList = FXCollections.observableArrayList();
             
@@ -256,7 +258,7 @@ public class SupplierController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = supplierDAO.showNextId();
+        String id = supplierBO.generateNextSupplierId();
         idField.setText(id);
     }
     catch(Exception e){
