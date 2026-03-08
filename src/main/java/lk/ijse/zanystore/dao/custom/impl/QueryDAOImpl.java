@@ -2,6 +2,8 @@ package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.QueryDAO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -28,5 +30,33 @@ public class QueryDAOImpl implements QueryDAO {
             list.add(new LoadItemDTO(itemId,itemName,itemType,price,color,itemQty));
         }
         return list;
+    }
+
+    //for LayoutController -> loadLastOrder();
+    public LoadLastOrderDTO loadLastOrderTable() throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT o.cloth_order_id, c.customer_name, o.cloth_order_description, o.cloth_order_end_date FROM cloth_order o JOIN customer c ON o.customer_id = c.customer_id ORDER BY cloth_order_id DESC LIMIT 1");
+        if(results.next()) {
+            int orderId = results.getInt("cloth_order_id");
+            String customerName = results.getString("customer_name");
+            String clothOrderDescription = results.getString("cloth_order_description");
+            String clothOrderEndDate = results.getString("cloth_order_end_date");
+
+            return new LoadLastOrderDTO(orderId,customerName,clothOrderDescription,clothOrderEndDate);
+        }
+        return null;
+    }
+
+    //for LayoutController -> loadLastPayment();
+    public LoadLastPaymentDTO loadLastPaymentTable() throws SQLException {
+        ResultSet result = CrudUtil.execute("SELECT p.payment_id, p.payment_amount, c.customer_name, o.date FROM payment p JOIN order_payment_details o ON p.payment_id = o.payment_id JOIN cloth_order co on o.cloth_order_id = co.cloth_order_id JOIN customer c on o.customer_id = c.customer_id and co.customer_id = c.customer_id ORDER BY p.payment_id DESC LIMIT 1");
+        if(result.next()) {
+            int paymentId = result.getInt("payment_id");
+            double paymentAmount = result.getDouble("payment_amount");
+            String customerName = result.getString("customer_name");
+            String paymentEndDate = result.getString("date");
+
+            return new LoadLastPaymentDTO(paymentId,paymentAmount,customerName,paymentEndDate);
+        }
+        return null;
     }
 }

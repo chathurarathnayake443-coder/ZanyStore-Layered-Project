@@ -38,6 +38,7 @@ import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.LayoutBO;
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.impl.LayoutBOImpl;
 import lk.ijse.zanystore.bo.custom.impl.PlaceOrderBOImpl;
 import lk.ijse.zanystore.dao.custom.TaskDAO;
@@ -56,6 +57,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import lk.ijse.zanystore.dto.OrderItemDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
 import lk.ijse.zanystore.dto.TaskDTO;
 
 public class LayoutController implements Initializable {
@@ -156,6 +159,7 @@ public class LayoutController implements Initializable {
 private AnchorPane imageSliderPane;
 
     LayoutBO layoutBO = (LayoutBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.LAYOUT);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
 
 private final List<Image> images = new ArrayList<>();
 private final List<ImageView> imageViews = new ArrayList<>();
@@ -516,25 +520,13 @@ private void setupButton(Button btn) {
     
     private void loadLastOrder(){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
-            
-            String sql = "SELECT o.cloth_order_id, c.customer_name, o.cloth_order_description, o.cloth_order_end_date FROM cloth_order o JOIN customer c ON o.customer_id = c.customer_id ORDER BY cloth_order_id DESC LIMIT 1";
-            
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            ResultSet results = pstm.executeQuery();
-            
-            if(results.next()){
-                String id = String.valueOf(results.getInt("cloth_order_id"));
-                String name = results.getString("customer_name");
-                String detail = results.getString("cloth_order_description");
-                String date = results.getString("cloth_order_end_date");
+
+            LoadLastOrderDTO lastOrder = queryBO.loadLastOrderTable();
                 
-                lbl1.setText(id);
-                lbl2.setText(name);
-                lbl3.setText(detail);
-                lbl7.setText(date);
-            }
+                lbl1.setText(String.valueOf(lastOrder.getCloth_order_id()));
+                lbl2.setText(lastOrder.getCustomer_name());
+                lbl3.setText(lastOrder.getCloth_order_description());
+                lbl7.setText(lastOrder.getCloth_order_end_date());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -543,25 +535,12 @@ private void setupButton(Button btn) {
     
     private void loadLastPayment(){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
-            
-            String sql = "SELECT p.payment_id, p.payment_amount, c.customer_name, o.date FROM payment p JOIN order_payment_details o ON p.payment_id = o.payment_id JOIN cloth_order co on o.cloth_order_id = co.cloth_order_id JOIN customer c on o.customer_id = c.customer_id and co.customer_id = c.customer_id ORDER BY p.payment_id DESC LIMIT 1";
-            
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            ResultSet results = pstm.executeQuery();
-            
-            if(results.next()){
-                String id = String.valueOf(results.getInt("payment_id"));
-                String name = results.getString("customer_name");
-                String amount = String.valueOf(results.getDouble("payment_amount"));
-                String date = results.getString("date");
-                
-                lbl4.setText(id);
-                lbl5.setText(name);
-                lbl6.setText(amount);
-                lbl8.setText(date);
-            }
+                LoadLastPaymentDTO lastPayment = queryBO.loadLastPaymentTable();
+                lbl4.setText(String.valueOf(lastPayment.getPayment_id()));
+                lbl5.setText(lastPayment.getCustomer_name());
+                lbl6.setText(String.valueOf(lastPayment.getPayment_amount()));
+                lbl8.setText(lastPayment.getDate());
+
         }
         catch(Exception e){
             e.printStackTrace();
