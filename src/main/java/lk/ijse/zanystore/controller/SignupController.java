@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.UserBOImpl;
 import lk.ijse.zanystore.dao.custom.UserDAO;
 //import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
@@ -72,7 +73,7 @@ public class SignupController implements Initializable {
     @FXML
     private TableColumn colPassword;
 
-    UserDAO userDAO = new UserDAOImpl();
+    UserBOImpl userBO = new UserBOImpl();
     
     private final String USER_ID_REGEX = "^[0-9]+$";
     private final String USER_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
@@ -140,13 +141,13 @@ public class SignupController implements Initializable {
                     new Alert(Alert.AlertType.ERROR,"Invalid Password Format").show();
                     return;
                 }
-            boolean result = userDAO.exist(name);
+            boolean result = userBO.existUser(name);
                     
                     if (result) {
                     new Alert(Alert.AlertType.ERROR, "User Name Already Exists!").show();
                     return; 
                 }
-                    boolean result1 = userDAO.save(new UserDTO(name,address,Double.parseDouble(salary),contact,password));
+                    boolean result1 = userBO.saveUser(new UserDTO(name,address,Double.parseDouble(salary),contact,password));
 
                         if (result1) {
                             loadUserTable();
@@ -181,7 +182,7 @@ public class SignupController implements Initializable {
         if (result.isPresent() && result.get() == yesButton) {
            String userName  = nameField.getText().trim();
 
-           boolean delResult = userDAO.delete(userName);
+           boolean delResult = userBO.deleteUser(userName);
             if(delResult){
                 loadUserTable();
                 new Alert(Alert.AlertType.INFORMATION,"User Deleted Successfully !").show();
@@ -233,7 +234,7 @@ public class SignupController implements Initializable {
                     return;
                 }
             
-            UserDTO user = userDAO.find(name);
+            UserDTO user = userBO.findUser(name);
             
             if(user != null){
                 String userPassword = user.getUser_password();
@@ -251,7 +252,7 @@ public class SignupController implements Initializable {
             if (enteredPassword.equals(userPassword)) {
                 // allow update
                 
-            boolean results = userDAO.update(new UserDTO(name, address, Double.parseDouble(salary), contact, password));
+            boolean results = userBO.updateUser(new UserDTO(name, address, Double.parseDouble(salary), contact, password));
             
             if(results){
                 loadUserTable();
@@ -275,7 +276,7 @@ public class SignupController implements Initializable {
     @FXML
     private void loadUserTable(){
         try{
-            List<UserDTO> userList = userDAO.getAll();
+            List<UserDTO> userList = userBO.getAllUser();
 
             ObservableList<UserDTO> obList = FXCollections.observableArrayList();
 
