@@ -19,8 +19,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.LowStockDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
 
 /**
  * FXML Controller class
@@ -43,6 +46,8 @@ public class LowstockController implements Initializable {
     
     @FXML
     private TableColumn colQty;
+
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
 
     /**
      * Initializes the controller class.
@@ -72,38 +77,10 @@ private void backButton(){
 @FXML
 private void loadTable(){
     try{
-        Connection conn = DBConnection.getInstance().getConnection();
+        List<LoadLowStockDTO> list = queryBO.loadLowStockTable();
+        ObservableList<LoadLowStockDTO> obList = FXCollections.observableArrayList();
         
-        String sql = "SELECT\n" +
-"    i.item_id,\n" +
-"    i.item_name,\n" +
-"    ics.color,\n" +
-"    ics.qty AS remaining_qty\n" +
-"FROM item_color_stock ics\n" +
-"JOIN item i\n" +
-"    ON i.item_id = ics.item_id\n" +
-"WHERE ics.qty <= 200\n" +
-"ORDER BY ics.qty ASC;";
-        
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        ResultSet results = pstm.executeQuery();
-        
-        List<LowStockDTO> stockList = new ArrayList<>();
-        
-        while(results.next()){
-            int id = results.getInt("item_id");
-            String name = results.getString("item_name");
-            String color = results.getString("color");
-            int qty = results.getInt("remaining_qty");
-            
-            LowStockDTO stock = new LowStockDTO(id, name, color, qty);
-            stockList.add(stock);
-        }
-        
-        ObservableList<LowStockDTO> obList = FXCollections.observableArrayList();
-        
-        for(LowStockDTO item : stockList){
+        for(LoadLowStockDTO item : list){
             obList.add(item);
         }
         

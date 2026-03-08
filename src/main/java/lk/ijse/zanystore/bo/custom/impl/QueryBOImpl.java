@@ -8,6 +8,7 @@ import lk.ijse.zanystore.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,5 +31,10 @@ public class QueryBOImpl implements QueryBO {
     public LoadLastPaymentDTO loadLastPaymentTable() throws SQLException {
         LoadLastPaymentDTO dto = queryDAO.loadLastPaymentTable();
         return dto;
+    }
+
+    public List<LoadLowStockDTO> loadLowStockTable() throws SQLException {
+        List<LoadLowStockDTO> list = queryDAO.loadLowStockTable();
+        return list;
     }
 }

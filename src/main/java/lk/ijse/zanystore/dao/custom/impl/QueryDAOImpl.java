@@ -4,6 +4,7 @@ import lk.ijse.zanystore.dao.custom.QueryDAO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -59,4 +60,29 @@ public class QueryDAOImpl implements QueryDAO {
         }
         return null;
     }
+
+    //for LowStockController -> loadItemTable();
+    public List<LoadLowStockDTO> loadLowStockTable() throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT\n" +
+                "    i.item_id,\n" +
+                "    i.item_name,\n" +
+                "    ics.color,\n" +
+                "    ics.qty AS remaining_qty\n" +
+                "FROM item_color_stock ics\n" +
+                "JOIN item i\n" +
+                "    ON i.item_id = ics.item_id\n" +
+                "WHERE ics.qty <= 200\n" +
+                "ORDER BY ics.qty ASC;");
+        List<LoadLowStockDTO> list = new ArrayList<>();
+        while (results.next()) {
+            int itemId = results.getInt("item_id");
+            String itemName = results.getString("item_name");
+            String color = results.getString("color");
+            int qty = results.getInt("remaining_qty");
+
+            list.add(new LoadLowStockDTO(itemId,itemName,color,qty));
+        }
+        return list;
+    }
+
 }
