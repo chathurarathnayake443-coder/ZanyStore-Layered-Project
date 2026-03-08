@@ -8,12 +8,12 @@ public class QuotationDTO {
     private String itemName;
     private String color;
     private double unitPrice;
-    private double qty;
+    private int qty;
     private double lineTotal;
 
     private static final DecimalFormat moneyFmt = new DecimalFormat("#,##0.00");
 
-    public QuotationDTO(int qId, String itemName, String color, double unitPrice, double qty, double lineTotal) {
+    public QuotationDTO(int qId, String itemName, String color, double unitPrice, int qty, double lineTotal) {
         this.qId = qId;
         this.itemName = itemName;
         this.color = color;
@@ -27,17 +27,23 @@ public class QuotationDTO {
     }
     public void setqId(int qId) {}
 
-    public QuotationDTO(String itemName, String color, double unitPrice, double qty, double lineTotal) {
+    public QuotationDTO(String itemName, String color, double unitPrice, int qty, double lineTotal) {
         this.itemName = itemName;
         this.color = color;
         this.unitPrice = unitPrice;
         this.qty = qty;
         this.lineTotal = lineTotal;
     }
-    
-    
 
-    public QuotationDTO(String itemName, String color, double unitPrice, double qty) {
+    public QuotationDTO(String itemName, String color, int qty, double unitPrice, double lineTotal) {
+        this.itemName = itemName;
+        this.color = color;
+        this.unitPrice = unitPrice;
+        this.qty = qty;
+        this.lineTotal = lineTotal;
+    }
+
+    public QuotationDTO(String itemName, String color, double unitPrice, int qty) {
         this.itemName = itemName;
         this.color = color;
         this.unitPrice = unitPrice;
@@ -88,7 +94,7 @@ public class QuotationDTO {
     
     
 
-    public void setQty(double qty) {
+    public void setQty(int qty) {
         this.qty = qty;
         this.lineTotal = qty * this.unitPrice;
     }

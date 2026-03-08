@@ -168,7 +168,7 @@ public class QuotationController implements Initializable {
     @FXML
     private void loadItemNames(){
         try{
-            List<String> names = itemBO.loadItemNames();
+            List<String> names = createQuotationBO.loadItemNames();
             
             ObservableList<String> itemNames = FXCollections.observableArrayList();
             
@@ -258,54 +258,29 @@ public class QuotationController implements Initializable {
      
      @FXML
     private void savePrintQuotation(ActionEvent event) {
-         Connection connection = null;
         
         try{
-            connection= DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
             String customerName = customerField.getText();
             double fullTotal = Double.parseDouble(subtotalLabel.getText());
-            
-            // color?
-//        String selectedColor = addingColorBox.getSelectionModel().getSelectedItem();
-//        String addingId = addingIdField.getText();
-//        String qty = addingQtyField.getText();
-        
-        // order items? - orderItemObList
 
-          boolean r1 = quotationDAO.save(new QuotationItemDTO(customerName, fullTotal));
-
-            if (!r1) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
+            List<QuotationDTO> list = new ArrayList<>();
+            for(QuotationDTO q : quotationItemObList){
+                list.add(q);
             }
 
-            int newId = quotationDAO.getId();
+            boolean result = createQuotationBO.placeQuotation(customerName, fullTotal, list);
 
-            for (QuotationDTO quotationDTO : quotationItemObList) {
-                boolean r2 = quotationItemDAO.save(new QuotationDTO(newId, quotationDTO.getItemName(),quotationDTO.getColor(),quotationDTO.getQty(),quotationDTO.getUnitPrice(),quotationDTO.getLineTotal()));
-
-                if (!r2) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    //return false;
-                }
+            if(!result){
+                new Alert(Alert.AlertType.ERROR,"Failed to Place Quotation !").show();
+                return;
             }
-
-            connection.commit();
-            connection.setAutoCommit(true);
             cleanFields();
             tblQuotation.getItems().clear();
             printBill();
             new Alert(Alert.AlertType.INFORMATION,"Quotation Placed Successfully !").show();
         }
         catch (Exception e) {
-            try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
-            new Alert(Alert.AlertType.ERROR, "Something went Wrong !").show();
             e.printStackTrace();
-        } finally {
-            try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
         
     }
