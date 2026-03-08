@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.ReturnBOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDetailDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -53,8 +54,7 @@ public class ReturnController implements Initializable {
     @FXML
     private TableColumn colOrderId;
 
-    ReturnDAOImpl returnDAO = new ReturnDAOImpl();
-    ReturnDetailDAOImpl returnDetailDAO = new ReturnDetailDAOImpl();
+    ReturnBOImpl returnBO =  new ReturnBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,91 +81,55 @@ public class ReturnController implements Initializable {
     }  
     
     @FXML
-    private void clickAddReturn(){
+    private void clickAddReturn() {
         Connection connection = null;
-        try{
-            connection= DBConnection.getInstance().getConnection();
+        try {
+            connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
             String orderId = orderIdField.getText().trim();
             String detail = detailField.getText();
             String date = dateField.getText();
 
-            boolean r1 = returnDAO.save(new ReturnDTO(detail));
+            boolean result = returnBO.saveReturn(orderId, detail, date);
 
-            if (!r1) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
+            if (!result) {
+                new Alert(Alert.AlertType.ERROR, "Return Creation Unsuccessful !").show();
             }
-
-            String id = returnDAO.getId();
-
-            boolean r2 = returnDetailDAO.save(new ReturnDTO(Integer.parseInt(orderId),Integer.parseInt(id),date));
-
-            if (!r2) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e) {
-        try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
-        new Alert(Alert.AlertType.ERROR, "Something went Wrong !").show();
-        e.printStackTrace();
-    } finally {
-        try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
-    }
     }
     
     @FXML
-    private void clickDelete(){
-        Connection connection = null;
-        try{
-            connection= DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
+    private void clickDelete() {
+        try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        
-        alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to Delete Return?");
 
-        ButtonType yesButton = new ButtonType("Yes");
-        ButtonType noButton = new ButtonType("No");
+            alert.setTitle("Delete Confirmation");
+            alert.setHeaderText("Are you sure you want to Delete Return?");
 
-        alert.getButtonTypes().setAll(yesButton, noButton);
+            ButtonType yesButton = new ButtonType("Yes");
+            ButtonType noButton = new ButtonType("No");
 
-        Optional<ButtonType> result = alert.showAndWait();
+            alert.getButtonTypes().setAll(yesButton, noButton);
 
-        if (result.isPresent() && result.get() == yesButton) {
-            String returnId = returnIdField.getText();
+            Optional<ButtonType> result = alert.showAndWait();
 
-            boolean b1 = returnDetailDAO.delete(returnId);
+            if (result.isPresent() && result.get() == yesButton) {
+                String returnId = returnIdField.getText();
 
-            if (!b1) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
+                boolean deleteResult = returnBO.deleteReturn(Integer.parseInt(returnId));
+
+                if(!deleteResult){
+                    new Alert(Alert.AlertType.ERROR, "Return Delete Unsuccessful !").show();
+                }
+                loadReturnTable();
+                new Alert(Alert.AlertType.INFORMATION, "Return Recorded Successfully").show();
             }
-
-            boolean b2 = returnDAO.delete(returnId);
-
-            if (!b2) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                //return false;
-            }
-            connection.commit();
-            connection.setAutoCommit(true);
-            loadReturnTable();
-            new Alert(Alert.AlertType.INFORMATION, "Return Recorded Successfully").show();
-        }     
-        }
-        catch (Exception e) {
-            try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Something went Wrong !").show();
             e.printStackTrace();
-        } finally {
-            try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
     }
     
@@ -225,7 +189,7 @@ public class ReturnController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = returnDAO.showNextId();
+        String id = returnBO.generateNextReturnId();
         returnIdField.setText(id);
     }
     catch(Exception e){
