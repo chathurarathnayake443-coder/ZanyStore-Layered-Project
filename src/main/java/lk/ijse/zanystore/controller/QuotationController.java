@@ -105,7 +105,6 @@ public class QuotationController implements Initializable {
     QuotationItemDAO quotationItemDAO = new QuotationItemDAOImpl();
     ItemDAO itemDAO = new ItemDAOImpl();
     CreateQuotationBOImpl createQuotationBO = new CreateQuotationBOImpl();
-    ItemBOImpl itemBO = new ItemBOImpl();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -212,7 +211,7 @@ public class QuotationController implements Initializable {
     @FXML
     private void loadQty(String itemName){
         try{
-            Double price = itemBO.getPriceForItem(itemName);
+            Double price = createQuotationBO.getPriceForItem(itemName);
             unitPriceField.setText(String.valueOf(price));
         }
         catch(Exception e){

@@ -1,6 +1,7 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import javafx.scene.control.Alert;
+import lk.ijse.zanystore.bo.custom.CreateQuotationBO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
 import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.QuotationItemDAO;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateQuotationBOImpl {
+public class CreateQuotationBOImpl implements CreateQuotationBO {
 
     QuotationDAO quotationDAO = new QuotationDAOImpl();
     QuotationItemDAO quotationItemDAO = new QuotationItemDAOImpl();

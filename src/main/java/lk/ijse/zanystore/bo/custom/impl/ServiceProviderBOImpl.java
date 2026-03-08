@@ -1,5 +1,6 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
+import lk.ijse.zanystore.bo.custom.ServiceProviderBO;
 import lk.ijse.zanystore.dao.custom.ServiceproviderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ServiceproviderDAOImpl;
 import lk.ijse.zanystore.dto.ServiceproviderDTO;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceProviderBOImpl {
+public class ServiceProviderBOImpl implements ServiceProviderBO {
 
     ServiceproviderDAO serviceproviderDAO = new ServiceproviderDAOImpl();
 

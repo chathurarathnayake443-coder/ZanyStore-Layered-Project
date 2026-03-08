@@ -1,5 +1,6 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
+import lk.ijse.zanystore.bo.custom.SupplierBO;
 import lk.ijse.zanystore.dao.custom.SupplierDAO;
 import lk.ijse.zanystore.dao.custom.impl.SupplierDAOImpl;
 import lk.ijse.zanystore.dto.SupplierDTO;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierBOImpl {
+public class SupplierBOImpl implements SupplierBO {
 
     SupplierDAO supplierDAO = new SupplierDAOImpl();
 

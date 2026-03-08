@@ -1,5 +1,6 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
+import lk.ijse.zanystore.bo.custom.UserBO;
 import lk.ijse.zanystore.dao.custom.UserDAO;
 import lk.ijse.zanystore.dao.custom.impl.UserDAOImpl;
 import lk.ijse.zanystore.dto.UserDTO;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserBOImpl {
+public class UserBOImpl implements UserBO {
 
     UserDAO userDAO = new UserDAOImpl();
 

@@ -1,5 +1,6 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
+import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
 import lk.ijse.zanystore.dao.custom.*;
 import lk.ijse.zanystore.dao.custom.impl.*;
 import lk.ijse.zanystore.db.DBConnection;
@@ -16,7 +17,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PlaceOrderBOImpl {
+public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     ClothOrderDAO clothOrderDAO = new ClothOrderDAOImpl();
     ClothOrderDetailDAO clothOrderDetailDAO = new ClothOrderDetailDAOImpl();

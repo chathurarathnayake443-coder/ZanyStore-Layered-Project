@@ -1,5 +1,6 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
+import lk.ijse.zanystore.bo.custom.ItemBO;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemBOImpl {
+public class ItemBOImpl implements ItemBO {
 
     ItemDAO itemDAO = new ItemDAOImpl();
     ItemColorStockDAO itemColorStockDAO = new ItemColorStockDAOImpl();
@@ -66,19 +67,6 @@ public class ItemBOImpl {
         return newItem.getItem_id();
     }
 
-    public ItemDTO findItem(String name) throws SQLException {
-        Item result = itemDAO.find(name);
-        return new ItemDTO(result.getItem_id());
-    }
-
-    public boolean saveItemColors(ItemColorStockDTO itemDTO) throws SQLException {
-        return itemColorStockDAO.save(new ItemColorStock(itemDTO.getItemId(),itemDTO.getColor(),itemDTO.getQty()));
-    }
-
-    public boolean updateItemColors(ItemColorStockDTO itemDTO) throws SQLException {
-        return itemColorStockDAO.update(new ItemColorStock(itemDTO.getItemId(),itemDTO.getColor(),itemDTO.getQty()));
-    }
-
     public boolean deleteItemColors(int itemId) throws SQLException {
         return itemColorStockDAO.delete(itemId);
     }
@@ -117,8 +105,4 @@ public class ItemBOImpl {
         return id;
     }
 
-    public double getPriceForItem(String itemName) throws SQLException {
-        Double price = itemDAO.getPrice(itemName);
-        return price;
-    }
 }

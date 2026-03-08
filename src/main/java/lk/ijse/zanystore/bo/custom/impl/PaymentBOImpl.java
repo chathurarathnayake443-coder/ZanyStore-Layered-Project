@@ -1,6 +1,7 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import javafx.scene.control.Alert;
+import lk.ijse.zanystore.bo.custom.PaymentBO;
 import lk.ijse.zanystore.dao.custom.impl.OrderPaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -11,7 +12,7 @@ import lk.ijse.zanystore.entity.Payment;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class PaymentBOImpl {
+public class PaymentBOImpl implements PaymentBO {
 
     PaymentDAOImpl paymentDAO = new PaymentDAOImpl();
     OrderPaymentDAOImpl orderPaymentDAO = new OrderPaymentDAOImpl();

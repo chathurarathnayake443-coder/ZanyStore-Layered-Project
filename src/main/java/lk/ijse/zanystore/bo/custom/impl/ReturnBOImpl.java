@@ -1,6 +1,7 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
 import javafx.scene.control.Alert;
+import lk.ijse.zanystore.bo.custom.ReturnBO;
 import lk.ijse.zanystore.dao.custom.ReturnDAO;
 import lk.ijse.zanystore.dao.custom.ReturnDetailDAO;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
@@ -13,7 +14,7 @@ import lk.ijse.zanystore.entity.ReturnDetail;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ReturnBOImpl {
+public class ReturnBOImpl implements ReturnBO {
 
     ReturnDAO returnDAO = new ReturnDAOImpl();
     ReturnDetailDAO returnDetailDAO = new ReturnDetailDAOImpl();

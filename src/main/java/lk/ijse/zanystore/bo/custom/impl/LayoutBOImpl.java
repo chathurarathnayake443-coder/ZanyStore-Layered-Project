@@ -1,5 +1,6 @@
 package lk.ijse.zanystore.bo.custom.impl;
 
+import lk.ijse.zanystore.bo.custom.LayoutBO;
 import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
 import lk.ijse.zanystore.dao.custom.PaymentDAO;
 import lk.ijse.zanystore.dao.custom.ReturnDAO;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LayoutBOImpl {
+public class LayoutBOImpl implements LayoutBO {
 
     ClothOrderDAO clothOrderDAO =  new ClothOrderDAOImpl();
     ReturnDAO returnDAO = new ReturnDAOImpl();
