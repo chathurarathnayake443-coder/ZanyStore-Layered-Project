@@ -58,4 +58,13 @@ public class PaymentDAOImpl implements PaymentDAO {
         }
         return null;
     }
+
+    public double getSum() throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT SUM(payment_amount) AS sum FROM payment");
+        if (results.next()) {
+            double amount = results.getDouble("sum");
+            return amount;
+        }
+        return 0;
+    }
 }

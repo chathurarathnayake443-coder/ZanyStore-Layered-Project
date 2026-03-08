@@ -62,4 +62,12 @@ public class ClothOrderDAOImpl implements ClothOrderDAO {
         }
         return list;
     }
+
+    public int getOrderCount() throws SQLException {
+        ResultSet result = CrudUtil.execute("SELECT COUNT(cloth_order_id) AS total_orders FROM cloth_order");
+        if (result.next()) {
+            return result.getInt("total_orders");
+        }
+        return 0;
+    }
 }

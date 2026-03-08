@@ -35,6 +35,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
+import lk.ijse.zanystore.bo.custom.impl.LayoutBOImpl;
+import lk.ijse.zanystore.bo.custom.impl.PlaceOrderBOImpl;
 import lk.ijse.zanystore.dao.custom.TaskDAO;
 import lk.ijse.zanystore.dao.custom.impl.TaskDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -150,7 +153,7 @@ public class LayoutController implements Initializable {
     @FXML
 private AnchorPane imageSliderPane;
 
-    TaskDAO taskDAO = new TaskDAOImpl();
+    LayoutBOImpl layoutBO = new LayoutBOImpl();
 
 private final List<Image> images = new ArrayList<>();
 private final List<ImageView> imageViews = new ArrayList<>();
@@ -401,17 +404,10 @@ private void setupButton(Button btn) {
     @FXML
     private void getOrderCount(){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
-            
-            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(cloth_order_id) AS total_orders FROM cloth_order");
-            
-            ResultSet result = pstm.executeQuery();
-            
-            if(result.next()){
-                ordersLbl.setText(String.valueOf(result.getInt("total_orders")));
-                int count = result.getInt("total_orders");
-                animateOrderCount(count);
-            }
+            int orderCount = layoutBO.getOrderCount();
+            ordersLbl.setText(String.valueOf(orderCount));
+            animateOrderCount(orderCount);
+
         }
         catch(Exception e){
             e.printStackTrace();
@@ -421,17 +417,10 @@ private void setupButton(Button btn) {
     @FXML
     private void getReturnCount(){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
-            
-            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(return_order_id) AS total_returns FROM return_order");
-            
-            ResultSet result = pstm.executeQuery();
-            
-            if(result.next()){
-                returnsLbl.setText(String.valueOf(result.getInt("total_returns")));
-                int count = result.getInt("total_returns");
-                animateReturnCount(count);
-            }
+            int totalReturns = layoutBO.getReturnOrderCount();
+            returnsLbl.setText(String.valueOf(totalReturns));
+            animateReturnCount(totalReturns);
+
         }
         catch(Exception e){
             e.printStackTrace();
@@ -441,20 +430,13 @@ private void setupButton(Button btn) {
     @FXML
       private void findTotal(){
           try{
-              Connection conn = DBConnection.getInstance().getConnection();
-              
-              String sql = "SELECT SUM(payment_amount) AS sum FROM payment";
-              
-              PreparedStatement pstm = conn.prepareStatement(sql);
-              
-              ResultSet results = pstm.executeQuery();
-              
-              if(results.next()){
-                String total = String.valueOf(results.getDouble("sum")/1000);
+              double amount = layoutBO.getSumOfPayments();
+
+                String total = String.valueOf(amount);
                 salesLbl.setText(total);
-                int total1 = (int)results.getDouble("sum")/1000;               
+                int total1 = (int)amount;
                 animateFindTotal(total1);
-              }
+
           }
           catch(Exception e){
               e.printStackTrace();
@@ -590,7 +572,7 @@ private void setupButton(Button btn) {
             String task = taskField.getText();
             String date = String.valueOf(taskDate.getValue());
             
-            boolean result = taskDAO.save(new TaskDTO(task,date));
+            boolean result = layoutBO.addTask(new TaskDTO(task,date));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Task Added !").show();
@@ -611,7 +593,7 @@ private void setupButton(Button btn) {
         try{
             obList.clear();
             
-            List<TaskDTO> taskList = taskDAO.getAll();
+            List<TaskDTO> taskList = layoutBO.viewAllTasks();
 
             for(TaskDTO taskDTO : taskList){
                 obList.add(taskDTO);
@@ -626,7 +608,7 @@ private void setupButton(Button btn) {
     
     private void deleteTask(TaskDTO task) {
     try {
-        boolean result = taskDAO.delete(task);
+        boolean result = layoutBO.deleteTask(task);
     } catch (Exception e) {
         e.printStackTrace();
     }

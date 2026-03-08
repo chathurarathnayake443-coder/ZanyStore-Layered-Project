@@ -76,8 +76,7 @@ public class EmployeeController implements Initializable {
     private final String EMP_ADDRESS_REGEX = "^[A-Za-z0-9\\s,]{3,}$";
     private final String EMP_SALARY_REGEX = "^[0-9]+(?:\\.[0-9]{1,2})?$";
     private final String EMP_CONTACT_REGEX = "^[0-9]{10}$";
-    
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+
     EmployeeBOImpl employeeBO = new EmployeeBOImpl();
 
     @Override

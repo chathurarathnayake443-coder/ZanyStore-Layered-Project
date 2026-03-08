@@ -1,4 +1,4 @@
 package lk.ijse.zanystore.bo.custom;
 
-public interface TaskBO {
+public interface LayoutBO {
 }

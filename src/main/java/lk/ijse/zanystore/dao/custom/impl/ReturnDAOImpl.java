@@ -58,4 +58,12 @@ public class ReturnDAOImpl implements ReturnDAO {
         boolean result = CrudUtil.execute("DELETE FROM return_order WHERE return_order_id = ?",id);
         return result;
     }
+
+    public int getTotalCount() throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT COUNT(return_order_id) AS total_returns FROM return_order");
+        if (results.next()) {
+            return results.getInt("total_returns");
+        }
+        return 0;
+    }
 }
