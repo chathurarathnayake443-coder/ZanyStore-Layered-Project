@@ -1,10 +1,7 @@
 package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.QueryDAO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
+import lk.ijse.zanystore.dto.QueryDTO.*;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -81,6 +78,22 @@ public class QueryDAOImpl implements QueryDAO {
             int qty = results.getInt("remaining_qty");
 
             list.add(new LoadLowStockDTO(itemId,itemName,color,qty));
+        }
+        return list;
+    }
+
+    //for PaymentController -> loadPaymentTable();
+    public List<LoadPaymentDTO> loadPaymentTable() throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT p.payment_id, p.payment_amount, o.cloth_order_id, c.customer_name, o.date FROM payment p JOIN order_payment_details o ON p.payment_id = o.payment_id JOIN cloth_order co on o.cloth_order_id = co.cloth_order_id JOIN customer c on o.customer_id = c.customer_id and co.customer_id = c.customer_id");
+        List<LoadPaymentDTO> list = new ArrayList<>();
+        while(results.next()){
+            int paymentId = results.getInt("payment_id");
+            double paymentAmount = results.getDouble("payment_amount");
+            int orderId = results.getInt("cloth_order_id");
+            String customerName = results.getString("customer_name");
+            String date = results.getString("date");
+
+            list.add(new LoadPaymentDTO(paymentId,orderId,paymentAmount,customerName,date));
         }
         return list;
     }

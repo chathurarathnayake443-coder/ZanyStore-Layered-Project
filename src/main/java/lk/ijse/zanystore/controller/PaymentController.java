@@ -32,12 +32,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.PaymentBO;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.impl.PaymentBOImpl;
 import lk.ijse.zanystore.dao.custom.impl.OrderPaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.PaymentDTO;
 //import lk.ijse.zanystore.model.PaymentModel;
+import lk.ijse.zanystore.dto.QueryDTO.LoadPaymentDTO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -110,6 +112,7 @@ public class PaymentController implements Initializable {
      private TableView tablePayment;
 
      PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PAYMENT);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -188,29 +191,10 @@ private void showNextId(){
        @FXML
        private void loadpaymentTable(){
            try{
-               Connection conn = DBConnection.getInstance().getConnection();
+               List<LoadPaymentDTO> list = queryBO.loadPaymentTable();
+               ObservableList<LoadPaymentDTO> obList = FXCollections.observableArrayList();
                
-               String sql = "SELECT p.payment_id, p.payment_amount, o.cloth_order_id, c.customer_name, o.date FROM payment p JOIN order_payment_details o ON p.payment_id = o.payment_id JOIN cloth_order co on o.cloth_order_id = co.cloth_order_id JOIN customer c on o.customer_id = c.customer_id and co.customer_id = c.customer_id";
-               
-               PreparedStatement pstm = conn.prepareStatement(sql);
-               
-               ResultSet results = pstm.executeQuery();
-               
-               List<PaymentDTO> paymentList = new ArrayList<>();
-               
-               while(results.next()){
-                   int paymentId = results.getInt("payment_id");
-                   int orderId = results.getInt("cloth_order_id");
-                   String name = results.getString("customer_name");
-                   double amount = results.getDouble("payment_amount");
-                   String date = results.getString("date");
-
-                   paymentList.add(new PaymentDTO(paymentId, orderId, name, amount, date));
-               }
-               
-               ObservableList<PaymentDTO> obList = FXCollections.observableArrayList();
-               
-               for(PaymentDTO paymentDTO : paymentList){
+               for(LoadPaymentDTO paymentDTO : list){
                    obList.add(paymentDTO);
                }
                

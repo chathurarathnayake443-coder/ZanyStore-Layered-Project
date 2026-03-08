@@ -1,10 +1,7 @@
 package lk.ijse.zanystore.dao.custom;
 
 import lk.ijse.zanystore.dao.SuperDAO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
-import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
+import lk.ijse.zanystore.dto.QueryDTO.*;
 import lk.ijse.zanystore.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -21,4 +18,6 @@ public interface QueryDAO extends SuperDAO {
     public LoadLastPaymentDTO loadLastPaymentTable() throws SQLException;
 
     public List<LoadLowStockDTO> loadLowStockTable() throws SQLException;
+
+    public List<LoadPaymentDTO> loadPaymentTable() throws SQLException;
 }

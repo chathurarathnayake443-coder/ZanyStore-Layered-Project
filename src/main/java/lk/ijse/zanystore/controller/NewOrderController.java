@@ -41,12 +41,14 @@ import javafx.stage.Window;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.impl.PlaceOrderBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
 import lk.ijse.zanystore.dao.custom.impl.*;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.*;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 //import lk.ijse.zanystore.model.OrderModel;
 
 /**
@@ -124,6 +126,7 @@ public class NewOrderController implements Initializable {
     private TableView tableOrder;
 
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PLACE_ORDER);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     private final ObservableList<OrderItemDTO> orderItemObList = FXCollections.observableArrayList();
 
@@ -175,7 +178,7 @@ public class NewOrderController implements Initializable {
         
         tableItem.setOnMouseClicked(event -> {
         Object object = tableItem.getSelectionModel().getSelectedItem();
-        ItemDTO selected = (ItemDTO)object;
+        LoadItemDTO selected = (LoadItemDTO)object;
         if (selected != null) {
             addingIdField.setText(String.valueOf(selected.getItem_id()));
             loadComboItemColor(selected.getItem_id());
@@ -189,27 +192,10 @@ public class NewOrderController implements Initializable {
     @FXML
     private void loadItemTable(){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
+            List<LoadItemDTO> itemList = queryBO.loadItemTable();
+            ObservableList<LoadItemDTO> obList = FXCollections.observableArrayList();
             
-            PreparedStatement pstm = conn.prepareStatement("SELECT ics.item_id, i.item_name, i.item_unit_price, ics.color, ics.qty FROM item_color_stock ics JOIN item i ON ics.item_id = i.item_id");
-            
-            ResultSet results = pstm.executeQuery();
-            
-            List<ItemDTO> itemList = new ArrayList<>();
-            
-            while(results.next()){
-                int id = results.getInt("item_id");
-                String name = results.getString("item_name");
-                double unitPrice = results.getDouble("item_unit_price");
-                String color = results.getString("color");
-                int qty = results.getInt("qty");
-
-                itemList.add(new ItemDTO(id,name, color, unitPrice, qty));
-            }
-            
-            ObservableList<ItemDTO> obList = FXCollections.observableArrayList();
-            
-            for(ItemDTO itemDTO : itemList){
+            for(LoadItemDTO itemDTO : itemList){
                 obList.add(itemDTO);
             }
             
