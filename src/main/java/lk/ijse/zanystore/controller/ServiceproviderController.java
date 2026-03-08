@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
+import lk.ijse.zanystore.bo.custom.impl.ServiceProviderBOImpl;
 import lk.ijse.zanystore.dao.custom.ServiceproviderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ServiceproviderDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
@@ -66,8 +67,8 @@ public class ServiceproviderController implements Initializable {
     private final String SER_ADDRESS_REGEX = "^[A-Za-z0-9\\s,]{3,}$";
     private final String SER_CONTACT_REGEX = "^[0-9]{10}$";
     private final String SER_TYPE_REGEX = "^[A-Za-z\\s]{3,}$";
-    
-    ServiceproviderDAO serviceproviderDAO = new ServiceproviderDAOImpl();
+
+    ServiceProviderBOImpl serviceProviderBO = new ServiceProviderBOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -123,7 +124,7 @@ public class ServiceproviderController implements Initializable {
                 return;
             }
             
-            boolean result = serviceproviderDAO.save(new ServiceproviderDTO(serName,serAddress,serContact,serType));
+            boolean result = serviceProviderBO.saveServiceProvider(new ServiceproviderDTO(serName,serAddress,serContact,serType));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Service Provider Saved Successfully !").show();
@@ -173,7 +174,7 @@ public class ServiceproviderController implements Initializable {
                 return;
             }
 
-            boolean result = serviceproviderDAO.update(new ServiceproviderDTO(Integer.parseInt(id),name,address,contact,type));
+            boolean result = serviceProviderBO.updateServiceProvider(new ServiceproviderDTO(Integer.parseInt(id),name,address,contact,type));
             
             if(result){
                 new Alert(Alert.AlertType.INFORMATION,"Updated Successfully !").show();
@@ -207,7 +208,7 @@ public class ServiceproviderController implements Initializable {
         if (result.isPresent() && result.get() == yesButton) {
             String id = idField.getText().trim();
             
-            boolean deleteResult = serviceproviderDAO.delete(Integer.parseInt(id));
+            boolean deleteResult = serviceProviderBO.deleteServiceProvider(id);
             
             if(deleteResult){
                 new Alert(Alert.AlertType.INFORMATION,"Deleted Successfully !").show();
@@ -242,7 +243,7 @@ public class ServiceproviderController implements Initializable {
     @FXML
     private void loadTable(){
         try{
-            List<ServiceproviderDTO> serviceList = serviceproviderDAO.getAll();
+            List<ServiceproviderDTO> serviceList = serviceProviderBO.getAllServiceProvider();
             
             ObservableList<ServiceproviderDTO> obList = FXCollections.observableArrayList();
             
@@ -260,7 +261,7 @@ public class ServiceproviderController implements Initializable {
     @FXML
 private void showNextId(){
     try{
-        String id = serviceproviderDAO.showNextId();
+        String id = serviceProviderBO.generateNextProviderID();
         idField.setText(id);
     }
     catch(Exception e){
