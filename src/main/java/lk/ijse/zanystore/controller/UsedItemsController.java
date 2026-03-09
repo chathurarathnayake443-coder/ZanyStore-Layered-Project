@@ -29,6 +29,7 @@ import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDetailDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadOtherDetailsDTO;
 import lk.ijse.zanystore.dto.UsedItemDTO;
 
@@ -44,7 +45,7 @@ public class UsedItemsController implements Initializable {
      */
     
     @FXML
-    private ComboBox<Integer> idBox;
+    private ComboBox<String> idBox;
     
     @FXML
     private TextField nameField;
@@ -85,8 +86,8 @@ public class UsedItemsController implements Initializable {
         
         idBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-        loadOtherDetails(newVal);
-        loadTable(newVal);
+        loadOtherDetails(Integer.parseInt(newVal));
+        loadTable(Integer.parseInt(newVal));
     }
         });
     }    
@@ -138,24 +139,12 @@ private void loadOtherDetails(int id){
 @FXML
 private void loadTable(int id){
     try{
-        Connection conn = DBConnection.getInstance().getConnection();
+        List <LoadItemDetailDTO> list = queryBO.loadItemDetailTable(id);
         
-        String sql = "SELECT oid.color, oid.qty, i.item_name FROM order_item_details oid JOIN item i ON i.item_id = oid.item_id JOIN item_color_stock ics ON ics.item_id = oid.item_id AND ics.color = oid.color WHERE oid.cloth_order_id = ?";
-         
-        PreparedStatement pstm = conn.prepareStatement(sql);
+        ObservableList<LoadItemDetailDTO> itemList = FXCollections.observableArrayList();
         
-        pstm.setInt(1, id);
-        
-        ResultSet results = pstm.executeQuery();
-        
-        ObservableList<UsedItemDTO> itemList = FXCollections.observableArrayList();
-        
-        while(results.next()){
-            String itemName = results.getString("item_name");
-            String color = results.getString("color");
-            int qty = results.getInt("qty");
-            
-            itemList.add(new UsedItemDTO(itemName, color, qty));
+        for(LoadItemDetailDTO dto : list){
+            itemList.add(dto);
         }
         
         tblUsedItems.setItems(itemList);

@@ -138,4 +138,18 @@ public class QueryDAOImpl implements QueryDAO {
         return null;
     }
 
+    //for UsedItemsController -> loadItemDetailTable();
+    public List<LoadItemDetailDTO> loadItemDetailTable(int id) throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT oid.color, oid.qty, i.item_name FROM order_item_details oid JOIN item i ON i.item_id = oid.item_id JOIN item_color_stock ics ON ics.item_id = oid.item_id AND ics.color = oid.color WHERE oid.cloth_order_id = ?",id);
+        List<LoadItemDetailDTO> list = new ArrayList<>();
+        while (results.next()) {
+            String color = results.getString("color");
+            int qty = results.getInt("qty");
+            String itemName = results.getString("item_name");
+
+            list.add(new LoadItemDetailDTO(color,qty,itemName));
+        }
+        return list;
+    }
+
 }

@@ -23,4 +23,6 @@ public interface QueryBO extends SuperBO {
     public List<LoadReturnDTO> loadReturnTable() throws SQLException;
 
     public LoadOtherDetailsDTO loadOtherDetailsTable(int id) throws SQLException;
+
+    public List<LoadItemDetailDTO> loadItemDetailTable(int id) throws SQLException;
 }
