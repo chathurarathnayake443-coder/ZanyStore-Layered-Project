@@ -12,9 +12,4 @@ import java.util.List;
 
 public interface TaskDAO extends CrudDAO<Task> {
 
-    public boolean save(Task task) throws SQLException;
-
-    public List<Task> getAll() throws SQLException;
-
-    public boolean delete(int id) throws SQLException;
 }

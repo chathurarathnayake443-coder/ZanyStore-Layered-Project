@@ -36,11 +36,12 @@ public class UserDAOImpl implements UserDAO {
         ResultSet result =  CrudUtil.execute("SELECT user_name, user_address, user_salary, user_contact_no, user_password FROM user WHERE user_name = ?",name);
 
         if(result.next()){
+            String user_name = result.getString("user_name");
             String user_address = result.getString("user_address");
             String user_salary = result.getString("user_salary");
             String user_contact_no = result.getString("user_contact_no");
             String user_password = result.getString("user_password");
-            return new User(user_password, user_address,Double.parseDouble(user_salary),user_contact_no);
+            return new User(user_name, user_password, user_address,Double.parseDouble(user_salary),user_contact_no);
         }
         return null;
     }

@@ -14,13 +14,7 @@ public interface UserDAO extends CrudDAO<User> {
 
     public boolean exist(String name) throws SQLException;
 
-    public boolean save(User entity) throws SQLException;
-
     public boolean delete(String name) throws SQLException;
 
     public User find(String name) throws SQLException;
-
-    public List<User> getAll() throws SQLException;
-
-    public boolean update(User entity) throws SQLException;
 }

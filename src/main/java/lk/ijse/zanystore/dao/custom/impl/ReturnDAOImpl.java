@@ -23,7 +23,8 @@ public class ReturnDAOImpl implements ReturnDAO {
 
     @Override
     public boolean delete(int id) throws SQLException {
-        return false;
+        boolean result = CrudUtil.execute("DELETE FROM return_order WHERE return_order_id = ?",id);
+        return result;
     }
 
     @Override
@@ -52,11 +53,6 @@ public class ReturnDAOImpl implements ReturnDAO {
             return String.valueOf(id);
         }
         return null;
-    }
-
-    public boolean delete(String id) throws SQLException {
-        boolean result = CrudUtil.execute("DELETE FROM return_order WHERE return_order_id = ?",id);
-        return result;
     }
 
     public int getTotalCount() throws SQLException {

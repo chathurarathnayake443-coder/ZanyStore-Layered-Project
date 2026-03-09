@@ -9,15 +9,4 @@ import java.util.List;
 
 public interface EmployeeDAO extends CrudDAO<Employee> {
 
-    public Employee find(int empId) throws SQLException;
-
-    public boolean save(Employee employeeDTO) throws SQLException;
-
-    public boolean update(Employee employeeDTO) throws SQLException;
-
-    public boolean delete(int empId) throws SQLException;
-
-    public List<Employee> getAll() throws SQLException;
-
-    public String showNextId() throws SQLException;
 }

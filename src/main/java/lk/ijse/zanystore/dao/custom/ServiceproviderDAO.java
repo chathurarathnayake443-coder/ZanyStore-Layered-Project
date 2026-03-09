@@ -12,13 +12,4 @@ import java.util.List;
 
 public interface ServiceproviderDAO extends CrudDAO<ServiceProvider> {
 
-    public boolean save(ServiceProvider entity) throws SQLException;
-
-    public boolean update(ServiceProvider entity) throws SQLException;
-
-    public boolean delete(int id) throws SQLException;
-
-    public List<ServiceProvider> getAll() throws SQLException;
-
-    public String showNextId() throws SQLException;
 }

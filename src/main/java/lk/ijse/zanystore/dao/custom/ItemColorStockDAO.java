@@ -11,11 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ItemColorStockDAO extends CrudDAO<ItemColorStock> {
-    public boolean update(ItemColorStock entity) throws SQLException;
-
-    public boolean save(ItemColorStock entity) throws SQLException;
-
-    public boolean delete(int id) throws SQLException;
 
     public List<String> getColors(int itemId) throws SQLException;
 

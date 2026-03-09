@@ -10,13 +10,5 @@ import java.sql.SQLException;
 
 public interface ReturnDAO extends CrudDAO<Return> {
 
-    public boolean save(Return entity) throws SQLException;
-
-    public String showNextId() throws SQLException;
-
-    public String getId() throws SQLException;
-
-    public boolean delete(String id) throws SQLException;
-
     public int getTotalCount() throws SQLException;
 }

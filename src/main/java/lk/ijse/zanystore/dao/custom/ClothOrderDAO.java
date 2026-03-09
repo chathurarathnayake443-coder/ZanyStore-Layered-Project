@@ -12,12 +12,6 @@ import java.util.List;
 
 public interface ClothOrderDAO extends CrudDAO<ClothOrder> {
 
-    public String showNextId() throws SQLException;
-
-    public boolean save(ClothOrder entity) throws SQLException;
-
-    public String getId() throws SQLException;
-
     public List<String> getAllId() throws SQLException;
 
     public int getOrderCount() throws SQLException;

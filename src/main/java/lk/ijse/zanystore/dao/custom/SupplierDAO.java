@@ -12,13 +12,4 @@ import java.util.List;
 
 public interface SupplierDAO extends CrudDAO<Supplier> {
 
-    public boolean save(Supplier entity) throws SQLException;
-
-    public boolean update(Supplier entity) throws SQLException;
-
-    public boolean delete(int id) throws SQLException;
-
-    public List<Supplier> getAll() throws SQLException;
-
-    public String showNextId() throws SQLException;
 }

@@ -10,7 +10,4 @@ import java.sql.SQLException;
 
 public interface QuotationDAO extends CrudDAO<Quotation> {
 
-    public String getId() throws SQLException;
-
-    public boolean save(Quotation entity) throws SQLException;
 }

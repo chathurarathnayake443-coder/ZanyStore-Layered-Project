@@ -9,7 +9,4 @@ import java.sql.SQLException;
 
 public interface ReturnDetailDAO extends CrudDAO<ReturnDetail> {
 
-    public boolean save(ReturnDetail entity) throws SQLException;
-
-    public boolean delete(String id) throws SQLException;
 }

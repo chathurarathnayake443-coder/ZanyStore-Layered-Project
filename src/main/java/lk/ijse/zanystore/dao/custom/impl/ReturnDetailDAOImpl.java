@@ -22,7 +22,8 @@ public class ReturnDetailDAOImpl implements ReturnDetailDAO {
 
     @Override
     public boolean delete(int id) throws SQLException {
-        return false;
+        boolean result = CrudUtil.execute("DELETE FROM return_order_details WHERE return_order_id = ?",id);
+        return result;
     }
 
     @Override
@@ -43,10 +44,5 @@ public class ReturnDetailDAOImpl implements ReturnDetailDAO {
     @Override
     public String getId() throws SQLException {
         return "";
-    }
-
-    public boolean delete(String id) throws SQLException {
-        boolean result = CrudUtil.execute("DELETE FROM return_order_details WHERE return_order_id = ?",id);
-        return result;
     }
 }

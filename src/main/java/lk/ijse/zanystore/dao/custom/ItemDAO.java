@@ -14,12 +14,6 @@ public interface ItemDAO extends CrudDAO<Item> {
 
     public Item find(String name) throws SQLException;
 
-    public boolean save(Item entity) throws SQLException;
-
-    public boolean delete(int id) throws SQLException;
-
-    public String showNextId() throws SQLException;
-
     public List<String> getNames() throws SQLException;
 
     public int getIds(String itemName) throws SQLException;

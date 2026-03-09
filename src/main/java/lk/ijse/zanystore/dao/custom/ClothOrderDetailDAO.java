@@ -9,5 +9,4 @@ import java.sql.SQLException;
 
 public interface ClothOrderDetailDAO extends CrudDAO<OrderItem> {
 
-    public boolean save(OrderItem entity) throws SQLException;
 }

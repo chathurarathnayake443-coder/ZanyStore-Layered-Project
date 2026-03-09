@@ -8,13 +8,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface CustomerDAO extends CrudDAO<Customer> {
-    public boolean save(Customer entity) throws SQLException;
 
-    public boolean update(Customer entity) throws SQLException;
-
-    public boolean delete(int id) throws SQLException;
-
-    public List<Customer> getAll() throws SQLException;
-
-    public String showNextId() throws SQLException;
 }
