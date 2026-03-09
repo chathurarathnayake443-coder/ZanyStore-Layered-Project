@@ -25,9 +25,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
 import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
+import lk.ijse.zanystore.dto.QueryDTO.LoadOtherDetailsDTO;
 import lk.ijse.zanystore.dto.UsedItemDTO;
 
 /**
@@ -69,6 +71,7 @@ public class UsedItemsController implements Initializable {
     private TableColumn colQty;
 
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PLACE_ORDER);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -120,21 +123,12 @@ private void loadId(){
 @FXML
 private void loadOtherDetails(int id){
     try{
-        Connection conn = DBConnection.getInstance().getConnection();
-        
-        String sql = "SELECT customer.customer_name, payment.payment_amount, cloth_order.cloth_order_end_date FROM cloth_order JOIN customer ON customer.customer_id = cloth_order.customer_id LEFT JOIN order_payment_details ON cloth_order.cloth_order_id = order_payment_details.cloth_order_id LEFT JOIN payment ON order_payment_details.payment_id = payment.payment_id WHERE cloth_order.cloth_order_id = ?";
-        
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        pstm.setInt(1, id);
-        
-        ResultSet results = pstm.executeQuery();
-        
-       if(results.next()){ 
-            nameField.setText(results.getString("customer_name"));
-            priceField.setText(String.valueOf(results.getDouble("payment_amount")));
-            dateField.setText(results.getString("cloth_order_end_date"));
-        }
+        LoadOtherDetailsDTO dto = queryBO.loadOtherDetailsTable(id);
+
+            nameField.setText(dto.getCustomer_name());
+            priceField.setText(String.valueOf(dto.getPayment_amount()));
+            dateField.setText(dto.getCloth_order_end_date());
+
     }
     catch(Exception e){
         e.printStackTrace();

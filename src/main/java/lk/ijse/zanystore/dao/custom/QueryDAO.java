@@ -24,4 +24,6 @@ public interface QueryDAO extends SuperDAO {
     public List<String> loadItemColorsTable(String itemName) throws SQLException;
 
     public List<LoadReturnDTO> loadReturnTable() throws SQLException;
+
+    public LoadOtherDetailsDTO loadOtherDetailsTable(int id) throws SQLException;
 }

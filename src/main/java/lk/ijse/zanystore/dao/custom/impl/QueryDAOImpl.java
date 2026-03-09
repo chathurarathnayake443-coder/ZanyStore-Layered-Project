@@ -125,4 +125,17 @@ public class QueryDAOImpl implements QueryDAO {
         return list;
     }
 
+    //for UsedItemsController -> loadOtherDetailsTable();
+    public LoadOtherDetailsDTO loadOtherDetailsTable(int id) throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT customer.customer_name, payment.payment_amount, cloth_order.cloth_order_end_date FROM cloth_order JOIN customer ON customer.customer_id = cloth_order.customer_id LEFT JOIN order_payment_details ON cloth_order.cloth_order_id = order_payment_details.cloth_order_id LEFT JOIN payment ON order_payment_details.payment_id = payment.payment_id WHERE cloth_order.cloth_order_id = ?",id);
+        if (results.next()) {
+            String customerName = results.getString("customer_name");
+            double paymentAmount = results.getDouble("payment_amount");
+            String clothOrderEndDate = results.getString("cloth_order_end_date");
+
+            return new LoadOtherDetailsDTO(customerName,paymentAmount,clothOrderEndDate);
+        }
+        return null;
+    }
+
 }

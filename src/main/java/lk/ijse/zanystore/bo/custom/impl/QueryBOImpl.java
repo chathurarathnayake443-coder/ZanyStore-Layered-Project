@@ -49,4 +49,9 @@ public class QueryBOImpl implements QueryBO {
         List<LoadReturnDTO> list = queryDAO.loadReturnTable();
         return list;
     }
+
+    public LoadOtherDetailsDTO loadOtherDetailsTable(int id) throws SQLException {
+        LoadOtherDetailsDTO dto = queryDAO.loadOtherDetailsTable(id);
+        return dto;
+    }
 }
