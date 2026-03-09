@@ -61,7 +61,8 @@ public class CreateQuotationBOImpl implements CreateQuotationBO {
                     return false;
                 }
             }
-
+            connection.commit();
+            connection.setAutoCommit(true);
         }
         catch (Exception e) {
             try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }

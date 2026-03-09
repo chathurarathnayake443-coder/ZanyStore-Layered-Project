@@ -37,17 +37,20 @@ public class ReturnBOImpl implements ReturnBO {
 
             String id = returnDAO.getId();
 
-            boolean r2 = returnDetailDAO.save(new ReturnDetail(Integer.parseInt(orderId),Integer.parseInt(id),date));
+            boolean r2 = returnDetailDAO.save(new ReturnDetail(Integer.parseInt(id),Integer.parseInt(orderId),date));
 
             if (!r2) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 return false;
             }
+            connection.commit();
+            connection.setAutoCommit(true);
         }
         catch (Exception e) {
             try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
             e.printStackTrace();
+            return false;
         } finally {
             try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
@@ -75,10 +78,13 @@ public class ReturnBOImpl implements ReturnBO {
                 connection.setAutoCommit(true);
                 //return false;
             }
+            connection.commit();
+            connection.setAutoCommit(true);
         }
         catch (Exception e) {
             try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
             e.printStackTrace();
+            return false;
         } finally {
             try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }

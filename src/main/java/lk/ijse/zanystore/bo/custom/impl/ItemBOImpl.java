@@ -30,26 +30,48 @@ public class ItemBOImpl implements ItemBO {
             connection.setAutoCommit(false);
 
             int itemId = createId(name, type, price);
+            boolean colorExists = itemColorStockDAO.exists(itemId, color);
 
-            boolean b1 = itemColorStockDAO.update(new ItemColorStock(itemId, color, qtyToAdd));
+            if (colorExists) {
+                boolean b1 = itemColorStockDAO.update(new ItemColorStock(itemId, color, qtyToAdd));
 
-            if (!b1) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
+                if (!b1) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    return false;
+                }
+            } else {
+                boolean b2 = itemColorStockDAO.save(new ItemColorStock(itemId, color, qtyToAdd));
+
+                if (!b2) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    return false;
+                }
             }
 
-            boolean b2 = itemColorStockDAO.save(new ItemColorStock(itemId, color, qtyToAdd));
-
-            if (!b2) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
-            }
+//            boolean b1 = itemColorStockDAO.update(new ItemColorStock(itemId, color, qtyToAdd));
+//
+//            if (!b1) {
+//                connection.rollback();
+//                connection.setAutoCommit(true);
+//                return false;
+//            }
+//
+//            boolean b2 = itemColorStockDAO.save(new ItemColorStock(itemId, color, qtyToAdd));
+//
+//            if (!b2) {
+//                connection.rollback();
+//                connection.setAutoCommit(true);
+//                return false;
+//            }
+            connection.commit();
+            connection.setAutoCommit(true);
         }
         catch (Exception e) {
                 try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
                 e.printStackTrace();
+                return false;
             } finally {
                 try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
             }

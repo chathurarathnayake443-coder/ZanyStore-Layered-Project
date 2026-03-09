@@ -143,8 +143,11 @@ public class ItemController implements Initializable {
             boolean result = itemBO.saveItem(color, qtyToAdd, name, type, unitPrice);
             if (!result) {
                 new Alert(Alert.AlertType.ERROR, "Failed to Save Item!").show();
+                return;
             }
             new Alert(Alert.AlertType.INFORMATION, "Item Saved!").show();
+            loadItemTable();
+            showNextId();
 
         } catch (Exception e) {
             e.printStackTrace();

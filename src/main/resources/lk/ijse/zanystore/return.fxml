@@ -45,6 +45,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="( fill )" />
                   <TextField fx:id="orderIdField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
                      <VBox.margin>
                         <Insets top="20.0" />
@@ -58,6 +59,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="( fill )" />
                   <TextField fx:id="detailField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
                      <VBox.margin>
                         <Insets top="20.0" />
@@ -75,7 +77,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField fx:id="nameField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                  <TextField fx:id="nameField" disable="true" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -88,7 +90,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField fx:id="addressField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
+                  <TextField fx:id="addressField" disable="true" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -101,6 +103,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="( fill )" />
                   <TextField fx:id="dateField" prefHeight="36.0" prefWidth="548.0" style="-fx-background-radius: 10px;">
                      <VBox.margin>
                         <Insets top="20.0" />

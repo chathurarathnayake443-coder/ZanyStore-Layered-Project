@@ -12,7 +12,7 @@ import java.util.List;
 public class QuotationItemDAOImpl implements QuotationItemDAO {
 
     public boolean save(QuotationItem entity) throws SQLException {
-        boolean result = CrudUtil.execute("INSERT INTO quotation_item (quotation_id,item_name, color,quantity,unit_price) VALUES (?,?,?,?,?)", entity.getQuotation_item_id(), entity.getItem_name(),entity.getColor(),entity.getQuantity(),entity.getUnit_price());
+        boolean result = CrudUtil.execute("INSERT INTO quotation_item (quotation_id,item_name, color,quantity,unit_price) VALUES (?,?,?,?,?)", entity.getQuotation_id(), entity.getItem_name(),entity.getColor(),entity.getQuantity(),entity.getUnit_price());
         return result;
     }
 

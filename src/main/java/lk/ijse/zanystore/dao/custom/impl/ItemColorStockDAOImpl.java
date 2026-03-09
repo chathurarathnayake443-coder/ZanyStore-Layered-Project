@@ -17,6 +17,17 @@ public class ItemColorStockDAOImpl implements ItemColorStockDAO {
         return result;
     }
 
+    public boolean exists(int itemId, String color) throws SQLException {
+        ResultSet result = CrudUtil.execute(
+                "SELECT COUNT(*) AS count FROM item_color_stock WHERE item_id = ? AND color = ?",
+                itemId, color
+        );
+        if (result.next()) {
+            return result.getInt("count") > 0;
+        }
+        return false;
+    }
+
     public boolean save(ItemColorStock entity) throws SQLException {
         boolean result = CrudUtil.execute("INSERT INTO item_color_stock (item_id, color, qty) VALUES (?, ?, ?)",entity.getItem_id(),entity.getColor(),entity.getQty());
         return result;

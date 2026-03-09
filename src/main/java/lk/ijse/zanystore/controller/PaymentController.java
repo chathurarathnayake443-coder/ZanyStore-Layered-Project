@@ -120,10 +120,10 @@ public class PaymentController implements Initializable {
         showNextId();
         loadPaymentTypes();
         
-        colPId.setCellValueFactory(new PropertyValueFactory<>("paymentId"));
-        colOId.setCellValueFactory(new PropertyValueFactory<>("orderId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colPId.setCellValueFactory(new PropertyValueFactory<>("payment_id"));
+        colOId.setCellValueFactory(new PropertyValueFactory<>("cloth_order_id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("customer_name"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("payment_amount"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         
         loadpaymentTable();
@@ -167,7 +167,7 @@ private void showNextId(){
 
                 System.out.println("payment id : " + pIdField.getText());
 
-                boolean result = paymentBO.savePayment(amount,method,pId,oId,cId,date);
+                boolean result = paymentBO.savePayment(amount,method,oId,pId,cId,date);
 
                 if(!result){
                     new Alert(Alert.AlertType.ERROR, "Failed to Place Payment !").show();

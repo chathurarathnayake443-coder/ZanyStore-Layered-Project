@@ -11,4 +11,6 @@ import java.sql.SQLException;
 public interface ReturnDAO extends CrudDAO<Return> {
 
     public int getTotalCount() throws SQLException;
+
+    public int getLastInsertedId() throws SQLException;
 }

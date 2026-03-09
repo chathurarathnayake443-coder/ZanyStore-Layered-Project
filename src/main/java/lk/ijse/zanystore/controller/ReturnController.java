@@ -87,20 +87,18 @@ public class ReturnController implements Initializable {
     
     @FXML
     private void clickAddReturn() {
-        Connection connection = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-
             String orderId = orderIdField.getText().trim();
             String detail = detailField.getText();
             String date = dateField.getText();
 
-            boolean result = returnBO.saveReturn(orderId, detail, date);
+            boolean result = returnBO.saveReturn(detail, orderId, date);
 
             if (!result) {
                 new Alert(Alert.AlertType.ERROR, "Return Creation Unsuccessful !").show();
             }
+            new Alert(Alert.AlertType.INFORMATION, "Return Created Successfully").show();
+            loadReturnTable();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +128,7 @@ public class ReturnController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Return Delete Unsuccessful !").show();
                 }
                 loadReturnTable();
-                new Alert(Alert.AlertType.INFORMATION, "Return Recorded Successfully").show();
+                new Alert(Alert.AlertType.INFORMATION, "Return Deleted Successfully").show();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Something went Wrong !").show();

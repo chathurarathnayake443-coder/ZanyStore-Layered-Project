@@ -55,6 +55,14 @@ public class ReturnDAOImpl implements ReturnDAO {
         return null;
     }
 
+    public int getLastInsertedId() throws SQLException {
+        ResultSet result = CrudUtil.execute("SELECT LAST_INSERT_ID() AS id");
+        if (result.next()) {
+            return result.getInt("id");
+        }
+        throw new SQLException("Could not retrieve last inserted return ID");
+    }
+
     public int getTotalCount() throws SQLException {
         ResultSet results = CrudUtil.execute("SELECT COUNT(return_order_id) AS total_returns FROM return_order");
         if (results.next()) {

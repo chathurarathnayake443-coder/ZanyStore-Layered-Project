@@ -34,7 +34,7 @@ public class UserBOImpl implements UserBO {
     public UserDTO findUser(String name) throws SQLException {
         User user = userDAO.find(name);
         if (user == null) return null;
-        return new UserDTO(user.getUser_password());
+        return new UserDTO(user.getUser_name(),user.getUser_password(),user.getUser_salary(),user.getUser_address(),user.getUser_contact_no());
     }
 
     public boolean updateUser(UserDTO userDTO) throws SQLException {

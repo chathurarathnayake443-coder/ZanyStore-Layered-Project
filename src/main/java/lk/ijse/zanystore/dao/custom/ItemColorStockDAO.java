@@ -21,4 +21,6 @@ public interface ItemColorStockDAO extends CrudDAO<ItemColorStock> {
     public List<String> getColorsById(int id) throws SQLException;
 
     public boolean decreaseQty(ItemColorStock entity) throws SQLException;
+
+    public boolean exists(int itemId, String color) throws SQLException;
 }
