@@ -29,6 +29,7 @@ import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.CreateQuotationBO;
 import lk.ijse.zanystore.bo.custom.ItemBO;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.impl.CreateQuotationBOImpl;
 import lk.ijse.zanystore.bo.custom.impl.ItemBOImpl;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
@@ -103,6 +104,7 @@ public class QuotationController implements Initializable {
     private ObservableList<QuotationDTO> quotationItemObList = FXCollections.observableArrayList();
 
     CreateQuotationBO createQuotationBO = (CreateQuotationBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUOTATION);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -182,21 +184,14 @@ public class QuotationController implements Initializable {
     @FXML
     private void loadItemColors(String itemName){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
-            
-            String sql = "SELECT ics.color FROM item i JOIN item_color_stock ics ON i.item_id = ics.item_id WHERE i.item_name = ?";
-            
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, itemName);
-            
             ObservableList<String> colorList = FXCollections.observableArrayList();
+
+            List<String> itemColors = queryBO.loadItemColorsTable(itemName);
             
-            ResultSet results = pstm.executeQuery();
-            
-            while(results.next()){
-                colorList.add(results.getString("color"));
+            for(String color : itemColors){
+                colorList.add(color);
             }
-            
+
             colorBox.setItems(colorList);
             loadQty(itemName);
             

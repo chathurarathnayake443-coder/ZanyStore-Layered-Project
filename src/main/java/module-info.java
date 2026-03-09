@@ -4,7 +4,7 @@ module lk.ijse.zanystore {
     requires java.sql;
     requires java.base;
     requires net.sf.jasperreports.core;
-    requires lk.ijse.zanystore;
+    //requires lk.ijse.zanystore;
     //requires lk.ijse.zanystore;
 
     opens lk.ijse.zanystore.controller to javafx.fxml;

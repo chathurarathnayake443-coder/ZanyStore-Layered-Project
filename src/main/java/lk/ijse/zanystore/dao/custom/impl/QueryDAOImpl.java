@@ -98,4 +98,14 @@ public class QueryDAOImpl implements QueryDAO {
         return list;
     }
 
+    //for QuotationController -> loadItemColors();
+    public List<String> loadItemColorsTable(String itemName) throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT ics.color FROM item i JOIN item_color_stock ics ON i.item_id = ics.item_id WHERE i.item_name = ?", itemName);
+        List<String> list = new ArrayList<>();
+        while (results.next()) {
+            list.add(results.getString("color"));
+        }
+        return list;
+    }
+
 }

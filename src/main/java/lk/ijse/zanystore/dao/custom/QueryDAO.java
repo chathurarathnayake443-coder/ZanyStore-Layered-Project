@@ -20,4 +20,6 @@ public interface QueryDAO extends SuperDAO {
     public List<LoadLowStockDTO> loadLowStockTable() throws SQLException;
 
     public List<LoadPaymentDTO> loadPaymentTable() throws SQLException;
+
+    public List<String> loadItemColorsTable(String itemName) throws SQLException;
 }
