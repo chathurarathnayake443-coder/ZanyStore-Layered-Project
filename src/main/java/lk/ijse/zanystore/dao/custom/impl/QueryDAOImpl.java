@@ -1,6 +1,7 @@
 package lk.ijse.zanystore.dao.custom.impl;
 
 import lk.ijse.zanystore.dao.custom.QueryDAO;
+import lk.ijse.zanystore.dto.OrderDTO;
 import lk.ijse.zanystore.dto.QueryDTO.*;
 import lk.ijse.zanystore.util.CrudUtil;
 
@@ -150,6 +151,25 @@ public class QueryDAOImpl implements QueryDAO {
             list.add(new LoadItemDetailDTO(color,qty,itemName));
         }
         return list;
+    }
+
+    //for OrderViewController -> loadOrderViewTable();
+    public List<LoadOrderViewDTO> loadOrderViewTable() throws SQLException{
+        ResultSet results = CrudUtil.execute("SELECT c.cloth_order_id, c.cloth_order_description, c.cloth_order_start_date, c.cloth_order_end_date, c.customer_id FROM cloth_order c JOIN order_serprovider_details os ON c.cloth_order_id = os.cloth_order_id");
+
+        List<LoadOrderViewDTO> orderList = new ArrayList<>();
+
+        while(results.next()){
+            int orderId = results.getInt("cloth_order_id");
+            int cusId = results.getInt("customer_id");
+            String detail = results.getString("cloth_order_description");
+            String startDate = results.getString("cloth_order_start_date");
+            String endDate = results.getString("cloth_order_end_date");
+
+            orderList.add(new LoadOrderViewDTO(orderId,detail,startDate,endDate,cusId));
+        }
+
+        return orderList;
     }
 
 }

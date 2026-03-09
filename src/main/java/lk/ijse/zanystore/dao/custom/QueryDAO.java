@@ -28,4 +28,6 @@ public interface QueryDAO extends SuperDAO {
     public LoadOtherDetailsDTO loadOtherDetailsTable(int id) throws SQLException;
 
     public List<LoadItemDetailDTO> loadItemDetailTable(int id) throws SQLException;
+
+    public List<LoadOrderViewDTO> loadOrderViewTable() throws SQLException;
 }

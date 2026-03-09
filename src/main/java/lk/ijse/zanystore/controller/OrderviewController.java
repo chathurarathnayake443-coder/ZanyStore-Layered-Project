@@ -17,8 +17,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.OrderDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadOrderViewDTO;
 import lk.ijse.zanystore.model.OrderviewModel;
 
 public class OrderviewController implements Initializable {
@@ -46,8 +49,8 @@ public class OrderviewController implements Initializable {
     
     @FXML
     private Button closeBtn;
-    
-    private OrderviewModel orderViewModel = new OrderviewModel();
+
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
 
      @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,11 +75,11 @@ public class OrderviewController implements Initializable {
     @FXML
     private void loadTable(){
         try{
-            List<OrderDTO> orderList = orderViewModel.loadOrderViewTable();
+            List<LoadOrderViewDTO> orderList = queryBO.loadOrderViewTable();
             
-            ObservableList<OrderDTO> obList = FXCollections.observableArrayList();
+            ObservableList<LoadOrderViewDTO> obList = FXCollections.observableArrayList();
             
-            for(OrderDTO orderDTO : orderList){
+            for(LoadOrderViewDTO orderDTO : orderList){
                 obList.add(orderDTO);
             }
             

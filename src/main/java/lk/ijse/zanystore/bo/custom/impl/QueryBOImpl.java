@@ -59,4 +59,9 @@ public class QueryBOImpl implements QueryBO {
         List<LoadItemDetailDTO> list = queryDAO.loadItemDetailTable(id);
         return list;
     }
+
+    public List<LoadOrderViewDTO> loadOrderViewTable() throws SQLException {
+        List<LoadOrderViewDTO> list = queryDAO.loadOrderViewTable();
+        return list;
+    }
 }
