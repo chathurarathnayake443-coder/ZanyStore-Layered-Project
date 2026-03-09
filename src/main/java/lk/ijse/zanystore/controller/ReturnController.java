@@ -19,11 +19,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.ReturnBO;
 import lk.ijse.zanystore.bo.custom.impl.ReturnBOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDetailDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
+import lk.ijse.zanystore.dto.QueryDTO.LoadReturnDTO;
 import lk.ijse.zanystore.dto.ReturnDTO;
 import lk.ijse.zanystore.dto.SupplierDTO;
 
@@ -57,6 +59,7 @@ public class ReturnController implements Initializable {
     private TableColumn colOrderId;
 
     ReturnBO returnBO =  (ReturnBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.RETURN);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,14 +70,14 @@ public class ReturnController implements Initializable {
         
         tableReturn.setOnMouseClicked(event -> {
         Object object = tableReturn.getSelectionModel().getSelectedItem();
-        ReturnDTO selected = (ReturnDTO)object;
+        LoadReturnDTO selected = (LoadReturnDTO)object;
         if (selected != null) {
             returnIdField.setText(String.valueOf(selected.getReturn_order_id()));
             orderIdField.setText(String.valueOf(selected.getCloth_order_id()));
             detailField.setText(selected.getReturn_order_details());
             nameField.setText(selected.getCustomer_name());
             addressField.setText(selected.getCustomer_address());
-            dateField.setText(selected.getReturn_date());
+            dateField.setText(selected.getOrder_return_date());
         }
     });
         
@@ -153,31 +156,10 @@ public class ReturnController implements Initializable {
     @FXML
     private void loadReturnTable(){
         try{
-            Connection conn = DBConnection.getInstance().getConnection();
+            List<LoadReturnDTO> returnList = queryBO.loadReturnTable();
+            ObservableList<LoadReturnDTO> obList = FXCollections.observableArrayList();
             
-            String sql = "SELECT r.return_order_id, o.cloth_order_id, r.return_order_details, c.customer_name, c.customer_address, ro.order_return_date FROM return_order_details ro JOIN return_order r ON ro.return_order_id = r.return_order_id JOIN cloth_order o ON ro.cloth_order_id = o.cloth_order_id JOIN customer c ON c.customer_id = o.customer_id";
-            
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            ResultSet results = pstm.executeQuery();
-            
-            List<ReturnDTO> returnList = new ArrayList<>();
-            
-            while(results.next()){
-                int returnId = results.getInt("return_order_id");
-                int orderId = results.getInt("cloth_order_id");
-                String description = results.getString("return_order_details");
-                String cusName = results.getString("customer_name");
-                String cusAddress = results.getString("customer_address");
-                String date = results.getString("order_return_date");
-                
-                ReturnDTO returns = new ReturnDTO(returnId, orderId,description,cusName,cusAddress,date);
-                returnList.add(returns);
-            }
-            
-            ObservableList<ReturnDTO> obList = FXCollections.observableArrayList();
-            
-            for(ReturnDTO returns : returnList){
+            for(LoadReturnDTO returns : returnList){
                 obList.add(returns);
             }
             

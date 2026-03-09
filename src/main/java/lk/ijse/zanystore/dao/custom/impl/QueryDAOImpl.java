@@ -108,4 +108,21 @@ public class QueryDAOImpl implements QueryDAO {
         return list;
     }
 
+    //for ReturnController -> loadReturnTable();
+    public List<LoadReturnDTO> loadReturnTable() throws SQLException {
+        ResultSet results = CrudUtil.execute("SELECT r.return_order_id, o.cloth_order_id, r.return_order_details, c.customer_name, c.customer_address, ro.order_return_date FROM return_order_details ro JOIN return_order r ON ro.return_order_id = r.return_order_id JOIN cloth_order o ON ro.cloth_order_id = o.cloth_order_id JOIN customer c ON c.customer_id = o.customer_id");
+        List<LoadReturnDTO> list = new ArrayList<>();
+        while (results.next()) {
+            int returnOrderId = results.getInt("return_order_id");
+            int clothOrderId = results.getInt("cloth_order_id");
+            String returnOrderDetails = results.getString("return_order_details");
+            String customerName = results.getString("customer_name");
+            String customerAddress = results.getString("customer_address");
+            String date = results.getString("order_return_date");
+
+            list.add(new LoadReturnDTO(returnOrderId,clothOrderId,returnOrderDetails,customerName,customerAddress,date));
+        }
+        return list;
+    }
+
 }

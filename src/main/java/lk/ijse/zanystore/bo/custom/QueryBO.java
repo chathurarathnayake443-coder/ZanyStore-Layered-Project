@@ -19,4 +19,6 @@ public interface QueryBO extends SuperBO {
     public List<LoadPaymentDTO> loadPaymentTable() throws SQLException;
 
     public List<String> loadItemColorsTable(String itemName) throws SQLException;
+
+    public List<LoadReturnDTO> loadReturnTable() throws SQLException;
 }

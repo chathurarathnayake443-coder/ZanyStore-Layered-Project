@@ -44,4 +44,9 @@ public class QueryBOImpl implements QueryBO {
         List<String> list = queryDAO.loadItemColorsTable(itemName);
         return list;
     }
+
+    public List<LoadReturnDTO> loadReturnTable() throws SQLException {
+        List<LoadReturnDTO> list = queryDAO.loadReturnTable();
+        return list;
+    }
 }
