@@ -22,7 +22,6 @@ import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.OrderDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadOrderViewDTO;
-import lk.ijse.zanystore.model.OrderviewModel;
 
 public class OrderviewController implements Initializable {
 

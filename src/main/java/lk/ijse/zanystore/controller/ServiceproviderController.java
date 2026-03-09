@@ -27,7 +27,6 @@ import lk.ijse.zanystore.dao.custom.impl.ServiceproviderDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.EmployeeDTO;
 import lk.ijse.zanystore.dto.ServiceproviderDTO;
-import lk.ijse.zanystore.model.ServiceproviderModel;
 
 public class ServiceproviderController implements Initializable {
     
