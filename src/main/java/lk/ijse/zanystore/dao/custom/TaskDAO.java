@@ -16,5 +16,5 @@ public interface TaskDAO extends CrudDAO<Task> {
 
     public List<Task> getAll() throws SQLException;
 
-    public boolean delete(Task task) throws SQLException;
+    public boolean delete(int id) throws SQLException;
 }

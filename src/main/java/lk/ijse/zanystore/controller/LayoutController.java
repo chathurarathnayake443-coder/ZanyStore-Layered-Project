@@ -438,10 +438,10 @@ private void setupButton(Button btn) {
           try{
               double amount = layoutBO.getSumOfPayments();
 
-                String total = String.valueOf(amount);
-                salesLbl.setText(total);
-                int total1 = (int)amount;
-                animateFindTotal(total1);
+              String total = String.valueOf(amount/1000);
+              salesLbl.setText(total);
+              int total1 = (int)amount/1000;
+              animateFindTotal(total1);
 
           }
           catch(Exception e){
@@ -586,14 +586,18 @@ private void setupButton(Button btn) {
             e.printStackTrace();
         }
     }
-    
+
     private void deleteTask(TaskDTO task) {
-    try {
-        boolean result = layoutBO.deleteTask(task);
-    } catch (Exception e) {
-        e.printStackTrace();
+        try {
+            boolean result = layoutBO.deleteTask(task);
+            if (!result) {
+                new Alert(Alert.AlertType.ERROR, "Failed to remove task!").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error deleting task!").show();
+        }
     }
-}
     
     @FXML
 private void clickLowStock() throws IOException {

@@ -24,7 +24,7 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public boolean delete(int id) throws SQLException {
-        return false;
+        return CrudUtil.execute("DELETE FROM task WHERE task_id = ?", id);
     }
 
     public List<Task> getAll() throws SQLException{
@@ -55,8 +55,8 @@ public class TaskDAOImpl implements TaskDAO {
         return "";
     }
 
-    public boolean delete(Task task) throws SQLException {
-        boolean result = CrudUtil.execute("DELETE FROM task WHERE task_name = ? AND date = ?",task.getTask_name(),task.getDate());
-        return result;
-    }
+//    public boolean delete(Task task) throws SQLException {
+//        boolean result = CrudUtil.execute("DELETE FROM task WHERE task_name = ? AND date = ?",task.getTask_name(),task.getDate());
+//        return result;
+//    }
 }
