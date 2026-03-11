@@ -49,22 +49,6 @@ public class ItemBOImpl implements ItemBO {
                     return false;
                 }
             }
-
-//            boolean b1 = itemColorStockDAO.update(new ItemColorStock(itemId, color, qtyToAdd));
-//
-//            if (!b1) {
-//                connection.rollback();
-//                connection.setAutoCommit(true);
-//                return false;
-//            }
-//
-//            boolean b2 = itemColorStockDAO.save(new ItemColorStock(itemId, color, qtyToAdd));
-//
-//            if (!b2) {
-//                connection.rollback();
-//                connection.setAutoCommit(true);
-//                return false;
-//            }
             connection.commit();
             connection.setAutoCommit(true);
         }
@@ -91,13 +75,37 @@ public class ItemBOImpl implements ItemBO {
         return newItem.getItem_id();
     }
 
-    public boolean deleteItemColors(int itemId) throws SQLException {
-        return itemColorStockDAO.delete(itemId);
-    }
+public boolean deleteItem(int itemId) {
+    Connection connection = null;
+    try {
+        connection = DBConnection.getInstance().getConnection();
+        connection.setAutoCommit(false);
 
-    public boolean deleteItem(int itemId) throws SQLException {
-        return itemDAO.delete(itemId);
+        boolean r1 = itemColorStockDAO.delete(itemId);
+        if (!r1) {
+            connection.rollback();
+            connection.setAutoCommit(true);
+            return false;
+        }
+
+        boolean r2 = itemDAO.delete(itemId);
+        if (!r2) {
+            connection.rollback();
+            connection.setAutoCommit(true);
+            return false;
+        }
+
+        connection.commit();
+        return true;
+
+    } catch (Exception e) {
+        try { if (connection != null) connection.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+        e.printStackTrace();
+        return false;
+    } finally {
+        try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
     }
+}
 
     public List<String> loadItemNames() throws SQLException {
         List<String> itemNames = itemDAO.getNames();

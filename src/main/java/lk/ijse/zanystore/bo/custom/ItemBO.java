@@ -14,8 +14,6 @@ public interface ItemBO extends SuperBO {
 
     public int createId(String name, String type, double price) throws SQLException;
 
-    public boolean deleteItemColors(int itemId) throws SQLException;
-
     public boolean deleteItem(int itemId) throws SQLException;
 
     public List<String> loadItemNames() throws SQLException;

@@ -153,11 +153,7 @@ private void showNextId(){
         
         @FXML
         private void makePayment() {
-            Connection connection = null;
             try {
-                connection = DBConnection.getInstance().getConnection();
-                connection.setAutoCommit(false);
-
                 String pId = pIdField.getText();
                 String oId = oIdField.getText();
                 String cId = cIdField.getText();

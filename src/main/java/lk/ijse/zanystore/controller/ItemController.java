@@ -155,65 +155,102 @@ public class ItemController implements Initializable {
         }
     }
 
+//    @FXML
+//    private void clickDeleteItem() {
+//        try {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//
+//        alert.setTitle("Delete Confirmation");
+//        alert.setHeaderText("Are you sure you want to Delete Item?");
+//
+//        ButtonType yesButton = new ButtonType("Yes");
+//        ButtonType noButton = new ButtonType("No");
+//
+//        alert.getButtonTypes().setAll(yesButton, noButton);
+//
+//        Optional<ButtonType> result = alert.showAndWait();
+//
+//        if (result.isPresent() && result.get() == yesButton) {
+//            String idText = idField.getText();
+//            if (idText == null || idText.trim().isEmpty()) {
+//                new Alert(Alert.AlertType.ERROR, "Enter an Item ID").show();
+//                return;
+//            }
+//            int itemId = Integer.parseInt(idText.trim());
+//
+//            try {
+//                boolean r1 = itemBO.deleteItemColors(itemId);
+//
+//                if (!r1) {
+//                    conn.rollback();
+//                    conn.setAutoCommit(true);
+//                    //return false;
+//                }
+//
+//                boolean affected = itemBO.deleteItem(itemId);
+//                    if (affected) {
+//                        conn.commit();
+//                        new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully !").show();
+//                        cleanFields();
+//                        loadItemTable();
+//                        loadItemNames();
+//                    } else {
+//                        conn.rollback();
+//                        new Alert(Alert.AlertType.ERROR, "No item found with ID: " + itemId).show();
+//                    }
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        } catch (NumberFormatException nfe) {
+//            new Alert(Alert.AlertType.ERROR, "Invalid ID format").show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     @FXML
     private void clickDeleteItem() {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        
-        alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to Delete Item?");
+            alert.setTitle("Delete Confirmation");
+            alert.setHeaderText("Are you sure you want to Delete Item?");
 
-        ButtonType yesButton = new ButtonType("Yes");
-        ButtonType noButton = new ButtonType("No");
+            ButtonType yesButton = new ButtonType("Yes");
+            ButtonType noButton = new ButtonType("No");
+            alert.getButtonTypes().setAll(yesButton, noButton);
 
-        alert.getButtonTypes().setAll(yesButton, noButton);
+            Optional<ButtonType> result = alert.showAndWait();
 
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.isPresent() && result.get() == yesButton) {
-            String idText = idField.getText();
-            if (idText == null || idText.trim().isEmpty()) {
-                new Alert(Alert.AlertType.ERROR, "Enter an Item ID").show();
-                return;
-            }
-            int itemId = Integer.parseInt(idText.trim());
-
-            Connection conn = DBConnection.getInstance().getConnection();
-            conn.setAutoCommit(false);
-
-            try {
-                boolean r1 = itemBO.deleteItemColors(itemId);
-
-                if (!r1) {
-                    conn.rollback();
-                    conn.setAutoCommit(true);
-                    //return false;
+            if (result.isPresent() && result.get() == yesButton) {
+                String idText = idField.getText();
+                if (idText == null || idText.trim().isEmpty()) {
+                    new Alert(Alert.AlertType.ERROR, "Enter an Item ID").show();
+                    return;
                 }
 
-                boolean affected = itemBO.deleteItem(itemId);
-                    if (affected) {
-                        conn.commit();
-                        new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully !").show();
-                        cleanFields();
-                        loadItemTable();
-                        loadItemNames();
-                    } else {
-                        conn.rollback();
-                        new Alert(Alert.AlertType.ERROR, "No item found with ID: " + itemId).show();
-                    }
+                int itemId = Integer.parseInt(idText.trim());
 
-            } catch (SQLException ex) {
-                try { conn.rollback(); } catch (SQLException ignore) {}
-                ex.printStackTrace();
-            } finally {
-                try { conn.setAutoCommit(true); } catch (SQLException ignore) {}
+                boolean deleted = itemBO.deleteItem(itemId);
+
+                if (deleted) {
+                    new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully!").show();
+                    cleanFields();
+                    loadItemTable();
+                    loadItemNames();
+                    showNextId();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "No item found with ID: " + itemId).show();
+                }
             }
-        } 
-            
+
         } catch (NumberFormatException nfe) {
             new Alert(Alert.AlertType.ERROR, "Invalid ID format").show();
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
 
