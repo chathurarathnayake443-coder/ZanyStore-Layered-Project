@@ -126,7 +126,6 @@ public class NewOrderController implements Initializable {
     private TableView tableOrder;
 
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PLACE_ORDER);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     private final ObservableList<OrderItemDTO> orderItemObList = FXCollections.observableArrayList();
 
@@ -192,7 +191,7 @@ public class NewOrderController implements Initializable {
     @FXML
     private void loadItemTable(){
         try{
-            List<LoadItemDTO> itemList = queryBO.loadItemTable();
+            List<LoadItemDTO> itemList = placeOrderBO.loadItemTable();
             ObservableList<LoadItemDTO> obList = FXCollections.observableArrayList();
             
             for(LoadItemDTO itemDTO : itemList){

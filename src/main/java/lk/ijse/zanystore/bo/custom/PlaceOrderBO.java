@@ -2,6 +2,7 @@ package lk.ijse.zanystore.bo.custom;
 
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.OrderItemDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.entity.ClothOrder;
 import lk.ijse.zanystore.entity.ItemColorStock;
 import lk.ijse.zanystore.entity.OrderItem;
@@ -23,4 +24,6 @@ public interface PlaceOrderBO extends SuperBO {
     public String generateNextOrderId() throws SQLException;
 
     public List<String> getAllId() throws SQLException;
+
+    public List<LoadItemDTO> loadItemTable() throws SQLException;
 }

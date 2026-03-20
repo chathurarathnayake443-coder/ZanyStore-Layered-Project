@@ -40,7 +40,6 @@ public class ItemController implements Initializable {
     @FXML private TableColumn<LoadItemDTO, Integer> colQty;
 
     ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.ITEM);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
 
     private final String ITEM_NAME_REGEX = "^[A-Za-z0-9\\s]{3,}$";
     private final String ITEM_TYPE_REGEX = "^[A-Za-z]{1,}$";

@@ -9,6 +9,7 @@ import lk.ijse.zanystore.dto.ItemColorStockDTO;
 import lk.ijse.zanystore.dto.OrderDTO;
 import lk.ijse.zanystore.dto.OrderItemDTO;
 import lk.ijse.zanystore.dto.OrderSerproviderDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.entity.ClothOrder;
 import lk.ijse.zanystore.entity.ItemColorStock;
 import lk.ijse.zanystore.entity.OrderItem;
@@ -25,6 +26,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     ItemColorStockDAO itemColorStockDAO = (ItemColorStockDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM_COLOR_STOCK);
     OrderSerproviderDAO orderSerproviderDAO = (OrderSerproviderDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER_SERPROVIDER);
     ItemDAO itemDAO = (ItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
 
     public boolean saveOrder(String customerId, String orderDetails, String sDate, String eDate, String gDate, String rDate, List<OrderItemDTO> orderItemDTOList) {
         Connection connection = null;
@@ -97,6 +99,11 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     public List<String> getAllId() throws SQLException {
         List<String> list = clothOrderDAO.getAllId();
+        return list;
+    }
+
+    public List<LoadItemDTO> loadItemTable() throws SQLException {
+        List<LoadItemDTO> list = queryDAO.loadItemTable();
         return list;
     }
 }
