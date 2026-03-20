@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 import lk.ijse.zanystore.bo.custom.CreateQuotationBO;
 import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
+import lk.ijse.zanystore.dao.custom.QueryDAO;
 import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.QuotationItemDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemDAOImpl;
@@ -25,6 +26,7 @@ public class CreateQuotationBOImpl implements CreateQuotationBO {
     QuotationDAO quotationDAO = (QuotationDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUOTATION);
     QuotationItemDAO quotationItemDAO = (QuotationItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUOTATION_ITEM);
     ItemDAO itemDAO = (ItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
 
     public List<String> loadItemNames() throws SQLException {
         List<String> itemNames = itemDAO.getNames();
@@ -71,6 +73,11 @@ public class CreateQuotationBOImpl implements CreateQuotationBO {
             try { if (connection != null) connection.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
         return true;
+    }
+
+    public List<String> loadItemColorsTable(String itemName) throws SQLException {
+        List<String> list = queryDAO.loadItemColorsTable(itemName);
+        return list;
     }
 
 

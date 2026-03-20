@@ -104,7 +104,6 @@ public class QuotationController implements Initializable {
     private ObservableList<QuotationDTO> quotationItemObList = FXCollections.observableArrayList();
 
     CreateQuotationBO createQuotationBO = (CreateQuotationBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUOTATION);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -186,7 +185,7 @@ public class QuotationController implements Initializable {
         try{
             ObservableList<String> colorList = FXCollections.observableArrayList();
 
-            List<String> itemColors = queryBO.loadItemColorsTable(itemName);
+            List<String> itemColors = createQuotationBO.loadItemColorsTable(itemName);
             
             for(String color : itemColors){
                 colorList.add(color);

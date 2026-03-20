@@ -15,4 +15,6 @@ public interface CreateQuotationBO extends SuperBO {
     public double getPriceForItem(String itemName) throws SQLException;
 
     public boolean placeQuotation(String customerName, double fullTotal, List<QuotationDTO>quotationItemList) throws SQLException;
+
+    public List<String> loadItemColorsTable(String itemName) throws SQLException;
 }
