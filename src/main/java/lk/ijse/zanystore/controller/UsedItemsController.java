@@ -72,7 +72,6 @@ public class UsedItemsController implements Initializable {
     private TableColumn colQty;
 
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PLACE_ORDER);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -124,7 +123,7 @@ private void loadId(){
 @FXML
 private void loadOtherDetails(int id){
     try{
-        LoadOtherDetailsDTO dto = queryBO.loadOtherDetailsTable(id);
+        LoadOtherDetailsDTO dto = placeOrderBO.loadOtherDetailsTable(id);
 
             nameField.setText(dto.getCustomer_name());
             priceField.setText(String.valueOf(dto.getPayment_amount()));
@@ -139,7 +138,7 @@ private void loadOtherDetails(int id){
 @FXML
 private void loadTable(int id){
     try{
-        List <LoadItemDetailDTO> list = queryBO.loadItemDetailTable(id);
+        List <LoadItemDetailDTO> list = placeOrderBO.loadItemDetailTable(id);
         
         ObservableList<LoadItemDetailDTO> itemList = FXCollections.observableArrayList();
         
