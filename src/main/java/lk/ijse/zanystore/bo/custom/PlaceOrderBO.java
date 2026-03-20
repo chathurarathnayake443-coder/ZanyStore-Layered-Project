@@ -4,6 +4,7 @@ import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.OrderItemDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDetailDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadOrderViewDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadOtherDetailsDTO;
 import lk.ijse.zanystore.entity.ClothOrder;
 import lk.ijse.zanystore.entity.ItemColorStock;
@@ -32,4 +33,6 @@ public interface PlaceOrderBO extends SuperBO {
     public LoadOtherDetailsDTO loadOtherDetailsTable(int id) throws SQLException;
 
     public List<LoadItemDetailDTO> loadItemDetailTable(int id) throws SQLException;
+
+    public List<LoadOrderViewDTO> loadOrderViewTable() throws SQLException;
 }

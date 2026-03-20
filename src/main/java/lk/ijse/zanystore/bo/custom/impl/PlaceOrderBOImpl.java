@@ -11,6 +11,7 @@ import lk.ijse.zanystore.dto.OrderItemDTO;
 import lk.ijse.zanystore.dto.OrderSerproviderDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDetailDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadOrderViewDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadOtherDetailsDTO;
 import lk.ijse.zanystore.entity.ClothOrder;
 import lk.ijse.zanystore.entity.ItemColorStock;
@@ -116,6 +117,11 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     public List<LoadItemDetailDTO> loadItemDetailTable(int id) throws SQLException {
         List<LoadItemDetailDTO> list = queryDAO.loadItemDetailTable(id);
+        return list;
+    }
+
+    public List<LoadOrderViewDTO> loadOrderViewTable() throws SQLException {
+        List<LoadOrderViewDTO> list = queryDAO.loadOrderViewTable();
         return list;
     }
 }
