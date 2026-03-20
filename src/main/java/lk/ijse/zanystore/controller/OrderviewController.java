@@ -1,11 +1,6 @@
 package lk.ijse.zanystore.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -19,9 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
-import lk.ijse.zanystore.bo.custom.QueryBO;
-import lk.ijse.zanystore.db.DBConnection;
-import lk.ijse.zanystore.dto.OrderDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadOrderViewDTO;
 
 public class OrderviewController implements Initializable {

@@ -1,12 +1,10 @@
 package lk.ijse.zanystore.controller;
 
 import java.net.URL;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,15 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
-import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.bo.custom.ReturnBO;
-import lk.ijse.zanystore.bo.custom.impl.ReturnBOImpl;
-import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
-import lk.ijse.zanystore.dao.custom.impl.ReturnDetailDAOImpl;
-import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.QueryDTO.LoadReturnDTO;
-import lk.ijse.zanystore.dto.ReturnDTO;
-import lk.ijse.zanystore.dto.SupplierDTO;
 
 public class ReturnController implements Initializable {
     

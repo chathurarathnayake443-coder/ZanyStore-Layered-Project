@@ -5,10 +5,6 @@
 package lk.ijse.zanystore.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,9 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.LayoutBO;
-import lk.ijse.zanystore.bo.custom.QueryBO;
-import lk.ijse.zanystore.db.DBConnection;
-import lk.ijse.zanystore.dto.LowStockDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
 
 /**

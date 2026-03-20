@@ -5,18 +5,12 @@
 package lk.ijse.zanystore.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,13 +19,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
 import lk.ijse.zanystore.bo.custom.PlaceOrderBO;
-import lk.ijse.zanystore.bo.custom.QueryBO;
-import lk.ijse.zanystore.dao.custom.ClothOrderDAO;
-import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
-import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.QueryDTO.LoadItemDetailDTO;
 import lk.ijse.zanystore.dto.QueryDTO.LoadOtherDetailsDTO;
-import lk.ijse.zanystore.dto.UsedItemDTO;
 
 /**
  * FXML Controller class
