@@ -112,7 +112,6 @@ public class PaymentController implements Initializable {
      private TableView tablePayment;
 
      PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.PAYMENT);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -187,7 +186,7 @@ private void showNextId(){
        @FXML
        private void loadpaymentTable(){
            try{
-               List<LoadPaymentDTO> list = queryBO.loadPaymentTable();
+               List<LoadPaymentDTO> list = paymentBO.loadPaymentTable();
                ObservableList<LoadPaymentDTO> obList = FXCollections.observableArrayList();
                
                for(LoadPaymentDTO paymentDTO : list){

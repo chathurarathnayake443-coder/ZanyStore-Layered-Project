@@ -2,11 +2,13 @@ package lk.ijse.zanystore.bo.custom;
 
 import javafx.scene.control.Alert;
 import lk.ijse.zanystore.db.DBConnection;
+import lk.ijse.zanystore.dto.QueryDTO.LoadPaymentDTO;
 import lk.ijse.zanystore.entity.OrderPayment;
 import lk.ijse.zanystore.entity.Payment;
 import lk.ijse.zanystore.bo.custom.SuperBO;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface PaymentBO extends SuperBO {
 
@@ -15,4 +17,6 @@ public interface PaymentBO extends SuperBO {
     public boolean savePayment(String amount, String method, String oId, String pId, String cId, String date);
 
     public String getTotalAmount() throws SQLException;
+
+    public List<LoadPaymentDTO> loadPaymentTable() throws SQLException;
 }

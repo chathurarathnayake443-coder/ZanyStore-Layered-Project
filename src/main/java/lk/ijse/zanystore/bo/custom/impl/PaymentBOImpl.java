@@ -5,21 +5,25 @@ import lk.ijse.zanystore.bo.custom.PaymentBO;
 import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.OrderPaymentDAO;
 import lk.ijse.zanystore.dao.custom.PaymentDAO;
+import lk.ijse.zanystore.dao.custom.QueryDAO;
 import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.impl.OrderPaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.PaymentDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadPaymentDTO;
 import lk.ijse.zanystore.entity.OrderPayment;
 import lk.ijse.zanystore.entity.Payment;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PaymentBOImpl implements PaymentBO {
 
     PaymentDAO paymentDAO = (PaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PAYMENT);
     OrderPaymentDAO orderPaymentDAO = (OrderPaymentDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CLOTH_ORDER_PAYMENT);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
 
     public String generateNextPaymentId() throws SQLException {
         String id = paymentDAO.showNextId();
@@ -66,5 +70,10 @@ public class PaymentBOImpl implements PaymentBO {
     public String getTotalAmount() throws SQLException {
         String total = paymentDAO.findTotal();
         return total;
+    }
+
+    public List<LoadPaymentDTO> loadPaymentTable() throws SQLException {
+        List<LoadPaymentDTO> list = queryDAO.loadPaymentTable();
+        return list;
     }
 }
