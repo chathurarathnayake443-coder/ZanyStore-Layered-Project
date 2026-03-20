@@ -155,62 +155,6 @@ public class ItemController implements Initializable {
         }
     }
 
-//    @FXML
-//    private void clickDeleteItem() {
-//        try {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//
-//        alert.setTitle("Delete Confirmation");
-//        alert.setHeaderText("Are you sure you want to Delete Item?");
-//
-//        ButtonType yesButton = new ButtonType("Yes");
-//        ButtonType noButton = new ButtonType("No");
-//
-//        alert.getButtonTypes().setAll(yesButton, noButton);
-//
-//        Optional<ButtonType> result = alert.showAndWait();
-//
-//        if (result.isPresent() && result.get() == yesButton) {
-//            String idText = idField.getText();
-//            if (idText == null || idText.trim().isEmpty()) {
-//                new Alert(Alert.AlertType.ERROR, "Enter an Item ID").show();
-//                return;
-//            }
-//            int itemId = Integer.parseInt(idText.trim());
-//
-//            try {
-//                boolean r1 = itemBO.deleteItemColors(itemId);
-//
-//                if (!r1) {
-//                    conn.rollback();
-//                    conn.setAutoCommit(true);
-//                    //return false;
-//                }
-//
-//                boolean affected = itemBO.deleteItem(itemId);
-//                    if (affected) {
-//                        conn.commit();
-//                        new Alert(Alert.AlertType.INFORMATION, "Item Deleted Successfully !").show();
-//                        cleanFields();
-//                        loadItemTable();
-//                        loadItemNames();
-//                    } else {
-//                        conn.rollback();
-//                        new Alert(Alert.AlertType.ERROR, "No item found with ID: " + itemId).show();
-//                    }
-//
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        } catch (NumberFormatException nfe) {
-//            new Alert(Alert.AlertType.ERROR, "Invalid ID format").show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @FXML
     private void clickDeleteItem() {
         try {
@@ -262,7 +206,7 @@ public class ItemController implements Initializable {
 
     private void loadItemTable() {
         try {
-            List<LoadItemDTO> itemList = queryBO.loadItemTable();
+            List<LoadItemDTO> itemList = itemBO.loadItemTable();
             tableItem.setItems(FXCollections.observableArrayList(itemList));
 
         } catch (Exception e) { e.printStackTrace(); }

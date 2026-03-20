@@ -4,12 +4,14 @@ import lk.ijse.zanystore.bo.custom.ItemBO;
 import lk.ijse.zanystore.dao.DAOFactory;
 import lk.ijse.zanystore.dao.custom.ItemColorStockDAO;
 import lk.ijse.zanystore.dao.custom.ItemDAO;
+import lk.ijse.zanystore.dao.custom.QueryDAO;
 import lk.ijse.zanystore.dao.custom.QuotationDAO;
 import lk.ijse.zanystore.dao.custom.impl.ItemColorStockDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.ItemColorStockDTO;
 import lk.ijse.zanystore.dto.ItemDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.entity.Item;
 import lk.ijse.zanystore.entity.ItemColorStock;
 
@@ -22,6 +24,7 @@ public class ItemBOImpl implements ItemBO {
 
     ItemDAO itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
     ItemColorStockDAO itemColorStockDAO = (ItemColorStockDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM_COLOR_STOCK);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
 
     public boolean saveItem(String color, int qtyToAdd, String name, String type, double price) {
         Connection connection = null;
@@ -135,6 +138,11 @@ public boolean deleteItem(int itemId) {
     public String showNextId() throws SQLException {
         String id = itemDAO.showNextId();
         return id;
+    }
+
+    public List<LoadItemDTO> loadItemTable() throws SQLException {
+        List<LoadItemDTO> list = queryDAO.loadItemTable();
+        return list;
     }
 
 }

@@ -1,6 +1,7 @@
 package lk.ijse.zanystore.bo.custom;
 
 import lk.ijse.zanystore.db.DBConnection;
+import lk.ijse.zanystore.dto.QueryDTO.LoadItemDTO;
 import lk.ijse.zanystore.entity.Item;
 import lk.ijse.zanystore.entity.ItemColorStock;
 import lk.ijse.zanystore.bo.custom.SuperBO;
@@ -27,4 +28,6 @@ public interface ItemBO extends SuperBO {
     public int getColorQty(int itemId, String color) throws SQLException;
 
     public String showNextId() throws SQLException;
+
+    public List<LoadItemDTO> loadItemTable() throws SQLException;
 }
