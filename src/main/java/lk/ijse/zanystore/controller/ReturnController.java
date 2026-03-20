@@ -59,7 +59,6 @@ public class ReturnController implements Initializable {
     private TableColumn colOrderId;
 
     ReturnBO returnBO =  (ReturnBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.RETURN);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -154,7 +153,7 @@ public class ReturnController implements Initializable {
     @FXML
     private void loadReturnTable(){
         try{
-            List<LoadReturnDTO> returnList = queryBO.loadReturnTable();
+            List<LoadReturnDTO> returnList = returnBO.loadReturnTable();
             ObservableList<LoadReturnDTO> obList = FXCollections.observableArrayList();
             
             for(LoadReturnDTO returns : returnList){
