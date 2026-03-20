@@ -7,6 +7,9 @@ import lk.ijse.zanystore.dao.custom.impl.ClothOrderDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.ReturnDAOImpl;
 import lk.ijse.zanystore.dao.custom.impl.TaskDAOImpl;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
 import lk.ijse.zanystore.dto.TaskDTO;
 import lk.ijse.zanystore.entity.Task;
 
@@ -20,6 +23,7 @@ public class LayoutBOImpl implements LayoutBO {
     ReturnDAO returnDAO = (ReturnDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.RETURN);
     PaymentDAO paymentDAO = (PaymentDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PAYMENT);
     TaskDAO taskDAO = (TaskDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TASK);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
 
     public int getOrderCount() throws SQLException {
         return clothOrderDAO.getOrderCount();
@@ -49,5 +53,20 @@ public class LayoutBOImpl implements LayoutBO {
     public boolean deleteTask(TaskDTO taskDTO) throws SQLException {
         boolean result = taskDAO.delete(taskDTO.getTask_id());
         return result;
+    }
+
+    public LoadLastOrderDTO loadLastOrderTable() throws SQLException {
+        LoadLastOrderDTO dto = queryDAO.loadLastOrderTable();
+        return dto;
+    }
+
+    public LoadLastPaymentDTO loadLastPaymentTable() throws SQLException {
+        LoadLastPaymentDTO dto = queryDAO.loadLastPaymentTable();
+        return dto;
+    }
+
+    public List<LoadLowStockDTO> loadLowStockTable() throws SQLException {
+        List<LoadLowStockDTO> list = queryDAO.loadLowStockTable();
+        return list;
     }
 }

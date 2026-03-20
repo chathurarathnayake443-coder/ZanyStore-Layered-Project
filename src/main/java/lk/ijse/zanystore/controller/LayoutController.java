@@ -159,7 +159,6 @@ public class LayoutController implements Initializable {
 private AnchorPane imageSliderPane;
 
     LayoutBO layoutBO = (LayoutBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.LAYOUT);
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
 
 private final List<Image> images = new ArrayList<>();
 private final List<ImageView> imageViews = new ArrayList<>();
@@ -521,7 +520,7 @@ private void setupButton(Button btn) {
     private void loadLastOrder(){
         try{
 
-            LoadLastOrderDTO lastOrder = queryBO.loadLastOrderTable();
+            LoadLastOrderDTO lastOrder = layoutBO.loadLastOrderTable();
                 
                 lbl1.setText(String.valueOf(lastOrder.getCloth_order_id()));
                 lbl2.setText(lastOrder.getCustomer_name());
@@ -535,7 +534,7 @@ private void setupButton(Button btn) {
     
     private void loadLastPayment(){
         try{
-                LoadLastPaymentDTO lastPayment = queryBO.loadLastPaymentTable();
+                LoadLastPaymentDTO lastPayment = layoutBO.loadLastPaymentTable();
                 lbl4.setText(String.valueOf(lastPayment.getPayment_id()));
                 lbl5.setText(lastPayment.getCustomer_name());
                 lbl6.setText(String.valueOf(lastPayment.getPayment_amount()));

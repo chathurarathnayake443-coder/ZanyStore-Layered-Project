@@ -1,5 +1,8 @@
 package lk.ijse.zanystore.bo.custom;
 
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastOrderDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLastPaymentDTO;
+import lk.ijse.zanystore.dto.QueryDTO.LoadLowStockDTO;
 import lk.ijse.zanystore.dto.TaskDTO;
 import lk.ijse.zanystore.entity.Task;
 import lk.ijse.zanystore.bo.custom.SuperBO;
@@ -20,4 +23,10 @@ public interface LayoutBO extends SuperBO {
     public List<TaskDTO> viewAllTasks() throws SQLException;
 
     public boolean deleteTask(TaskDTO taskDTO) throws SQLException;
+
+    public LoadLastOrderDTO loadLastOrderTable() throws SQLException;
+
+    public LoadLastPaymentDTO loadLastPaymentTable() throws SQLException;
+
+    public List<LoadLowStockDTO> loadLowStockTable() throws SQLException;
 }

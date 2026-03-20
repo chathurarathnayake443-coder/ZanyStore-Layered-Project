@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.zanystore.App;
 import lk.ijse.zanystore.bo.BOFactory;
+import lk.ijse.zanystore.bo.custom.LayoutBO;
 import lk.ijse.zanystore.bo.custom.QueryBO;
 import lk.ijse.zanystore.db.DBConnection;
 import lk.ijse.zanystore.dto.LowStockDTO;
@@ -47,7 +48,7 @@ public class LowstockController implements Initializable {
     @FXML
     private TableColumn colQty;
 
-    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.QUERY);
+    LayoutBO layoutBO = (LayoutBO) BOFactory.getInstance().getBOFactory(BOFactory.BOTypes.LAYOUT);
 
     /**
      * Initializes the controller class.
@@ -77,7 +78,7 @@ private void backButton(){
 @FXML
 private void loadTable(){
     try{
-        List<LoadLowStockDTO> list = queryBO.loadLowStockTable();
+        List<LoadLowStockDTO> list = layoutBO.loadLowStockTable();
         ObservableList<LoadLowStockDTO> obList = FXCollections.observableArrayList();
         
         for(LoadLowStockDTO item : list){
